@@ -471,9 +471,6 @@ export function DomStagePortal() {
   const cardRef = useRef(null);
   const hueRef = useRef(null);
   const svRef = useRef(null);
-  const photoRef = useRef(null);
-  const mailRef = useRef(null);
-  const frostImgRef = useRef(null);
   const [hsv, setHsv] = useState(HSV0);
   const [phase, setPhase] = useState("idle");
   const [sel, setSel] = useState(0);
@@ -481,32 +478,6 @@ export function DomStagePortal() {
   const [r, g, b] = hsvToRgb(hsv.h, hsv.s, hsv.v);
   const hex = toHex(r, g, b);
   const hueColor = `hsl(${hsv.h}, 100%, 50%)`;
-
-  useEffect(() => {
-    const photo = photoRef.current;
-    const mail = mailRef.current;
-    const img = frostImgRef.current;
-    if (!photo || !mail || !img) return undefined;
-
-    function sync() {
-      const mr = mail.getBoundingClientRect();
-      const pr = photo.getBoundingClientRect();
-      img.style.width = `${pr.width}px`;
-      img.style.height = `${pr.height}px`;
-      img.style.left = `${pr.left - mr.left}px`;
-      img.style.top = `${pr.top - mr.top}px`;
-    }
-
-    sync();
-    const ro = new ResizeObserver(sync);
-    ro.observe(photo);
-    ro.observe(mail);
-    window.addEventListener("resize", sync);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", sync);
-    };
-  }, []);
 
   function pickSv(e) {
     const box = e.currentTarget.getBoundingClientRect();
@@ -708,7 +679,7 @@ export function DomStagePortal() {
     <div className="feature-visual rt-dom-stage-wrap rt-portal-wrap" ref={wrapRef}>
       <div className="feature-stage is-active" data-theme="branded" style={{ ["--fx-c"]: 1 }}>
         <div className="feature-stage-art rt-portal-scene" ref={sceneRef}>
-          <figure className="rt-portal-photo" ref={photoRef} aria-hidden="true">
+          <figure className="rt-portal-photo" aria-hidden="true">
             <img
               src="https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg?auto=compress&cs=tinysrgb&w=1400"
               alt=""
@@ -831,14 +802,7 @@ export function DomStagePortal() {
             </svg>
           </span>
 
-          <article className="rt-portal-mail" ref={mailRef}>
-            <span className="rt-portal-mail-frost" aria-hidden="true">
-              <img
-                ref={frostImgRef}
-                src="https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg?auto=compress&cs=tinysrgb&w=1400"
-                alt=""
-              />
-            </span>
+          <article className="rt-portal-mail">
             <span className="rt-portal-mail-badge" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
                 <rect x="3.5" y="6" width="17" height="12.5" rx="2" stroke="#fff" strokeWidth="1.6" />
@@ -1220,7 +1184,7 @@ export function DomStageRecovery() {
   const sceneRef = useRef(null);
   const acceptRef = useRef(null);
   const xAcceptRef = useRef(null);
-  const [phase, setPhase] = useState("idle");
+  const [phase, setPhase] = useState("offer");
   const [secs, setSecs] = useState(30);
   const [mouse, setMouse] = useState({ x: 28, y: 36, on: false, down: false });
 
@@ -1293,14 +1257,11 @@ export function DomStageRecovery() {
       }
 
       while (my === gen) {
-        setPhase("idle");
+        setPhase("offer");
         setSecs(30);
         put({ x: 72, y: 90 }, { on: false, down: false });
-        await later(380);
+        await later(520);
         if (isDead()) return;
-
-        setPhase("offer");
-        await later(480);
         if (isDead()) return;
 
         setPhase("tick");
@@ -1379,10 +1340,10 @@ export function DomStageRecovery() {
             <path
               className="rt-rv-curve-line"
               pathLength="180"
-              d="M 6 78 C 24 94, 46 88, 60 64 S 86 30, 96 24"
+              d="M 42 94 C 58 98, 70 78, 80 52 S 90 20, 93 14"
               fill="none"
               stroke="#ff2ea6"
-              strokeWidth="2.4"
+              strokeWidth="2.6"
               strokeLinecap="round"
               filter="url(#rt-rv-glow)"
               vectorEffect="non-scaling-stroke"
@@ -1422,7 +1383,7 @@ export function DomStageRecovery() {
                 <span className={`rt-rv-btn is-dark${phase === "hit" || later ? " is-hit" : ""}`} ref={acceptRef}>
                   Accept Refund $20
                   <em className={phase === "tick" || phase === "offer" || phase === "hit" ? "is-on" : ""}>
-                    Expire in {secs} seconds
+                    Expire in {secs}s
                   </em>
                 </span>
               </div>

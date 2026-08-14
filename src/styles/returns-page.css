@@ -1198,46 +1198,20 @@
 
 .rt-portal-mail {
   position: absolute;
-  right: -10%;
+  right: -8%;
   bottom: calc(var(--portal-inset-y) + 18px);
   z-index: 3;
   width: min(200px, 32%);
   padding: 14px 14px 12px;
   border-radius: 16px;
   color: #111827;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.46);
+  border: 1px solid rgba(255, 255, 255, 0.7);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.85) inset,
+    0 1px 0 rgba(255, 255, 255, 0.55) inset,
     0 16px 36px -18px rgba(15, 23, 42, 0.22);
-}
-
-.rt-portal-mail-frost {
-  display: block;
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  border-radius: inherit;
-  background: rgba(255, 255, 255, 0.78);
-  -webkit-backdrop-filter: blur(18px) saturate(1.5);
-  backdrop-filter: blur(18px) saturate(1.5);
-  pointer-events: none;
-}
-
-.rt-portal-mail-frost img {
-  position: absolute;
-  max-width: none;
-  object-fit: cover;
-  filter: blur(22px);
-  transform: scale(1.12);
-  transform-origin: center center;
-  opacity: 0.28;
-}
-
-.rt-portal-mail > *:not(.rt-portal-mail-frost) {
-  position: relative;
-  z-index: 1;
+  -webkit-backdrop-filter: blur(22px) saturate(1.8);
+  backdrop-filter: blur(22px) saturate(1.8);
 }
 
 .rt-portal-mail-badge {
@@ -2441,10 +2415,19 @@
     gap: 8px;
   }
 
+  .rt-rv-credit,
+  .rt-rv-xchg {
+    display: none;
+  }
+
   .rt-rv-col.is-right {
-    flex-direction: row-reverse;
-    align-items: stretch;
-    gap: 8px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 4;
+    display: block;
+    width: auto;
+    padding: 0;
   }
 
   .rt-rv-keep {
@@ -2483,13 +2466,6 @@
 
   .rt-rv-stat strong {
     font-size: 22px;
-  }
-
-  .rt-rv-xchg {
-    margin-top: 0;
-    flex: 1;
-    min-width: 0;
-    padding: 12px;
   }
 
   .rt-rv-btn {

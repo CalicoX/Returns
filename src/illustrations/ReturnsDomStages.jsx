@@ -686,10 +686,18 @@ function WorkflowBot() {
   return (
     <div className="rt-wf-bot" ref={botRef} aria-hidden="true">
       <div className="rt-wf-bot-fig">
-        <img src="/assets/features/ai-bot.jpg?v=4" alt="" width="240" height="268" />
-        <span className="rt-wf-bot-eyes">
-          <i className="is-l" />
-          <i className="is-r" />
+        <i className="rt-wf-bot-ear is-l" />
+        <i className="rt-wf-bot-ear is-r" />
+        <span className="rt-wf-bot-head">
+          <i className="rt-wf-bot-shine" />
+          <span className="rt-wf-bot-face">
+            <i className="rt-wf-bot-eye is-l" />
+            <i className="rt-wf-bot-eye is-r" />
+          </span>
+        </span>
+        <i className="rt-wf-bot-neck" />
+        <span className="rt-wf-bot-body">
+          <i className="rt-wf-bot-chest" />
         </span>
       </div>
     </div>

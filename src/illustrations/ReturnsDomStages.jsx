@@ -456,7 +456,10 @@ function SparkleIcon() {
 
 /** 0 · Branded portal */
 export function DomStagePortal() {
+  const wrapRef = useRef(null);
   const [hsv, setHsv] = useState({ h: 168, s: 0.88, v: 0.71 });
+  const [draw, setDraw] = useState(false);
+  const [ants, setAnts] = useState(false);
   const [r, g, b] = hsvToRgb(hsv.h, hsv.s, hsv.v);
   const hex = toHex(r, g, b);
   const hueColor = `hsl(${hsv.h}, 100%, 50%)`;
@@ -474,8 +477,94 @@ export function DomStagePortal() {
     setHsv((cur) => ({ ...cur, h }));
   }
 
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return undefined;
+
+    let gen = 0;
+    let raf = 0;
+    const timers = [];
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    function later(ms) {
+      return new Promise((resolve) => {
+        const id = window.setTimeout(resolve, ms);
+        timers.push(id);
+      });
+    }
+
+    async function play() {
+      const my = ++gen;
+      if (reduce.matches) {
+        setDraw(true);
+        setAnts(true);
+        return;
+      }
+
+      while (my === gen) {
+        setDraw(false);
+        setAnts(false);
+        setHsv({ h: 168, s: 0.88, v: 0.71 });
+        await later(280);
+        if (my !== gen) return;
+        setDraw(true);
+        await later(1180);
+        if (my !== gen) return;
+        setAnts(true);
+
+        const start = performance.now();
+        await new Promise((resolve) => {
+          function tick(now) {
+            if (my !== gen) {
+              resolve();
+              return;
+            }
+            const t = (now - start) / 7200;
+            if (t >= 1) {
+              resolve();
+              return;
+            }
+            const h = (168 + t * 210) % 360;
+            const s = 0.78 + Math.sin(t * Math.PI * 2) * 0.14;
+            const v = 0.7 + Math.cos(t * Math.PI * 2) * 0.12;
+            setHsv({
+              h,
+              s: Math.min(1, Math.max(0.45, s)),
+              v: Math.min(1, Math.max(0.42, v)),
+            });
+            raf = requestAnimationFrame(tick);
+          }
+          raf = requestAnimationFrame(tick);
+        });
+        if (my !== gen) return;
+        await later(900);
+      }
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          play();
+        } else {
+          gen += 1;
+          if (raf) cancelAnimationFrame(raf);
+          timers.splice(0).forEach((id) => window.clearTimeout(id));
+        }
+      },
+      { threshold: 0.28 }
+    );
+    io.observe(wrap);
+
+    return () => {
+      gen += 1;
+      if (raf) cancelAnimationFrame(raf);
+      timers.forEach((id) => window.clearTimeout(id));
+      io.disconnect();
+    };
+  }, []);
+
   return (
-    <div className="feature-visual rt-dom-stage-wrap rt-portal-wrap">
+    <div className="feature-visual rt-dom-stage-wrap rt-portal-wrap" ref={wrapRef}>
       <div className="feature-stage is-active" data-theme="branded" style={{ ["--fx-c"]: 1 }}>
         <div className="feature-stage-art rt-portal-scene">
           <figure className="rt-portal-photo" aria-hidden="true">
@@ -488,7 +577,10 @@ export function DomStagePortal() {
             />
           </figure>
 
-          <div className="rt-portal-search-wrap">
+          <div className={`rt-portal-search-wrap${draw ? " is-draw" : ""}${ants ? " is-ants" : ""}`}>
+            <svg className="rt-portal-draw" viewBox="0 0 260 188" preserveAspectRatio="none" aria-hidden="true">
+              <rect className="rt-portal-draw-line" x="3.5" y="3.5" width="253" height="181" rx="16" pathLength="1" />
+            </svg>
             <SelectFrame />
             <div className="rt-portal-search">
               <strong>Return center</strong>
@@ -515,7 +607,13 @@ export function DomStagePortal() {
             </div>
           </div>
 
-          <div className="rt-portal-pick-wrap">
+          <div
+            className="rt-portal-pick-wrap"
+            style={{
+              ["--mx"]: `${8 + hsv.s * 78}%`,
+              ["--my"]: `${30 + (1 - hsv.v) * 28}%`,
+            }}
+          >
             <div className="rt-portal-picker">
               <header>
                 <strong>Color picker</strong>

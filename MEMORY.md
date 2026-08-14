@@ -44,8 +44,9 @@
 
 - 右上 **Return center** 查询框（Order number / Email / Search）。
 - 左侧真实 **Color picker**；选中色同步到 Search 按钮。
-- 取色器带 Illustrator 选中框（蚂蚁线 + 8 个锚点）和假鼠标。
-- 右下邮件卡：From/To + 正文骨架 + View return details。
+- Return center 先描边画出选框，再切蚂蚁线。
+- 取色器自动扫色，Search 按钮和滴管跟随；也可手拖。
+- 右下邮件卡必须是能透出照片的毛玻璃（低不透明度 + backdrop-filter），不要实心白。
 - 左下 3.5x Customer LTV。
 - 不要加回浏览器窗 / Brand experience / 商品卡。
 

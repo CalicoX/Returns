@@ -32,6 +32,10 @@ Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows →
 
 登山照铺满、无外框。右上 Return center 查询框；左取色器（选中色=Search 按钮）+ AI 选中框/鼠标；右下邮件骨架；左下 3.5x。
 
+### Feature 02 插图
+
+透明底，无深色井。细化机器人（无大黑 visor），眼睛跟鼠标。
+
 ---
 
 ## 关键路径

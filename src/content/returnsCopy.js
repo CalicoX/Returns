@@ -116,6 +116,7 @@ export const FEATURES = [
     badge: "-80%",
     badgeLabel: "Support Workload",
     reverse: true,
+    badgeInArt: true,
   },
   {
     title: "Multiple Ways to Recover Revenue",

@@ -51,6 +51,14 @@
 
 ---
 
+## Feature 02 AI 插图（2026-08-14）
+
+- **不要深色井**。`.rt-wf-scene` 保持透明，禁止 `#0b1020` 那坨黑底。
+- 机器人用细化 3D 资产 `public/assets/features/ai-bot.jpg`，不要退回两个椭圆 + 大黑 visor。
+- 眼睛高光跟鼠标；整只机器人轻微转头。
+
+---
+
 ## 工程教训
 
 - 本地曾不是 git 仓库；远程 `CalicoX/Returns` 从空仓推上，默认 `main`。

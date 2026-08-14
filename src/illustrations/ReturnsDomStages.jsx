@@ -408,9 +408,9 @@ function toHex(r, g, b) {
   return `#${[r, g, b].map((n) => n.toString(16).padStart(2, "0")).join("")}`;
 }
 
-function PortalMouse() {
+function PortalMouse({ className = "rt-portal-mouse" }) {
   return (
-    <span className="rt-portal-mouse" aria-hidden="true">
+    <span className={className} aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none">
         <path
           d="M5.2 3.4l12.8 11.2-6.05.35 3.7 6.85-2.35 1.25-3.75-6.9-4.35 4.15z"
@@ -421,6 +421,36 @@ function PortalMouse() {
         />
       </svg>
     </span>
+  );
+}
+
+function SelectFrame() {
+  return (
+    <div className="rt-ai-select" aria-hidden="true">
+      <i className="n" />
+      <i className="e" />
+      <i className="s" />
+      <i className="w" />
+      <b className="tl" />
+      <b className="tr" />
+      <b className="bl" />
+      <b className="br" />
+      <b className="tm" />
+      <b className="bm" />
+      <b className="ml" />
+      <b className="mr" />
+    </div>
+  );
+}
+
+function SparkleIcon() {
+  return (
+    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path
+        d="M8 .6c.35 2.7 1.5 4.7 4.4 6.4-2.9.35-4.05 2.35-4.4 6.4-.35-2.7-1.5-4.7-4.4-6.4C6.5 6.65 7.65 4.65 8 .6z"
+        fill="currentColor"
+      />
+    </svg>
   );
 }
 
@@ -458,46 +488,34 @@ export function DomStagePortal() {
             />
           </figure>
 
-          <div className="rt-portal-search">
-            <strong>Return center</strong>
-            <div className="rt-portal-search-row">
-              <span className="rt-portal-search-ico" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <circle cx="12" cy="10" r="3.2" stroke="currentColor" strokeWidth="1.6" />
-                  <path
-                    d="M6 18.2c1.4-2.2 3.5-3.4 6-3.4s4.6 1.2 6 3.4"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </span>
-              <div className="rt-portal-fields">
-                <span>Order number</span>
-                <span>Email</span>
+          <div className="rt-portal-search-wrap">
+            <SelectFrame />
+            <div className="rt-portal-search">
+              <strong>Return center</strong>
+              <div className="rt-portal-search-row">
+                <span className="rt-portal-search-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="10" r="3.2" stroke="currentColor" strokeWidth="1.6" />
+                    <path
+                      d="M6 18.2c1.4-2.2 3.5-3.4 6-3.4s4.6 1.2 6 3.4"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </span>
+                <div className="rt-portal-fields">
+                  <span>Order number</span>
+                  <span>Email</span>
+                </div>
               </div>
+              <button type="button" style={{ background: hex }}>
+                Search
+              </button>
             </div>
-            <button type="button" style={{ background: hex }}>
-              Search
-            </button>
           </div>
 
           <div className="rt-portal-pick-wrap">
-            <div className="rt-ai-select" aria-hidden="true">
-              <i className="n" />
-              <i className="e" />
-              <i className="s" />
-              <i className="w" />
-              <b className="tl" />
-              <b className="tr" />
-              <b className="bl" />
-              <b className="br" />
-              <b className="tm" />
-              <b className="bm" />
-              <b className="ml" />
-              <b className="mr" />
-            </div>
-
             <div className="rt-portal-picker">
               <header>
                 <strong>Color picker</strong>
@@ -599,51 +617,170 @@ export function DomStagePortal() {
   );
 }
 
+const WF_RULES = [
+  {
+    n: 1,
+    title: "10% handling fee for items ≥$15",
+    meta: "ID:101  ·  Rule description text, usually longer tha…",
+  },
+  {
+    n: 2,
+    title: "Auto-process for quality issues",
+    meta: "ID:101  ·  Rule description text, usually longer tha…",
+  },
+  {
+    n: 3,
+    title: "Unshipped orders: Auto approval",
+    meta: "ID:101  ·  Rule description text, usually longer tha…",
+  },
+];
+
+const WF_PILLS = [
+  "Auto refund under $20",
+  "Auto-confirm receipt in 7 days",
+  "Service fee for items over $100",
+  "Workflow vs general settings",
+];
+
+function WorkflowBot() {
+  const botRef = useRef(null);
+
+  useEffect(() => {
+    const bot = botRef.current;
+    if (!bot) return undefined;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+
+    let raf = 0;
+    let tx = 0;
+    let ty = 0;
+    let cx = 0;
+    let cy = 0;
+
+    function tick() {
+      raf = 0;
+      cx += (tx - cx) * 0.2;
+      cy += (ty - cy) * 0.2;
+      bot.style.setProperty("--ex", `${cx.toFixed(2)}px`);
+      bot.style.setProperty("--ey", `${cy.toFixed(2)}px`);
+      if (Math.abs(tx - cx) > 0.04 || Math.abs(ty - cy) > 0.04) {
+        raf = requestAnimationFrame(tick);
+      }
+    }
+
+    function onMove(e) {
+      const r = bot.getBoundingClientRect();
+      const ox = r.left + r.width * 0.5;
+      const oy = r.top + r.height * 0.38;
+      tx = Math.max(-5.2, Math.min(5.2, (e.clientX - ox) / 22));
+      ty = Math.max(-3.6, Math.min(3.6, (e.clientY - oy) / 28));
+      if (!raf) raf = requestAnimationFrame(tick);
+    }
+
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return (
+    <div className="rt-wf-bot" ref={botRef} aria-hidden="true">
+      <div className="rt-wf-bot-fig">
+        <img src="/assets/features/ai-bot.jpg?v=4" alt="" width="240" height="268" />
+        <span className="rt-wf-bot-eyes">
+          <i className="is-l" />
+          <i className="is-r" />
+        </span>
+      </div>
+    </div>
+  );
+}
+
 /** 1 · AI workflows */
 export function DomStageAi() {
+  const [pill, setPill] = useState(0);
+
   return (
-    <div className="feature-visual rt-dom-stage-wrap">
+    <div className="feature-visual rt-dom-stage-wrap rt-wf-wrap">
       <div className="feature-stage is-active" data-theme="notify" style={{ ["--fx-c"]: 1 }}>
-        <div className="feature-stage-art" aria-hidden="true">
-          <div className="fx-glass fx-main">
-            <div className="fx-chrome">
-              <i />
-              <i />
-              <i />
-              <span className="fx-url">returns · AI workflow</span>
-            </div>
-            <div className="fx-body">
-              <div className="fx-hero-block has-photo rt-dom-photo-ai">
-                <strong>Describe policy in plain language</strong>
-                <span>9 triggers × 8 actions</span>
+        <div className="feature-stage-art rt-wf-scene">
+          <div className="rt-wf-panel-wrap">
+            <div className="rt-wf-panel">
+              <header className="rt-wf-head">
+                <span className="rt-wf-brand">
+                  <SparkleIcon />
+                  AI Assistant
+                </span>
+                <em>Beta</em>
+                <span className="rt-wf-head-spacer" />
+                <span className="rt-wf-icon" aria-hidden="true">
+                  <svg viewBox="0 0 16 16" fill="none">
+                    <circle cx="8" cy="8" r="5.2" stroke="currentColor" strokeWidth="1.4" />
+                    <path d="M8 5.2V8l1.8 1.2" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                  </svg>
+                </span>
+                <span className="rt-wf-icon is-close" aria-hidden="true">
+                  <svg viewBox="0 0 16 16" fill="none">
+                    <path d="M4.4 4.4l7.2 7.2M11.6 4.4l-7.2 7.2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </header>
+
+              <WorkflowBot />
+
+              <h3>Good morning, how can I help you?</h3>
+              <p>Describe your scenario, or click a shortcut action.</p>
+
+              <div className="rt-wf-pills">
+                {WF_PILLS.map((label, i) => (
+                  <button
+                    key={label}
+                    type="button"
+                    className={pill === i ? "is-on" : undefined}
+                    onClick={() => setPill(i)}
+                  >
+                    {label}
+                  </button>
+                ))}
               </div>
-              <div className="fx-status-grid">
-                <b className="is-ok">
-                  Rules<em>AI</em>
-                </b>
-                <b className="is-ok">
-                  Approve<em>Auto</em>
-                </b>
-                <b className="is-on">
-                  Label<em>Live</em>
-                </b>
-                <b>
-                  Refund<em>—</em>
+
+              <div className="rt-wf-composer">
+                <span>Describe your needs</span>
+                <b aria-hidden="true">
+                  <svg viewBox="0 0 16 16" fill="none">
+                    <path d="M8 11.4V4.6M5.2 7.2L8 4.4l2.8 2.8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
                 </b>
               </div>
             </div>
           </div>
-          <div className="fx-glass fx-float-a">
-            <strong>Policy KB</strong>
-            <span>"No returns after 30 days"</span>
+
+          <div className="rt-wf-rules">
+            {WF_RULES.map((rule) => (
+              <article className="rt-wf-rule" key={rule.title}>
+                <span className="rt-wf-rule-mark" aria-hidden="true">
+                  <SparkleIcon />
+                </span>
+                <span className="rt-wf-drag" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                  <i />
+                </span>
+                <b>{rule.n}</b>
+                <div>
+                  <strong>{rule.title}</strong>
+                  <span>{rule.meta}</span>
+                </div>
+              </article>
+            ))}
           </div>
-          <div className="fx-glass fx-float-b">
-            <strong>Filter queue</strong>
-            <span>Status · reason · channel</span>
-          </div>
-          <div className="fx-glass fx-float-c">
-            <strong>−80% support load</strong>
-            <span>No engineering required</span>
+
+          <div className="rt-wf-stat">
+            <strong>−80%</strong>
+            <span>Support Workload</span>
           </div>
         </div>
       </div>

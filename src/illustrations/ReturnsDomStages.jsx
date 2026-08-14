@@ -1261,7 +1261,6 @@ export function DomStageRecovery() {
         put({ x: 72, y: 90 }, { on: false, down: false });
         await later(520);
         if (isDead()) return;
-        if (isDead()) return;
 
         setPhase("tick");
         for (let n = 30; n >= 2; n -= 2) {
@@ -1293,6 +1292,11 @@ export function DomStageRecovery() {
         await later(150);
         if (isDead()) return;
         put(pos, { down: false });
+        await later(280);
+        if (isDead()) return;
+        setPhase("grow");
+        await later(1400);
+        if (isDead()) return;
         setPhase("done");
         await later(2400);
       }
@@ -1320,7 +1324,7 @@ export function DomStageRecovery() {
     };
   }, []);
 
-  const later = phase === "credit" || phase === "xchg" || phase === "done";
+  const later = phase === "credit" || phase === "xchg" || phase === "grow" || phase === "done";
 
   return (
     <div className="feature-visual rt-dom-stage-wrap rt-rv-wrap" ref={wrapRef}>

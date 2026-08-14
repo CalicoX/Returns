@@ -71,7 +71,7 @@
 - 内容锁定产品拦截 UI：Keep your item、Instant Refund $20、Store credit、Try an exchange。
 - 20%+ Revenue Recovery Rate 青绿徽章画在插图里（`badgeInArt`），不要外面再叠一个。
 - 背景是上升增长曲线（面积图），线下半透明青绿渐变，对到 20%+。不要品红连线。
-- 自动演示倒计时后点 Accept。悬停不要暂停。
+- 曲线最后出现，再从左往右长出来。悬停不要暂停。
 
 ---
 

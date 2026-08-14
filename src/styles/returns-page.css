@@ -2007,6 +2007,18 @@
   height: auto;
   pointer-events: none;
   overflow: visible;
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+  transition: none;
+}
+
+.rt-rv-scene.is-grow .rt-rv-curve,
+.rt-rv-scene.is-done .rt-rv-curve {
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+  transition:
+    clip-path 1.25s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.18s linear;
 }
 
 .rt-rv-curve-fill {
@@ -2273,6 +2285,7 @@
 
 .rt-rv-scene.is-credit .rt-rv-credit,
 .rt-rv-scene.is-xchg .rt-rv-credit,
+.rt-rv-scene.is-grow .rt-rv-credit,
 .rt-rv-scene.is-done .rt-rv-credit {
   opacity: 1;
   transform: none;
@@ -2354,6 +2367,7 @@
 }
 
 .rt-rv-scene.is-xchg .rt-rv-xchg,
+.rt-rv-scene.is-grow .rt-rv-xchg,
 .rt-rv-scene.is-done .rt-rv-xchg {
   opacity: 1;
   transform: none;
@@ -2491,6 +2505,12 @@
   .rt-rv-xchg {
     opacity: 1 !important;
     transform: none !important;
+    transition: none !important;
+  }
+
+  .rt-rv-curve {
+    opacity: 1 !important;
+    clip-path: none !important;
     transition: none !important;
   }
 

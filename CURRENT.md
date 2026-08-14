@@ -38,7 +38,7 @@ Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows →
 
 ### Feature 03 插图
 
-透明底，无路线图 / 无深色井。真实拦截 UI：Keep your item + Instant Refund、$20 store credit、Try an exchange。背景是上升增长曲线，线下半透明青绿渐变。20%+ 青绿徽章在画里。自动演示：倒计时 → 点 Accept → 积分卡 → 换货卡。
+透明底，无路线图 / 无深色井。真实拦截 UI：Keep your item + Instant Refund、$20 store credit、Try an exchange。背景是上升增长曲线，线下半透明青绿渐变。20%+ 青绿徽章在画里。自动演示：倒计时 → 点 Accept → 积分卡 → 换货卡 → 曲线最后出现并增长。
 
 ---
 

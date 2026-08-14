@@ -834,10 +834,10 @@
 
 .rt-portal-search-wrap {
   position: absolute;
-  top: 46%;
-  left: 38%;
+  top: 50%;
+  left: 50%;
   z-index: 5;
-  width: min(248px, 44%);
+  width: min(248px, 46%);
   transform: translate(-50%, -50%);
 }
 
@@ -1198,10 +1198,10 @@
 
 .rt-portal-mail {
   position: absolute;
-  right: calc(var(--portal-inset-x) - 40px);
+  right: calc(var(--portal-inset-x) - 56px);
   bottom: calc(var(--portal-inset-y) + 18px);
   z-index: 3;
-  width: min(210px, 34%);
+  width: min(200px, 32%);
   padding: 14px 14px 12px;
   border-radius: 16px;
   color: #111827;

@@ -46,7 +46,7 @@
 - 左侧真实 **Color picker**；选中色同步到 Search 按钮。
 - Return center：鼠标拖出选框，松手后卡片出现 + 蚂蚁线。不要描边绕一圈。
 - 同一只鼠标滑到 Color picker：先拖色相条，再去色板选色；Search 按钮全程跟随。
-- 右下邮件是透明白色毛玻璃。卡片靠右、不要压 Return center；左边仍压在照片上。用对照片对齐的模糊层，不依赖 backdrop-filter。
+- Return center 必须水平居中。邮件自己往右挪，不要去动中间那张卡。
 - 左下 3.5x Customer LTV。
 - 不要加回浏览器窗 / Brand experience / 商品卡。
 

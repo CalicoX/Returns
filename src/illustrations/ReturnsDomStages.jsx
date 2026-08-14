@@ -803,6 +803,7 @@ export function DomStagePortal() {
           </span>
 
           <article className="rt-portal-mail">
+            <span className="rt-portal-mail-frost" aria-hidden="true" />
             <span className="rt-portal-mail-badge" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
                 <rect x="3.5" y="6" width="17" height="12.5" rx="2" stroke="#fff" strokeWidth="1.6" />
@@ -1130,99 +1131,326 @@ export function DomStageAi() {
   );
 }
 
-/** 2 · Revenue recovery */
-export function DomStageRecovery() {
+function RvClose() {
   return (
-    <div className="feature-visual rt-dom-stage-wrap">
-      <div className="feature-stage is-active is-route-on" data-theme="lastmile" style={{ ["--fx-c"]: 1 }}>
-        <div className="feature-stage-art" aria-hidden="true">
-          <div className="fx-route-map">
-            <svg viewBox="0 0 440 220" preserveAspectRatio="xMidYMid meet">
-              <defs>
-                <linearGradient id="rt-fx-route-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#38bdf8" />
-                  <stop offset="45%" stopColor="#3b82f6" />
-                  <stop offset="100%" stopColor="#8b5cf6" />
-                </linearGradient>
-                <filter id="rt-fx-route-glow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="2.2" result="b" />
-                  <feMerge>
-                    <feMergeNode in="b" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
-                <path
-                  id="rt-fx-route-path"
-                  d="M 36 168 C 90 168, 120 120, 168 108 C 220 94, 250 140, 300 128 C 348 116, 360 72, 400 64"
-                />
-              </defs>
-              <rect x="48" y="40" width="52" height="36" rx="6" fill="rgba(255,255,255,0.45)" />
-              <rect x="180" y="28" width="70" height="28" rx="6" fill="rgba(255,255,255,0.35)" />
-              <rect x="300" y="100" width="60" height="40" rx="6" fill="rgba(255,255,255,0.4)" />
+    <span className="rt-rv-close" aria-hidden="true">
+      <svg viewBox="0 0 16 16" fill="none">
+        <path d="M4.2 4.2l7.6 7.6M11.8 4.2l-7.6 7.6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    </span>
+  );
+}
+
+function RvInfo() {
+  return (
+    <svg className="rt-rv-info" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <circle cx="8" cy="8" r="6.1" stroke="currentColor" strokeWidth="1.3" />
+      <path d="M8 7.2V11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <circle cx="8" cy="5.2" r="0.8" fill="currentColor" />
+    </svg>
+  );
+}
+
+function RvBolt() {
+  return (
+    <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
+      <path d="M6.8 1.2L2.6 6.6h3l-.8 4.2 4.4-5.6h-3L6.8 1.2z" fill="currentColor" />
+    </svg>
+  );
+}
+
+function RvSwap() {
+  return (
+    <svg viewBox="0 0 18 18" fill="none" aria-hidden="true">
+      <path d="M4 6.2h10.2M11.6 3.6L14.4 6.2 11.6 8.8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M14 11.8H3.8M6.4 9.2L3.6 11.8 6.4 14.4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function RvCreditMark() {
+  return (
+    <span className="rt-rv-coin" aria-hidden="true">
+      <svg viewBox="0 0 18 18" fill="none">
+        <circle cx="9" cy="9" r="7" stroke="currentColor" strokeWidth="1.4" />
+        <path d="M9 5.2v7.6M7.1 6.6c.5-.7 1.2-1 1.9-1 .9 0 1.7.5 1.7 1.4 0 2.1-3.6 1.1-3.6 3.1 0 .9.8 1.5 1.9 1.5.8 0 1.5-.3 2-.9" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+      </svg>
+    </span>
+  );
+}
+
+/** 2 · Revenue recovery — keep / credit / exchange collage */
+export function DomStageRecovery() {
+  const wrapRef = useRef(null);
+  const sceneRef = useRef(null);
+  const acceptRef = useRef(null);
+  const xAcceptRef = useRef(null);
+  const [phase, setPhase] = useState("idle");
+  const [secs, setSecs] = useState(30);
+  const [mouse, setMouse] = useState({ x: 28, y: 36, on: false, down: false });
+
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return undefined;
+
+    let gen = 0;
+    let raf = 0;
+    const timers = [];
+    const pos = { x: 28, y: 36 };
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    function later(ms) {
+      return new Promise((resolve) => {
+        const id = window.setTimeout(resolve, ms);
+        timers.push(id);
+      });
+    }
+
+    let isDead = () => false;
+
+    function put(p, extra = {}) {
+      pos.x = p.x;
+      pos.y = p.y;
+      setMouse((m) => ({ ...m, x: p.x, y: p.y, ...extra }));
+    }
+
+    function sceneXY(el, fx, fy) {
+      const scene = sceneRef.current;
+      if (!scene || !el) return { ...pos };
+      const sr = scene.getBoundingClientRect();
+      const r0 = el.getBoundingClientRect();
+      return {
+        x: r0.left - sr.left + r0.width * fx,
+        y: r0.top - sr.top + r0.height * fy,
+      };
+    }
+
+    function moveTo(target, ms) {
+      const from = { x: pos.x, y: pos.y };
+      const start = performance.now();
+      return new Promise((resolve) => {
+        function tick(now) {
+          if (isDead()) {
+            resolve();
+            return;
+          }
+          const t = Math.min(1, (now - start) / ms);
+          const e = 1 - (1 - t) * (1 - t);
+          put({
+            x: from.x + (target.x - from.x) * e,
+            y: from.y + (target.y - from.y) * e,
+          });
+          if (t < 1) raf = requestAnimationFrame(tick);
+          else resolve();
+        }
+        raf = requestAnimationFrame(tick);
+      });
+    }
+
+    async function play() {
+      const my = ++gen;
+      isDead = () => my !== gen;
+
+      if (reduce.matches) {
+        setPhase("done");
+        setSecs(30);
+        return;
+      }
+
+      while (my === gen) {
+        setPhase("idle");
+        setSecs(30);
+        put({ x: 72, y: 90 }, { on: false, down: false });
+        await later(380);
+        if (isDead()) return;
+
+        setPhase("offer");
+        await later(480);
+        if (isDead()) return;
+
+        setPhase("tick");
+        for (let n = 30; n >= 2; n -= 2) {
+          setSecs(n);
+          await later(55);
+          if (isDead()) return;
+        }
+        setSecs(1);
+
+        const accept = acceptRef.current;
+        put(sceneXY(accept, 0.18, 0.35), { on: true, down: false });
+        await moveTo(sceneXY(accept, 0.7, 0.55), 500);
+        if (isDead()) return;
+        put(pos, { down: true });
+        setPhase("hit");
+        await later(150);
+        if (isDead()) return;
+        put(pos, { down: false });
+
+        setPhase("credit");
+        await later(520);
+        if (isDead()) return;
+
+        setPhase("xchg");
+        const xAccept = xAcceptRef.current;
+        await moveTo(sceneXY(xAccept, 0.64, 0.55), 620);
+        if (isDead()) return;
+        put(pos, { down: true });
+        await later(150);
+        if (isDead()) return;
+        put(pos, { down: false });
+        setPhase("done");
+        await later(2400);
+      }
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          play();
+        } else {
+          gen += 1;
+          timers.splice(0).forEach((id) => window.clearTimeout(id));
+          if (raf) cancelAnimationFrame(raf);
+        }
+      },
+      { threshold: 0.35 },
+    );
+    io.observe(wrap);
+
+    return () => {
+      gen += 1;
+      timers.forEach((id) => window.clearTimeout(id));
+      if (raf) cancelAnimationFrame(raf);
+      io.disconnect();
+    };
+  }, []);
+
+  const later = phase === "credit" || phase === "xchg" || phase === "done";
+
+  return (
+    <div className="feature-visual rt-dom-stage-wrap rt-rv-wrap" ref={wrapRef}>
+      <div className="feature-stage is-active" data-theme="recover" style={{ ["--fx-c"]: 1 }}>
+        <div className={`feature-stage-art rt-rv-scene is-${phase}`} ref={sceneRef} aria-hidden="true">
+          <svg className="rt-rv-curve" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs>
+              <filter id="rt-rv-glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="1.2" result="b" />
+                <feMerge>
+                  <feMergeNode in="b" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            <path
+              className="rt-rv-curve-line"
+              pathLength="180"
+              d="M 6 78 C 24 94, 46 88, 60 64 S 86 30, 96 24"
+              fill="none"
+              stroke="#ff2ea6"
+              strokeWidth="2.4"
+              strokeLinecap="round"
+              filter="url(#rt-rv-glow)"
+              vectorEffect="non-scaling-stroke"
+            />
+          </svg>
+
+          <div className="rt-rv-col is-left">
+            <article className="rt-rv-keep">
+              <header className="rt-rv-modal-head">
+                <div>
+                  <strong>Keep your item</strong>
+                  <p>The merchant proposes a refund of $20. If still usable, we offer a keep incentive.</p>
+                </div>
+                <RvClose />
+              </header>
+
+              <div className="rt-rv-keep-slot" />
+
+              <div className="rt-rv-refund">
+                <div className="rt-rv-refund-top">
+                  <b>
+                    $20.00 <em>USD</em>
+                  </b>
+                  <span className="rt-rv-pill">
+                    <RvBolt />
+                    Instant Refund
+                  </span>
+                </div>
+                <p>
+                  Retained goods, compensation amount
+                  <RvInfo />
+                </p>
+              </div>
+
+              <div className="rt-rv-actions">
+                <span className="rt-rv-btn">Return Anyway</span>
+                <span className={`rt-rv-btn is-dark${phase === "hit" || later ? " is-hit" : ""}`} ref={acceptRef}>
+                  Accept Refund $20
+                  <em className={phase === "tick" || phase === "offer" || phase === "hit" ? "is-on" : ""}>
+                    Expire in {secs} seconds
+                  </em>
+                </span>
+              </div>
+            </article>
+
+            <article className="rt-rv-credit">
+              <div className="rt-rv-credit-top">
+                <b>
+                  $20.00 <em>USD</em>
+                </b>
+                <span className="rt-rv-credit-tag">
+                  <RvCreditMark />
+                  Store credit
+                </span>
+              </div>
+              <p>
+                Credits can offset future purchases.
+                <RvInfo />
+              </p>
+            </article>
+          </div>
+
+          <div className="rt-rv-col is-right">
+            <div className="rt-rv-stat">
+              <strong>20%+</strong>
+              <span>Revenue Recovery Rate</span>
+            </div>
+
+            <article className="rt-rv-xchg">
+              <header className="rt-rv-modal-head">
+                <div>
+                  <strong>Try an exchange?</strong>
+                  <p>As a valued customer, we&apos;d like to offer you an exchange option.</p>
+                </div>
+                <RvClose />
+              </header>
+              <div className="rt-rv-switch">
+                <RvSwap />
+                Switch to exchange
+              </div>
+              <div className="rt-rv-actions">
+                <span className="rt-rv-btn">Return Anyway</span>
+                <span className={`rt-rv-btn is-dark${phase === "done" ? " is-hit" : ""}`} ref={xAcceptRef}>
+                  Accept
+                </span>
+              </div>
+            </article>
+          </div>
+
+          <span
+            className={`rt-rv-mouse${mouse.on ? " is-on" : ""}${mouse.down ? " is-down" : ""}`}
+            style={{ ["--x"]: `${mouse.x}px`, ["--y"]: `${mouse.y}px` }}
+          >
+            <svg viewBox="0 0 24 24" fill="none">
               <path
-                className="route-base"
-                d="M 36 168 C 90 168, 120 120, 168 108 C 220 94, 250 140, 300 128 C 348 116, 360 72, 400 64"
+                d="M5.2 3.4l12.8 11.2-6.05.35 3.7 6.85-2.35 1.25-3.75-6.9-4.35 4.15z"
+                fill="#111827"
+                stroke="#fff"
+                strokeWidth="1.4"
+                strokeLinejoin="round"
               />
-              <path
-                className="route-live"
-                filter="url(#rt-fx-route-glow)"
-                pathLength="280"
-                d="M 36 168 C 90 168, 120 120, 168 108 C 220 94, 250 140, 300 128 C 348 116, 360 72, 400 64"
-                stroke="url(#rt-fx-route-grad)"
-              />
-              <circle className="route-node is-hub" cx="36" cy="168" r="7" />
-              <circle className="route-node" cx="168" cy="108" r="5.5" />
-              <circle className="route-node" cx="300" cy="128" r="5.5" />
-              <circle className="route-node is-home" cx="400" cy="64" r="7" />
-              <text className="route-label" x="36" y="192" textAnchor="middle">
-                Request
-              </text>
-              <text className="route-label" x="168" y="96" textAnchor="middle">
-                Offer
-              </text>
-              <text className="route-label" x="300" y="150" textAnchor="middle">
-                Keep
-              </text>
-              <text className="route-label" x="400" y="52" textAnchor="middle">
-                Revenue
-              </text>
             </svg>
-          </div>
-          <div className="fx-glass fx-main">
-            <div className="fx-chrome">
-              <i />
-              <i />
-              <i />
-              <span className="fx-url">returns · recovery</span>
-            </div>
-            <div className="fx-body">
-              <div className="fx-hero-block has-photo rt-dom-photo-recover">
-                <strong>Intercept before refund</strong>
-                <span>Credit · points · exchange</span>
-              </div>
-              <div className="fx-row">
-                <span className="fx-chip">
-                  <i className="fx-dot is-amber" />
-                  $15 credit
-                </span>
-                <span className="fx-chip">
-                  <i className="fx-dot is-blue" />
-                  Free exchange
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="fx-glass fx-float-a">
-            <strong>ROI dashboard</strong>
-            <span>Real-time return metrics</span>
-          </div>
-          <div className="fx-glass fx-float-b">
-            <strong>20%+ recovery rate</strong>
-            <div className="fx-row">
-              <span className="fx-chip">Credits</span>
-              <span className="fx-chip">Exchange</span>
-            </div>
-          </div>
+          </span>
         </div>
       </div>
     </div>

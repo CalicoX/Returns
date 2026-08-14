@@ -46,7 +46,7 @@
 - 左侧真实 **Color picker**；选中色同步到 Search 按钮。
 - Return center：鼠标拖出选框，松手后卡片出现 + 蚂蚁线。不要描边绕一圈。
 - 同一只鼠标滑到 Color picker：先拖色相条，再去色板选色；Search 按钮全程跟随。
-- 右下邮件卡必须是能透出照片的毛玻璃（低不透明度 + backdrop-filter），不要实心白。
+- 右下邮件卡必须是真毛玻璃。禁止父级常驻 `filter: blur(0)`（会废掉 backdrop-filter）。卡片压在照片上，单独一层 frost。
 - 左下 3.5x Customer LTV。
 - 不要加回浏览器窗 / Brand experience / 商品卡。
 
@@ -61,6 +61,16 @@
 - 输入框打字 → 发送 → 左边规则卡逐条生成；循环播。
 - 面板在左，三条规则卡在右，贴着面板右边略压上去；最上面一张毛玻璃。三条分开排。
 - 内容要够：规则卡带 When/Then；下面 Trigger→Condition→Action 点亮；右下 Pending 队列随规则变成 Auto；面板里回显 Created。
+
+---
+
+## Feature 03 收入挽回插图（2026-08-14）
+
+- **不要** tracking 那套 Request→Offer→Keep 路线图 / 货车。
+- **不要深色井**。和 01/02 一样透明拼贴，白卡片直接浮在页面上。
+- 内容锁定产品拦截 UI：Keep your item、Instant Refund $20、Store credit、Try an exchange。
+- 20%+ Revenue Recovery Rate 青绿徽章画在插图里（`badgeInArt`），不要外面再叠一个。
+- 品红曲线连 Keep / credit / exchange；自动演示倒计时后点 Accept。悬停不要暂停。
 
 ---
 

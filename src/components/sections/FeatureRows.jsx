@@ -96,6 +96,7 @@ export default function FeatureRows() {
         }
         slide.style.setProperty("--fp-blur", `${blur.toFixed(2)}px`);
         slide.style.setProperty("--fp-op", Math.max(0.4, op).toFixed(3));
+        slide.classList.toggle("is-leaving", blur > 0.2);
         const stage = slide.querySelector(".feature-stage");
         if (stage) {
           let c = Math.max(0, 1 - leave);

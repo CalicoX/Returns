@@ -393,35 +393,24 @@ export function DomStagePortal() {
     <div className="feature-visual rt-dom-stage-wrap rt-portal-wrap">
       <div className="feature-stage is-active" data-theme="branded" style={{ ["--fx-c"]: 1 }}>
         <div className="feature-stage-art rt-portal-scene" aria-hidden="true">
-          <div className="fx-glass fx-main">
-            <div className="fx-chrome">
-              <i />
-              <i />
-              <i />
-              <span className="fx-url">brand.com/returns</span>
-            </div>
-            <div className="fx-body">
-              <div className="fx-hero-block has-photo rt-dom-photo-portal">
-                <img
-                  className="fx-hero-photo"
-                  src="https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                  alt=""
-                  width="1200"
-                  height="800"
-                  decoding="async"
-                />
-                <strong>Select an item to return</strong>
-                <span>Self-serve · multi-language</span>
-              </div>
-            </div>
-          </div>
-          <div className="fx-glass fx-float-a">
+          <figure className="rt-portal-photo">
+            <img
+              src="https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              alt=""
+              width="1200"
+              height="800"
+              decoding="async"
+            />
+          </figure>
+
+          <div className="fx-glass rt-portal-product">
             <div className="fx-illus rt-dom-illus-coat" />
             <strong>Merino Overcoat</strong>
             <span>Size M · $248</span>
           </div>
+
           <div className="rt-portal-dock">
-            <div className="fx-glass fx-float-c rt-portal-brand">
+            <div className="fx-glass rt-portal-brand">
               <strong>Brand experience</strong>
               <span>Custom visuals · copy · theme</span>
             </div>
@@ -434,7 +423,8 @@ export function DomStagePortal() {
               <em>Refund</em>
             </span>
           </div>
-          <div className="fx-glass fx-float-b">
+
+          <div className="fx-glass rt-portal-miles">
             <strong>9 milestones</strong>
             <div className="fx-thumb-row">
               <span className="rt-dom-pill">Submitted</span>

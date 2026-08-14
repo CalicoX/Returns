@@ -30,7 +30,7 @@ Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows →
 
 ### Feature 01 插图
 
-浏览器窗里是登山生活照；Brand 卡右侧贴 Label/Live + Refund；3.5x 是实心青绿标签。
+无外边框（同面单）。圆角生活照 + 浮卡 + Label 胶囊；3.5x 实心青绿标签。
 
 ---
 

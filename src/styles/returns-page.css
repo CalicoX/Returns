@@ -784,83 +784,107 @@
   opacity: 1;
 }
 
-.rt-dom-photo-portal {
-  background:
-    linear-gradient(180deg, transparent 42%, rgba(15, 23, 42, 0.55)),
-    linear-gradient(160deg, #1e3a8a 0%, #312e81 48%, #1e1b4b 100%) !important;
-}
-
-/* 01 门户：浅底网格 + Label 胶囊（对齐新稿，告别登山照旧构图） */
-.rt-portal-wrap.feature-visual,
-.rt-portal-wrap .feature-stage,
-.rt-portal-wrap .feature-stage-art {
+/* 01 门户：和面单一样，无外边框，照片为主体 */
+.rt-portal-wrap.feature-visual {
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: 0;
   overflow: visible !important;
 }
 
-.rt-portal-wrap .fx-main .fx-body {
-  padding: 0;
-  background: transparent;
-}
-
-.rt-portal-wrap .fx-hero-block.has-photo {
-  flex: 1 1 auto;
-  min-height: 0;
+.rt-portal-wrap .feature-stage,
+.rt-portal-wrap .feature-stage-art {
+  background: transparent !important;
+  border: 0 !important;
   border-radius: 0;
-  padding: 18px 18px 22px;
+  overflow: visible !important;
 }
 
-.rt-portal-wrap .fx-hero-block.has-photo::before {
-  background: linear-gradient(180deg, transparent 48%, rgba(15, 23, 42, 0.5) 100%);
+.rt-portal-wrap .feature-stage-art::before {
+  display: none;
 }
 
-.rt-portal-wrap .fx-hero-block strong {
-  font-size: 15px;
-  letter-spacing: -0.03em;
+.rt-portal-scene {
+  position: relative;
+  height: 100%;
+  min-height: 100%;
+}
+
+.rt-portal-photo {
+  position: absolute;
+  inset: 6% 10% 12% 2%;
+  margin: 0;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #e8eef4;
+  box-shadow: 0 24px 48px -28px rgba(15, 23, 42, 0.2);
+}
+
+.rt-portal-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 38%;
+}
+
+.rt-portal-product {
+  position: absolute;
+  right: 0;
+  top: 6%;
+  z-index: 3;
+  width: min(236px, 38%);
+  padding: 0 0 12px;
+  overflow: hidden;
+}
+
+.rt-portal-product .fx-illus {
+  height: 118px;
+  margin: 0 0 10px;
+  border-radius: 14px 14px 0 0;
+}
+
+.rt-portal-product > strong,
+.rt-portal-product > span {
+  padding: 0 14px;
+}
+
+.rt-portal-miles {
+  position: absolute;
+  right: 2%;
+  bottom: 4%;
+  z-index: 3;
+  width: min(248px, 40%);
+  padding: 14px 16px;
 }
 
 .rt-portal-dock {
   position: absolute;
-  left: 7%;
-  bottom: 7%;
-  z-index: 6;
+  left: 0;
+  bottom: 2%;
+  z-index: 4;
   display: flex;
   align-items: flex-end;
   gap: 10px;
   pointer-events: none;
 }
 
-.rt-portal-wrap .fx-float-c {
+.rt-portal-brand.fx-glass {
   position: relative;
   left: auto;
-  bottom: auto;
   top: auto;
   right: auto;
-}
-
-.rt-portal-brand.fx-glass {
+  bottom: auto;
   background: rgba(209, 250, 229, 0.92);
   border-color: rgba(167, 243, 208, 0.9);
   padding: 14px 16px;
 }
 
-.rt-portal-marks {
-  display: none;
-}
-
 .rt-portal-wrap .fx-thumb-row .rt-dom-pill {
   display: inline-flex;
   margin: 0;
-}
-
-.rt-portal-marks {
-  position: absolute;
-  left: 26%;
-  bottom: 9%;
-  z-index: 5;
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
-  pointer-events: none;
 }
 
 .rt-label-chip {

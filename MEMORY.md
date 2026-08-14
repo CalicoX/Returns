@@ -40,11 +40,11 @@
 
 ## Feature 01 插图（2026-08-14）
 
-- 浏览器窗里是**生活照**（登山），不是空紫渐变。
-- Brand experience 右侧贴着 Label/Live 浅蓝芯片 + Refund 方块。
-- 9 milestones：描边胶囊 / 实心蓝 Label。
-- 3.5x 用图二那种**实心青绿圆角标签**（`.is-solid-label`），不是渐变镂空字。
-- 不要退回 Return center / 取色器 / 邮件卡那套旧浮卡。
+- **和面单同一套：无外边框。** 不要浏览器 chrome、不要 `feature-visual` 描边底。
+- 照片本身是主体（圆角图），浮卡直接叠在照片上。
+- Brand 卡右侧贴 Label/Live + Refund；9 milestones 用描边 / 实心蓝胶囊。
+- 3.5x 实心青绿标签。
+- 不要加回 Safari/浏览器窗框。
 
 ---
 

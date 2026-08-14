@@ -30,7 +30,7 @@ Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows →
 
 ### Feature 01 插图
 
-登山照铺满。Return center 描边画出选框后切蚂蚁线；取色器自动扫色、Search 跟随；右下邮件毛玻璃。
+登山照铺满。鼠标拖选框后出现 Return center；再点 Color picker，Search 跟随变色。邮件毛玻璃。
 
 ### Feature 02 插图
 

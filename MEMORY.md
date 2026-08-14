@@ -44,8 +44,8 @@
 
 - 右上 **Return center** 查询框（Order number / Email / Search）。
 - 左侧真实 **Color picker**；选中色同步到 Search 按钮。
-- Return center 先描边画出选框，再切蚂蚁线。
-- 取色器自动扫色，Search 按钮和滴管跟随；也可手拖。
+- Return center：鼠标拖出选框，松手后卡片出现 + 蚂蚁线。不要描边绕一圈。
+- 然后鼠标点 Color picker，Search 按钮同步变色。也可手拖。
 - 右下邮件卡必须是能透出照片的毛玻璃（低不透明度 + backdrop-filter），不要实心白。
 - 左下 3.5x Customer LTV。
 - 不要加回浏览器窗 / Brand experience / 商品卡。

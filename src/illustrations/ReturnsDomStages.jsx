@@ -454,12 +454,20 @@ function SparkleIcon() {
   );
 }
 
+const PICK_STEPS = [
+  { h: 168, s: 0.88, v: 0.71 },
+  { h: 192, s: 0.84, v: 0.78 },
+  { h: 146, s: 0.9, v: 0.64 },
+  { h: 214, s: 0.76, v: 0.72 },
+];
+
 /** 0 · Branded portal */
 export function DomStagePortal() {
   const wrapRef = useRef(null);
-  const [hsv, setHsv] = useState({ h: 168, s: 0.88, v: 0.71 });
-  const [draw, setDraw] = useState(false);
-  const [ants, setAnts] = useState(false);
+  const [hsv, setHsv] = useState(PICK_STEPS[0]);
+  const [phase, setPhase] = useState("idle");
+  const [sel, setSel] = useState(0);
+  const [click, setClick] = useState(false);
   const [r, g, b] = hsvToRgb(hsv.h, hsv.s, hsv.v);
   const hex = toHex(r, g, b);
   const hueColor = `hsl(${hsv.h}, 100%, 50%)`;
@@ -496,22 +504,19 @@ export function DomStagePortal() {
     async function play() {
       const my = ++gen;
       if (reduce.matches) {
-        setDraw(true);
-        setAnts(true);
+        setSel(100);
+        setPhase("pick");
         return;
       }
 
       while (my === gen) {
-        setDraw(false);
-        setAnts(false);
-        setHsv({ h: 168, s: 0.88, v: 0.71 });
-        await later(280);
+        setPhase("idle");
+        setSel(0);
+        setClick(false);
+        setHsv(PICK_STEPS[0]);
+        await later(360);
         if (my !== gen) return;
-        setDraw(true);
-        await later(1180);
-        if (my !== gen) return;
-        setAnts(true);
-
+        setPhase("drag");
         const start = performance.now();
         await new Promise((resolve) => {
           function tick(now) {
@@ -519,25 +524,29 @@ export function DomStagePortal() {
               resolve();
               return;
             }
-            const t = (now - start) / 7200;
-            if (t >= 1) {
-              resolve();
-              return;
-            }
-            const h = (168 + t * 210) % 360;
-            const s = 0.78 + Math.sin(t * Math.PI * 2) * 0.14;
-            const v = 0.7 + Math.cos(t * Math.PI * 2) * 0.12;
-            setHsv({
-              h,
-              s: Math.min(1, Math.max(0.45, s)),
-              v: Math.min(1, Math.max(0.42, v)),
-            });
-            raf = requestAnimationFrame(tick);
+            const t = Math.min(1, (now - start) / 860);
+            const e = 1 - (1 - t) * (1 - t);
+            setSel(e * 100);
+            if (t < 1) raf = requestAnimationFrame(tick);
+            else resolve();
           }
           raf = requestAnimationFrame(tick);
         });
         if (my !== gen) return;
-        await later(900);
+        setPhase("card");
+        await later(720);
+        if (my !== gen) return;
+        setPhase("pick");
+        await later(320);
+        for (const step of PICK_STEPS) {
+          if (my !== gen) return;
+          setClick(true);
+          setHsv(step);
+          await later(150);
+          setClick(false);
+          await later(560);
+        }
+        await later(1600);
       }
     }
 
@@ -577,12 +586,31 @@ export function DomStagePortal() {
             />
           </figure>
 
-          <div className={`rt-portal-search-wrap${draw ? " is-draw" : ""}${ants ? " is-ants" : ""}`}>
-            <svg className="rt-portal-draw" viewBox="0 0 260 188" preserveAspectRatio="none" aria-hidden="true">
-              <rect className="rt-portal-draw-line" x="3.5" y="3.5" width="253" height="181" rx="16" pathLength="1" />
-            </svg>
+          <div className={`rt-portal-search-wrap is-${phase}`}>
+            <div
+              className="rt-portal-marquee"
+              style={{ width: `${sel}%`, height: `${sel}%` }}
+              aria-hidden="true"
+            />
             <SelectFrame />
-            <div className="rt-portal-search">
+            {phase === "drag" ? (
+              <span
+                className="rt-portal-cursor is-down"
+                style={{ left: `${sel}%`, top: `${sel}%` }}
+                aria-hidden="true"
+              >
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M5.2 3.4l12.8 11.2-6.05.35 3.7 6.85-2.35 1.25-3.75-6.9-4.35 4.15z"
+                    fill="#111827"
+                    stroke="#fff"
+                    strokeWidth="1.4"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+            ) : null}
+            <div className={`rt-portal-search${phase === "card" || phase === "pick" ? " is-in" : ""}`}>
               <strong>Return center</strong>
               <div className="rt-portal-search-row">
                 <span className="rt-portal-search-ico" aria-hidden="true">
@@ -608,7 +636,7 @@ export function DomStagePortal() {
           </div>
 
           <div
-            className="rt-portal-pick-wrap"
+            className={`rt-portal-pick-wrap${phase === "pick" ? " is-aim" : ""}${click ? " is-click" : ""}`}
             style={{
               ["--mx"]: `${8 + hsv.s * 78}%`,
               ["--my"]: `${30 + (1 - hsv.v) * 28}%`,

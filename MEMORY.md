@@ -40,11 +40,13 @@
 
 ## Feature 01 插图（2026-08-14）
 
-- **和面单同一套：无外边框。** 不要浏览器 chrome、不要 `feature-visual` 描边底。
-- 照片本身是主体（圆角图），浮卡直接叠在照片上。
-- Brand 卡右侧贴 Label/Live + Refund；9 milestones 用描边 / 实心蓝胶囊。
-- 3.5x 实心青绿标签。
-- 不要加回 Safari/浏览器窗框。
+对照参考图（登山照叠浮件），不要自己发挥：
+
+- 照片铺满圆角容器，**无浏览器窗、无外框、无 Brand experience 卡**。
+- 右上：Merino Overcoat 商品卡。
+- 左下：3.5x 实心青绿块 + Label/Live 浅蓝块 + Refund。
+- 右下：9 milestones 玻璃条，Submitted / Review 描边，Label 实心蓝。
+- 3.5x 画在插图里（`badgeInArt`），不要再在外面叠一层。
 
 ---
 

@@ -101,6 +101,7 @@ export const FEATURES = [
     badge: "3.5x",
     badgeLabel: "Customer LTV",
     reverse: false,
+    badgeInArt: true,
   },
   {
     title: "AI Workflows for 24/7 Returns Automation",

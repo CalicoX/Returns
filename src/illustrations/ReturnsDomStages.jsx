@@ -395,25 +395,26 @@ export function DomStagePortal() {
         <div className="feature-stage-art rt-portal-scene" aria-hidden="true">
           <figure className="rt-portal-photo">
             <img
-              src="https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              src="https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg?auto=compress&cs=tinysrgb&w=1400"
               alt=""
-              width="1200"
-              height="800"
+              width="1400"
+              height="900"
               decoding="async"
             />
           </figure>
 
-          <div className="fx-glass rt-portal-product">
-            <div className="fx-illus rt-dom-illus-coat" />
+          <div className="rt-portal-product">
+            <div className="rt-portal-product-img" />
             <strong>Merino Overcoat</strong>
             <span>Size M · $248</span>
           </div>
 
+          <div className="rt-portal-ltv">
+            <strong>3.5x</strong>
+            <span>Customer LTV</span>
+          </div>
+
           <div className="rt-portal-dock">
-            <div className="fx-glass rt-portal-brand">
-              <strong>Brand experience</strong>
-              <span>Custom visuals · copy · theme</span>
-            </div>
             <span className="rt-label-chip">
               <b>Label</b>
               <em>Live</em>
@@ -424,12 +425,12 @@ export function DomStagePortal() {
             </span>
           </div>
 
-          <div className="fx-glass rt-portal-miles">
+          <div className="rt-portal-miles">
             <strong>9 milestones</strong>
-            <div className="fx-thumb-row">
-              <span className="rt-dom-pill">Submitted</span>
-              <span className="rt-dom-pill">Review</span>
-              <span className="rt-dom-pill is-on">Label</span>
+            <div className="rt-portal-pills">
+              <span>Submitted</span>
+              <span>Review</span>
+              <span className="is-on">Label</span>
             </div>
           </div>
         </div>

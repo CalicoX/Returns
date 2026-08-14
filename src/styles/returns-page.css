@@ -784,7 +784,7 @@
   opacity: 1;
 }
 
-/* 01 门户：和面单一样，无外边框，照片为主体 */
+/* 01 门户：对照参考稿 — 照片铺满，无外框，浮件按四角落位 */
 .rt-portal-wrap.feature-visual {
   padding: 0 !important;
   border: 0 !important;
@@ -814,12 +814,11 @@
 
 .rt-portal-photo {
   position: absolute;
-  inset: 6% 10% 12% 2%;
+  inset: 0;
   margin: 0;
-  border-radius: 22px;
+  border-radius: 20px;
   overflow: hidden;
-  background: #e8eef4;
-  box-shadow: 0 24px 48px -28px rgba(15, 23, 42, 0.2);
+  background: #d7dee6;
 }
 
 .rt-portal-photo img {
@@ -827,64 +826,84 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 38%;
+  object-position: 50% 42%;
 }
 
 .rt-portal-product {
   position: absolute;
-  right: 0;
-  top: 6%;
+  top: 28px;
+  right: 22px;
   z-index: 3;
-  width: min(236px, 38%);
-  padding: 0 0 12px;
+  width: 168px;
   overflow: hidden;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 16px 36px -18px rgba(15, 23, 42, 0.35);
 }
 
-.rt-portal-product .fx-illus {
-  height: 118px;
-  margin: 0 0 10px;
-  border-radius: 14px 14px 0 0;
+.rt-portal-product-img {
+  height: 92px;
+  background: #1e293b;
 }
 
-.rt-portal-product > strong,
-.rt-portal-product > span {
-  padding: 0 14px;
+.rt-portal-product strong,
+.rt-portal-product span {
+  display: block;
+  padding: 0 12px;
 }
 
-.rt-portal-miles {
+.rt-portal-product strong {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+}
+
+.rt-portal-product span {
+  margin: 2px 0 12px;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.rt-portal-ltv {
   position: absolute;
-  right: 2%;
-  bottom: 4%;
-  z-index: 3;
-  width: min(248px, 40%);
-  padding: 14px 16px;
+  left: 18px;
+  bottom: 22px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 92px;
+  padding: 12px 14px 10px;
+  border-radius: 16px;
+  background: #2dd4bf;
+  box-shadow: 0 14px 28px -16px rgba(13, 148, 136, 0.55);
+}
+
+.rt-portal-ltv strong {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  color: #0b1220;
+}
+
+.rt-portal-ltv span {
+  margin-top: 4px;
+  font-size: 10px;
+  font-weight: 650;
+  color: #115e59;
 }
 
 .rt-portal-dock {
   position: absolute;
-  left: 0;
-  bottom: 2%;
+  left: 122px;
+  bottom: 28px;
   z-index: 4;
   display: flex;
   align-items: flex-end;
   gap: 10px;
-  pointer-events: none;
-}
-
-.rt-portal-brand.fx-glass {
-  position: relative;
-  left: auto;
-  top: auto;
-  right: auto;
-  bottom: auto;
-  background: rgba(209, 250, 229, 0.92);
-  border-color: rgba(167, 243, 208, 0.9);
-  padding: 14px 16px;
-}
-
-.rt-portal-wrap .fx-thumb-row .rt-dom-pill {
-  display: inline-flex;
-  margin: 0;
 }
 
 .rt-label-chip {
@@ -892,22 +911,21 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 1px;
-  padding: 10px 16px 9px;
-  border-radius: 16px;
+  padding: 10px 16px 8px;
+  border-radius: 14px;
   background: #c5d8ff;
-  box-shadow: 0 10px 22px -12px rgba(37, 99, 235, 0.4);
 }
 
 .rt-label-chip b {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: -0.03em;
-  line-height: 1.15;
-  color: #1d4ed8;
+  line-height: 1.1;
+  color: #2563eb;
 }
 
 .rt-label-chip em {
-  font-size: 10px;
+  font-size: 11px;
   font-style: normal;
   font-weight: 600;
   color: #3b82f6;
@@ -917,7 +935,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .rt-label-refund i {
@@ -926,11 +944,11 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: #e8eef6;
+  background: rgba(255, 255, 255, 0.82);
   color: #64748b;
   font-style: normal;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: 400;
   line-height: 1;
 }
 
@@ -939,6 +957,56 @@
   font-style: normal;
   font-weight: 600;
   color: #64748b;
+}
+
+.rt-portal-miles {
+  position: absolute;
+  right: 18px;
+  bottom: 22px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  box-shadow: 0 12px 28px -18px rgba(15, 23, 42, 0.28);
+}
+
+.rt-portal-miles strong {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #0f172a;
+}
+
+.rt-portal-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rt-portal-pills span {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 650;
+  color: #111827;
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.rt-portal-pills span.is-on {
+  color: #fff;
+  background: #3b6cff;
+  border-color: transparent;
+  box-shadow: 0 6px 14px -6px rgba(59, 108, 255, 0.7);
 }
 
 .rt-dom-photo-ai {
@@ -965,12 +1033,6 @@
   border-radius: 8px;
   background: linear-gradient(145deg, #334155, #1e293b);
   margin-bottom: 6px;
-}
-
-.rt-portal-wrap .fx-float-a .fx-illus.rt-dom-illus-coat {
-  height: 118px;
-  margin: 0 0 10px;
-  border-radius: 14px 14px 0 0;
 }
 
 .rt-dom-pill {
@@ -3073,26 +3135,6 @@
   max-width: 12em;
 }
 
-.rt-feature-badge.is-solid-label {
-  left: 12px;
-  bottom: 12px;
-  gap: 2px;
-  padding: 14px 18px 12px;
-  border-radius: 18px;
-  background: #2dd4bf;
-  box-shadow: 0 10px 24px -14px rgba(13, 148, 136, 0.55);
-}
-
-.rt-feature-badge.is-solid-label strong {
-  background: none;
-  color: #0b1220;
-  -webkit-text-fill-color: #0b1220;
-  filter: none;
-}
-
-.rt-feature-badge.is-solid-label span {
-  color: #115e59;
-}
 
 /* —— Plans：淡描边 · Subscribe 对齐 · Max 描边扫光 —— */
 .rt-plans {

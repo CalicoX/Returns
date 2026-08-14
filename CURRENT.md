@@ -30,7 +30,7 @@ Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows →
 
 ### Feature 01 插图
 
-无外边框（同面单）。圆角生活照 + 浮卡 + Label 胶囊；3.5x 实心青绿标签。
+登山照铺满。右上商品卡；左下 3.5x + Label/Live + Refund；右下 9 milestones。无外框。
 
 ---
 

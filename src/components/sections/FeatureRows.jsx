@@ -198,7 +198,7 @@ export default function FeatureRows() {
                       <div className="rt-feature-media">
                         {Stage ? <Stage /> : null}
                         {!f.badgeInArt ? (
-                          <div className={`rt-feature-badge${i === 0 ? " is-solid-label" : ""}`}>
+                          <div className="rt-feature-badge">
                             <strong>{f.badge}</strong>
                             <span>{f.badgeLabel}</span>
                           </div>

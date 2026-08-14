@@ -670,9 +670,9 @@ function WorkflowBot() {
     function onMove(e) {
       const r = bot.getBoundingClientRect();
       const ox = r.left + r.width * 0.5;
-      const oy = r.top + r.height * 0.38;
-      tx = Math.max(-5.2, Math.min(5.2, (e.clientX - ox) / 22));
-      ty = Math.max(-3.6, Math.min(3.6, (e.clientY - oy) / 28));
+      const oy = r.top + r.height * 0.52;
+      tx = Math.max(-4.2, Math.min(4.2, (e.clientX - ox) / 24));
+      ty = Math.max(-2.6, Math.min(2.6, (e.clientY - oy) / 32));
       if (!raf) raf = requestAnimationFrame(tick);
     }
 
@@ -686,18 +686,15 @@ function WorkflowBot() {
   return (
     <div className="rt-wf-bot" ref={botRef} aria-hidden="true">
       <div className="rt-wf-bot-fig">
-        <i className="rt-wf-bot-ear is-l" />
-        <i className="rt-wf-bot-ear is-r" />
         <span className="rt-wf-bot-head">
           <i className="rt-wf-bot-shine" />
-          <span className="rt-wf-bot-face">
-            <i className="rt-wf-bot-eye is-l" />
-            <i className="rt-wf-bot-eye is-r" />
+          <span className="rt-wf-bot-visor">
+            <span className="rt-wf-bot-face">
+              <i className="rt-wf-bot-glass" />
+              <i className="rt-wf-bot-eye is-l" />
+              <i className="rt-wf-bot-eye is-r" />
+            </span>
           </span>
-        </span>
-        <i className="rt-wf-bot-neck" />
-        <span className="rt-wf-bot-body">
-          <i className="rt-wf-bot-chest" />
         </span>
       </div>
     </div>

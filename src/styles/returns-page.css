@@ -1408,9 +1408,9 @@
   --ey: 0px;
   position: relative;
   flex: 0 0 auto;
-  width: 108px;
-  height: 118px;
-  margin: 10px auto 8px;
+  width: 96px;
+  height: 96px;
+  margin: 18px auto 14px;
 }
 
 .rt-wf-bot-fig {
@@ -1418,141 +1418,101 @@
   width: 100%;
   height: 100%;
   transform:
-    translate3d(calc(var(--ex) * 0.16), calc(var(--ey) * 0.1), 0)
-    rotate(calc(var(--ex) * 0.5deg));
-  transform-origin: 50% 72%;
+    translate3d(calc(var(--ex) * 0.12), calc(var(--ey) * 0.08), 0)
+    rotate(calc(var(--ex) * 0.35deg));
+  transform-origin: 50% 60%;
   will-change: transform;
-}
-
-.rt-wf-bot-ear {
-  position: absolute;
-  top: 28px;
-  width: 16px;
-  height: 22px;
-  border-radius: 8px;
-  background:
-    linear-gradient(180deg, #f1f5f9 0%, #cbd5e1 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.85),
-    0 2px 4px rgba(15, 23, 42, 0.12);
-}
-
-.rt-wf-bot-ear.is-l { left: 6px; }
-.rt-wf-bot-ear.is-r { right: 6px; }
-
-.rt-wf-bot-ear::after {
-  content: "";
-  position: absolute;
-  inset: 5px 4px;
-  border-radius: 5px;
-  background: linear-gradient(180deg, #67e8f9 0%, #22d3ee 100%);
-  opacity: 0.55;
 }
 
 .rt-wf-bot-head {
   position: absolute;
-  left: 50%;
-  top: 4px;
-  width: 78px;
-  height: 68px;
-  border-radius: 50% 50% 46% 46%;
+  inset: 0;
+  border-radius: 50%;
   background:
-    radial-gradient(circle at 32% 26%, #fff 0 16%, transparent 40%),
-    radial-gradient(circle at 78% 18%, rgba(255, 255, 255, 0.7) 0 10%, transparent 28%),
-    radial-gradient(circle at 50% 112%, rgba(196, 181, 253, 0.35) 0 16%, transparent 42%),
-    linear-gradient(180deg, #f8fafc 0%, #e2e8f0 58%, #cbd5e1 100%);
+    radial-gradient(circle at 32% 26%, #fff 0 14%, transparent 38%),
+    radial-gradient(circle at 72% 18%, rgba(255, 255, 255, 0.9) 0 8%, transparent 22%),
+    radial-gradient(circle at 50% 100%, #e8eef6 0 18%, transparent 46%),
+    linear-gradient(165deg, #ffffff 0%, #f4f7fb 52%, #e6ecf4 100%);
   box-shadow:
-    0 10px 16px -10px rgba(15, 23, 42, 0.4),
-    inset 0 -8px 12px rgba(99, 102, 241, 0.06);
-  transform: translateX(-50%);
+    0 16px 24px -14px rgba(15, 23, 42, 0.32),
+    inset 0 -12px 18px rgba(148, 163, 184, 0.16),
+    inset 0 1px 0 #fff;
 }
 
 .rt-wf-bot-shine {
   position: absolute;
-  left: 16px;
-  top: 8px;
-  width: 18px;
-  height: 10px;
+  left: 22%;
+  top: 12%;
+  width: 28%;
+  height: 16%;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.72);
-  filter: blur(0.4px);
+  background: rgba(255, 255, 255, 0.78);
+  filter: blur(1px);
+  pointer-events: none;
 }
 
-.rt-wf-bot-face {
+.rt-wf-bot-visor {
   position: absolute;
-  left: 14px;
-  right: 14px;
-  top: 22px;
-  height: 24px;
-  border-radius: 12px;
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse at 50% 40%, #243046 0%, #0b1220 72%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  left: 14%;
+  right: 14%;
+  top: 30%;
+  height: 40%;
+  padding: 2.5px;
+  border-radius: 999px;
+  background: linear-gradient(
+    115deg,
+    #f472d0 0%,
+    #c084fc 26%,
+    #6366f1 50%,
+    #38bdf8 76%,
+    #22d3ee 100%
+  );
+  box-shadow:
+    -8px 0 16px rgba(244, 114, 208, 0.42),
+    8px 0 16px rgba(34, 211, 238, 0.4),
+    0 8px 16px rgba(59, 130, 246, 0.32);
   transform-origin: center;
   animation: rt-wf-blink 5.8s ease-in-out infinite;
 }
 
+.rt-wf-bot-face {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse at 50% 38%, #1c2438 0%, #070b14 78%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.rt-wf-bot-glass {
+  position: absolute;
+  left: 10%;
+  top: 0;
+  width: 46%;
+  height: 42%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 70%);
+  pointer-events: none;
+}
+
 .rt-wf-bot-eye {
   position: absolute;
-  top: 4px;
-  width: 10px;
-  height: 15px;
+  top: 50%;
+  width: 18%;
+  height: 46%;
   border-radius: 50%;
-  transform: translate(var(--ex), var(--ey));
+  background:
+    radial-gradient(circle at 38% 32%, #fff 0 62%, #e0f2fe 100%);
+  box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.78);
+  transform: translateY(-50%) translate(var(--ex), var(--ey));
   will-change: transform;
 }
 
-.rt-wf-bot-eye.is-l {
-  left: 8px;
-  background: radial-gradient(circle at 38% 32%, #fff 0 18%, #22d3ee 40%, #0369a1 100%);
-  box-shadow: 0 0 7px 1px rgba(34, 211, 238, 0.7);
-}
-
-.rt-wf-bot-eye.is-r {
-  right: 8px;
-  background: radial-gradient(circle at 38% 32%, #fff 0 18%, #e879f9 40%, #6d28d9 100%);
-  box-shadow: 0 0 7px 1px rgba(232, 121, 249, 0.65);
-}
-
-.rt-wf-bot-neck {
-  position: absolute;
-  left: 50%;
-  top: 68px;
-  width: 22px;
-  height: 8px;
-  border-radius: 4px;
-  background: linear-gradient(180deg, #dbe3ee 0%, #94a3b8 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  transform: translateX(-50%);
-}
-
-.rt-wf-bot-body {
-  position: absolute;
-  left: 50%;
-  bottom: 2px;
-  width: 44px;
-  height: 38px;
-  border-radius: 42% 42% 36% 36%;
-  background:
-    radial-gradient(circle at 50% 18%, #fff 0 10%, transparent 28%),
-    linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
-  box-shadow: 0 6px 10px -8px rgba(15, 23, 42, 0.35);
-  transform: translateX(-50%);
-}
-
-.rt-wf-bot-chest {
-  position: absolute;
-  left: 50%;
-  top: 12px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 40% 35%, #fff 0 18%, #a5f3fc 42%, #22d3ee 100%);
-  box-shadow: 0 0 0 2px rgba(186, 230, 253, 0.7);
-  transform: translateX(-50%);
-}
+.rt-wf-bot-eye.is-l { left: 22%; }
+.rt-wf-bot-eye.is-r { right: 22%; }
 
 @keyframes rt-wf-blink {
   0%,
@@ -1561,7 +1521,7 @@
     transform: scaleY(1);
   }
   92% {
-    transform: scaleY(0.1);
+    transform: scaleY(0.12);
   }
 }
 
@@ -1571,7 +1531,7 @@
     transform: none;
   }
 
-  .rt-wf-bot-face {
+  .rt-wf-bot-visor {
     animation: none;
   }
 
@@ -1831,25 +1791,9 @@
   }
 
   .rt-wf-bot {
-    width: 88px;
-    height: 96px;
-  }
-
-  .rt-wf-bot-head {
-    width: 64px;
-    height: 56px;
-  }
-
-  .rt-wf-bot-face {
-    left: 12px;
-    right: 12px;
-    top: 18px;
-    height: 20px;
-  }
-
-  .rt-wf-bot-body {
-    width: 36px;
-    height: 30px;
+    width: 78px;
+    height: 78px;
+    margin: 12px auto 10px;
   }
 
   .rt-wf-pills button {

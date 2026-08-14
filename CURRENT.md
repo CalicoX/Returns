@@ -34,7 +34,7 @@ Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows →
 
 ### Feature 02 插图
 
-透明底，无深色井。细化机器人（无大黑 visor），眼睛跟鼠标。
+透明底，无深色井。细化机器人贴在卡片上方。输入框打字后左边规则卡逐条生成。
 
 ---
 

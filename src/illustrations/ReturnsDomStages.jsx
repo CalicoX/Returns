@@ -698,10 +698,98 @@ function WorkflowBot() {
 
 /** 1 · AI workflows */
 export function DomStageAi() {
-  const [pill, setPill] = useState(0);
+  const wrapRef = useRef(null);
+  const [pill, setPill] = useState(-1);
+  const [typed, setTyped] = useState("");
+  const [caret, setCaret] = useState(true);
+  const [sending, setSending] = useState(false);
+  const [ready, setReady] = useState(0);
+
+  useEffect(() => {
+    const id = window.setInterval(() => setCaret((on) => !on), 460);
+    return () => window.clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return undefined;
+
+    let gen = 0;
+    const timers = [];
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    function later(ms) {
+      return new Promise((resolve) => {
+        const id = window.setTimeout(resolve, ms);
+        timers.push(id);
+      });
+    }
+
+    async function play() {
+      const my = ++gen;
+      if (reduce.matches) {
+        setTyped(WF_RULES[2].title);
+        setReady(WF_RULES.length);
+        setPill(2);
+        return;
+      }
+
+      while (my === gen) {
+        setTyped("");
+        setReady(0);
+        setSending(false);
+        setPill(-1);
+        await later(480);
+        if (my !== gen) return;
+
+        for (let i = 0; i < WF_RULES.length; i += 1) {
+          const text = WF_RULES[i].title;
+          setPill(Math.min(i, WF_PILLS.length - 1));
+          for (let c = 1; c <= text.length; c += 1) {
+            setTyped(text.slice(0, c));
+            await later(text[c - 1] === " " ? 56 : 24);
+            if (my !== gen) return;
+          }
+          await later(260);
+          if (my !== gen) return;
+          setSending(true);
+          await later(240);
+          if (my !== gen) return;
+          setReady(i + 1);
+          await later(160);
+          setSending(false);
+          await later(220);
+          setTyped("");
+          await later(380);
+          if (my !== gen) return;
+        }
+
+        await later(2600);
+      }
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          play();
+        } else {
+          gen += 1;
+          timers.splice(0).forEach((id) => window.clearTimeout(id));
+        }
+      },
+      { threshold: 0.35 }
+    );
+    io.observe(wrap);
+
+    return () => {
+      gen += 1;
+      timers.forEach((id) => window.clearTimeout(id));
+      io.disconnect();
+    };
+  }, []);
 
   return (
-    <div className="feature-visual rt-dom-stage-wrap rt-wf-wrap">
+    <div className="feature-visual rt-dom-stage-wrap rt-wf-wrap" ref={wrapRef}>
       <div className="feature-stage is-active" data-theme="notify" style={{ ["--fx-c"]: 1 }}>
         <div className="feature-stage-art rt-wf-scene">
           <div className="rt-wf-panel-wrap">
@@ -744,9 +832,12 @@ export function DomStageAi() {
                 ))}
               </div>
 
-              <div className="rt-wf-composer">
-                <span>Describe your needs</span>
-                <b aria-hidden="true">
+              <div className={`rt-wf-composer${sending ? " is-sending" : ""}`}>
+                <span>
+                  {typed ? <em className="rt-wf-typed">{typed}</em> : "Describe your needs"}
+                  <i className={`rt-wf-caret${caret && !sending ? " is-on" : ""}`} />
+                </span>
+                <b className={typed || sending ? "is-on" : undefined} aria-hidden="true">
                   <svg viewBox="0 0 16 16" fill="none">
                     <path d="M8 11.4V4.6M5.2 7.2L8 4.4l2.8 2.8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
@@ -756,8 +847,8 @@ export function DomStageAi() {
           </div>
 
           <div className="rt-wf-rules">
-            {WF_RULES.map((rule) => (
-              <article className="rt-wf-rule" key={rule.title}>
+            {WF_RULES.map((rule, i) => (
+              <article className={`rt-wf-rule${ready > i ? " is-in" : ""}`} key={rule.title}>
                 <span className="rt-wf-rule-mark" aria-hidden="true">
                   <SparkleIcon />
                 </span>

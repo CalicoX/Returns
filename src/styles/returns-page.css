@@ -1661,14 +1661,13 @@
 
 .rt-wf-rules {
   position: absolute;
-  left: 3%;
-  top: 14%;
+  left: 4%;
+  top: 16%;
   z-index: 6;
-  width: min(400px, 58%);
+  width: min(360px, 54%);
   display: flex;
   flex-direction: column;
-  gap: 0;
-  isolation: isolate;
+  gap: 8px;
 }
 
 .rt-wf-rule {
@@ -1686,26 +1685,17 @@
   pointer-events: none;
 }
 
-.rt-wf-rule:nth-child(1) { z-index: 3; }
-.rt-wf-rule:nth-child(2) { z-index: 2; }
-.rt-wf-rule:nth-child(3) { z-index: 1; }
-
 .rt-wf-rule.is-in {
   opacity: 1;
   transform: none;
   pointer-events: auto;
   transition:
     transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.36s ease,
-    margin-top 0.4s ease;
-}
-
-.rt-wf-rule.is-in + .rt-wf-rule.is-in {
-  margin-top: -12px;
+    opacity 0.36s ease;
 }
 
 .rt-wf-rule.is-in:first-child {
-  background: rgba(255, 255, 255, 0.46);
+  background: rgba(255, 255, 255, 0.5);
   -webkit-backdrop-filter: blur(18px) saturate(1.45);
   backdrop-filter: blur(18px) saturate(1.45);
   box-shadow:
@@ -1826,9 +1816,9 @@
   }
 
   .rt-wf-rules {
-    left: 2%;
-    top: 10%;
-    width: min(230px, 62%);
+    left: 3%;
+    top: 12%;
+    width: min(220px, 56%);
   }
 
   .rt-wf-rule:last-child {

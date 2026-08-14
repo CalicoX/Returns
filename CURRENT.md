@@ -34,7 +34,7 @@ Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows →
 
 ### Feature 02 插图
 
-透明底，无深色井。右侧 AI 面板拉高。机器人纯 CSS。输入框打字后左边规则卡逐条生成。
+透明底，无深色井。面板在左。机器人纯 CSS。打字生成右侧规则卡；When/Then + 流程条 + Pending 队列。
 
 ---
 

@@ -621,18 +621,36 @@ const WF_RULES = [
   {
     n: 1,
     title: "10% handling fee for items ≥$15",
-    meta: "ID:101  ·  Rule description text, usually longer tha…",
+    meta: "ID:101  ·  Item value rule",
+    when: "Value ≥ $15",
+    then: "Add 10% fee",
   },
   {
     n: 2,
     title: "Auto-process for quality issues",
-    meta: "ID:101  ·  Rule description text, usually longer tha…",
+    meta: "ID:102  ·  Quality exception",
+    when: "Reason = Quality",
+    then: "Auto approve",
   },
   {
     n: 3,
     title: "Unshipped orders: Auto approval",
-    meta: "ID:101  ·  Rule description text, usually longer tha…",
+    meta: "ID:103  ·  Pre-fulfillment",
+    when: "Status = Unshipped",
+    then: "Instant refund",
   },
+];
+
+const WF_STEPS = [
+  { k: "when", label: "Trigger", sub: "9 events" },
+  { k: "if", label: "Condition", sub: "Reason / value" },
+  { k: "then", label: "Action", sub: "8 actions" },
+];
+
+const WF_QUEUE = [
+  { id: "RT-1842", reason: "Quality issue", autoAt: 2 },
+  { id: "RT-1843", reason: "Unshipped", autoAt: 3 },
+  { id: "RT-1844", reason: "Arrived late", autoAt: 99 },
 ];
 
 const WF_PILLS = [
@@ -709,6 +727,7 @@ export function DomStageAi() {
   const [caret, setCaret] = useState(true);
   const [sending, setSending] = useState(false);
   const [ready, setReady] = useState(0);
+  const [note, setNote] = useState("");
 
   useEffect(() => {
     const id = window.setInterval(() => setCaret((on) => !on), 460);
@@ -735,6 +754,7 @@ export function DomStageAi() {
       if (reduce.matches) {
         setTyped(WF_RULES[2].title);
         setReady(WF_RULES.length);
+        setNote(`Created · ${WF_RULES[2].title}`);
         setPill(2);
         return;
       }
@@ -743,6 +763,7 @@ export function DomStageAi() {
         setTyped("");
         setReady(0);
         setSending(false);
+        setNote("");
         setPill(-1);
         await later(480);
         if (my !== gen) return;
@@ -750,6 +771,7 @@ export function DomStageAi() {
         for (let i = 0; i < WF_RULES.length; i += 1) {
           const text = WF_RULES[i].title;
           setPill(Math.min(i, WF_PILLS.length - 1));
+          setNote("");
           for (let c = 1; c <= text.length; c += 1) {
             setTyped(text.slice(0, c));
             await later(text[c - 1] === " " ? 56 : 24);
@@ -761,6 +783,7 @@ export function DomStageAi() {
           await later(240);
           if (my !== gen) return;
           setReady(i + 1);
+          setNote(`Created · ${WF_RULES[i].title}`);
           await later(160);
           setSending(false);
           await later(220);
@@ -822,7 +845,13 @@ export function DomStageAi() {
               <WorkflowBot />
 
               <h3>Good morning, how can I help you?</h3>
-              <p>Describe your scenario, or click a shortcut action.</p>
+              <p>
+                {note ? (
+                  <em className="rt-wf-note">{note}</em>
+                ) : (
+                  "Describe your scenario, or click a shortcut action."
+                )}
+              </p>
 
               <div className="rt-wf-pills">
                 {WF_PILLS.map((label, i) => (
@@ -869,9 +898,41 @@ export function DomStageAi() {
                 <div>
                   <strong>{rule.title}</strong>
                   <span>{rule.meta}</span>
+                  <em>
+                    <i>When</i>
+                    {rule.when}
+                    <i>Then</i>
+                    {rule.then}
+                  </em>
                 </div>
               </article>
             ))}
+          </div>
+
+          <div className="rt-wf-flow" aria-hidden="true">
+            {WF_STEPS.map((step, i) => (
+              <span className={`rt-wf-step${ready > i ? " is-on" : ""}`} key={step.k}>
+                <b>{step.label}</b>
+                <i>{step.sub}</i>
+              </span>
+            ))}
+          </div>
+
+          <div className={`rt-wf-queue${ready > 0 ? " is-in" : ""}`} aria-hidden="true">
+            <header>
+              <strong>Pending returns</strong>
+              <span>{WF_QUEUE.length}</span>
+            </header>
+            {WF_QUEUE.map((row) => {
+              const on = ready >= row.autoAt;
+              return (
+                <div className={`rt-wf-qrow${on ? " is-auto" : ""}`} key={row.id}>
+                  <b>{row.id}</b>
+                  <span>{row.reason}</span>
+                  <i>{on ? "Auto" : "Review"}</i>
+                </div>
+              );
+            })}
           </div>
 
           <div className="rt-wf-stat">

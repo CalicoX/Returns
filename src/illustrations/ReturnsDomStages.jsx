@@ -1184,6 +1184,7 @@ export function DomStageRecovery() {
   const acceptRef = useRef(null);
   const xAcceptRef = useRef(null);
   const [phase, setPhase] = useState("offer");
+  const [grown, setGrown] = useState(false);
   const [secs, setSecs] = useState(30);
   const [mouse, setMouse] = useState({ x: 28, y: 36, on: false, down: false });
 
@@ -1250,56 +1251,56 @@ export function DomStageRecovery() {
       isDead = () => my !== gen;
 
       if (reduce.matches) {
+        setGrown(true);
         setPhase("done");
         setSecs(30);
         return;
       }
 
-      while (my === gen) {
-        setPhase("offer");
-        setSecs(30);
-        put({ x: 72, y: 90 }, { on: false, down: false });
-        await later(520);
-        if (isDead()) return;
+      setPhase("offer");
+      setGrown(false);
+      setSecs(30);
+      put({ x: 72, y: 90 }, { on: false, down: false });
+      await later(520);
+      if (isDead()) return;
 
-        setPhase("tick");
-        for (let n = 30; n >= 2; n -= 2) {
-          setSecs(n);
-          await later(55);
-          if (isDead()) return;
-        }
-        setSecs(1);
-
-        const accept = acceptRef.current;
-        put(sceneXY(accept, 0.18, 0.35), { on: true, down: false });
-        await moveTo(sceneXY(accept, 0.7, 0.55), 500);
+      setPhase("tick");
+      for (let n = 30; n >= 2; n -= 2) {
+        setSecs(n);
+        await later(55);
         if (isDead()) return;
-        put(pos, { down: true });
-        setPhase("hit");
-        await later(150);
-        if (isDead()) return;
-        put(pos, { down: false });
-
-        setPhase("credit");
-        await later(520);
-        if (isDead()) return;
-
-        setPhase("xchg");
-        const xAccept = xAcceptRef.current;
-        await moveTo(sceneXY(xAccept, 0.64, 0.55), 620);
-        if (isDead()) return;
-        put(pos, { down: true });
-        await later(150);
-        if (isDead()) return;
-        put(pos, { down: false });
-        await later(280);
-        if (isDead()) return;
-        setPhase("grow");
-        await later(3600);
-        if (isDead()) return;
-        setPhase("done");
-        await later(2800);
       }
+      setSecs(1);
+
+      const accept = acceptRef.current;
+      put(sceneXY(accept, 0.18, 0.35), { on: true, down: false });
+      await moveTo(sceneXY(accept, 0.7, 0.55), 500);
+      if (isDead()) return;
+      put(pos, { down: true });
+      setPhase("hit");
+      await later(150);
+      if (isDead()) return;
+      put(pos, { down: false });
+
+      setPhase("credit");
+      await later(520);
+      if (isDead()) return;
+
+      setPhase("xchg");
+      const xAccept = xAcceptRef.current;
+      await moveTo(sceneXY(xAccept, 0.64, 0.55), 620);
+      if (isDead()) return;
+      put(pos, { down: true });
+      await later(150);
+      if (isDead()) return;
+      put(pos, { down: false });
+      await later(280);
+      if (isDead()) return;
+      setPhase("grow");
+      await later(3600);
+      if (isDead()) return;
+      setGrown(true);
+      setPhase("done");
     }
 
     const io = new IntersectionObserver(
@@ -1329,7 +1330,7 @@ export function DomStageRecovery() {
   return (
     <div className="feature-visual rt-dom-stage-wrap rt-rv-wrap" ref={wrapRef}>
       <div className="feature-stage is-active" data-theme="recover" style={{ ["--fx-c"]: 1 }}>
-        <div className={`feature-stage-art rt-rv-scene is-${phase}`} ref={sceneRef} aria-hidden="true">
+        <div className={`feature-stage-art rt-rv-scene is-${phase}${grown ? " is-grown" : ""}`} ref={sceneRef} aria-hidden="true">
           <svg className="rt-rv-curve" viewBox="0 0 640 480" preserveAspectRatio="none">
             <defs>
               <linearGradient id="rt-rv-area" x1="0" y1="0" x2="0" y2="1">

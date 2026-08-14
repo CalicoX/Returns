@@ -2018,9 +2018,14 @@
 }
 
 .rt-rv-scene.is-grow .rt-rv-curve,
-.rt-rv-scene.is-done .rt-rv-curve {
+.rt-rv-scene.is-done .rt-rv-curve,
+.rt-rv-scene.is-grown .rt-rv-curve {
   opacity: 1;
   transition: opacity 0.25s linear;
+}
+
+.rt-rv-scene.is-grown .rt-rv-curve {
+  transition: none;
 }
 
 .rt-rv-curve-fill {
@@ -2029,9 +2034,14 @@
 }
 
 .rt-rv-scene.is-grow .rt-rv-curve-fill,
-.rt-rv-scene.is-done .rt-rv-curve-fill {
+.rt-rv-scene.is-done .rt-rv-curve-fill,
+.rt-rv-scene.is-grown .rt-rv-curve-fill {
   opacity: 1;
   transition: opacity 3.2s ease;
+}
+
+.rt-rv-scene.is-grown .rt-rv-curve-fill {
+  transition: none;
 }
 
 .rt-rv-curve-line {
@@ -2045,9 +2055,14 @@
 }
 
 .rt-rv-scene.is-grow .rt-rv-curve-line,
-.rt-rv-scene.is-done .rt-rv-curve-line {
+.rt-rv-scene.is-done .rt-rv-curve-line,
+.rt-rv-scene.is-grown .rt-rv-curve-line {
   stroke-dashoffset: 0;
   transition: stroke-dashoffset 3.2s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.rt-rv-scene.is-grown .rt-rv-curve-line {
+  transition: none;
 }
 
 .rt-rv-curve-dot {
@@ -2058,9 +2073,14 @@
 }
 
 .rt-rv-scene.is-grow .rt-rv-curve-dot,
-.rt-rv-scene.is-done .rt-rv-curve-dot {
+.rt-rv-scene.is-done .rt-rv-curve-dot,
+.rt-rv-scene.is-grown .rt-rv-curve-dot {
   opacity: 1;
   transition: opacity 0.45s ease 2.7s;
+}
+
+.rt-rv-scene.is-grown .rt-rv-curve-dot {
+  transition: none;
 }
 
 .rt-rv-col {

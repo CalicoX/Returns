@@ -454,20 +454,27 @@ function SparkleIcon() {
   );
 }
 
-const PICK_STEPS = [
-  { h: 168, s: 0.88, v: 0.71 },
-  { h: 192, s: 0.84, v: 0.78 },
-  { h: 146, s: 0.9, v: 0.64 },
-  { h: 214, s: 0.76, v: 0.72 },
-];
+const HSV0 = { h: 168, s: 0.88, v: 0.71 };
+
+function lerp(a, b, t) {
+  return a + (b - a) * t;
+}
+
+function easeOut(t) {
+  return 1 - (1 - t) * (1 - t);
+}
 
 /** 0 · Branded portal */
 export function DomStagePortal() {
   const wrapRef = useRef(null);
-  const [hsv, setHsv] = useState(PICK_STEPS[0]);
+  const sceneRef = useRef(null);
+  const cardRef = useRef(null);
+  const hueRef = useRef(null);
+  const svRef = useRef(null);
+  const [hsv, setHsv] = useState(HSV0);
   const [phase, setPhase] = useState("idle");
   const [sel, setSel] = useState(0);
-  const [click, setClick] = useState(false);
+  const [mouse, setMouse] = useState({ x: 0, y: 0, on: false, down: false });
   const [r, g, b] = hsvToRgb(hsv.h, hsv.s, hsv.v);
   const hex = toHex(r, g, b);
   const hueColor = `hsl(${hsv.h}, 100%, 50%)`;
@@ -492,6 +499,7 @@ export function DomStagePortal() {
     let gen = 0;
     let raf = 0;
     const timers = [];
+    const pos = { x: 0, y: 0 };
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     function later(ms) {
@@ -501,8 +509,48 @@ export function DomStagePortal() {
       });
     }
 
+    function sceneXY(el, fx, fy) {
+      const scene = sceneRef.current;
+      if (!scene || !el) return { ...pos };
+      const sr = scene.getBoundingClientRect();
+      const r0 = el.getBoundingClientRect();
+      return {
+        x: r0.left - sr.left + r0.width * fx,
+        y: r0.top - sr.top + r0.height * fy,
+      };
+    }
+
+    function put(p, extra = {}) {
+      pos.x = p.x;
+      pos.y = p.y;
+      setMouse((m) => ({ ...m, x: p.x, y: p.y, ...extra }));
+    }
+
+    let dead = () => false;
+
+    function moveTo(target, ms) {
+      const from = { x: pos.x, y: pos.y };
+      const start = performance.now();
+      return new Promise((resolve) => {
+        function tick(now) {
+          if (dead()) {
+            resolve();
+            return;
+          }
+          const t = Math.min(1, (now - start) / ms);
+          const e = easeOut(t);
+          put({ x: lerp(from.x, target.x, e), y: lerp(from.y, target.y, e) });
+          if (t < 1) raf = requestAnimationFrame(tick);
+          else resolve();
+        }
+        raf = requestAnimationFrame(tick);
+      });
+    }
+
     async function play() {
       const my = ++gen;
+      dead = () => my !== gen;
+
       if (reduce.matches) {
         setSel(100);
         setPhase("pick");
@@ -512,41 +560,96 @@ export function DomStagePortal() {
       while (my === gen) {
         setPhase("idle");
         setSel(0);
-        setClick(false);
-        setHsv(PICK_STEPS[0]);
-        await later(360);
-        if (my !== gen) return;
+        setHsv(HSV0);
+        put({ x: 0, y: 0 }, { on: false, down: false });
+        await later(320);
+        if (dead()) return;
+
         setPhase("drag");
+        const card = cardRef.current;
+        const a = sceneXY(card, 0.04, 0.06);
+        put(a, { on: true, down: true });
         const start = performance.now();
         await new Promise((resolve) => {
           function tick(now) {
-            if (my !== gen) {
+            if (dead()) {
               resolve();
               return;
             }
-            const t = Math.min(1, (now - start) / 860);
-            const e = 1 - (1 - t) * (1 - t);
+            const t = Math.min(1, (now - start) / 880);
+            const e = easeOut(t);
             setSel(e * 100);
+            put(sceneXY(card, e * 0.96, e * 0.94), { on: true, down: true });
             if (t < 1) raf = requestAnimationFrame(tick);
             else resolve();
           }
           raf = requestAnimationFrame(tick);
         });
-        if (my !== gen) return;
+        if (dead()) return;
+        put(sceneXY(card, 0.96, 0.94), { down: false });
         setPhase("card");
-        await later(720);
-        if (my !== gen) return;
+        await later(480);
+        if (dead()) return;
+
         setPhase("pick");
-        await later(320);
-        for (const step of PICK_STEPS) {
-          if (my !== gen) return;
-          setClick(true);
-          setHsv(step);
-          await later(150);
-          setClick(false);
-          await later(560);
-        }
-        await later(1600);
+        const hueEl = hueRef.current;
+        const svEl = svRef.current;
+        await moveTo(sceneXY(hueEl, HSV0.h / 360, 0.5), 520);
+        if (dead()) return;
+        put(pos, { down: true });
+        await later(80);
+        const hFrom = HSV0.h;
+        const hTo = 268;
+        const hueStart = performance.now();
+        await new Promise((resolve) => {
+          function tick(now) {
+            if (dead()) {
+              resolve();
+              return;
+            }
+            const t = Math.min(1, (now - hueStart) / 980);
+            const e = easeOut(t);
+            const h = lerp(hFrom, hTo, e);
+            setHsv((cur) => ({ ...cur, h }));
+            put(sceneXY(hueEl, h / 360, 0.5), { down: true });
+            if (t < 1) raf = requestAnimationFrame(tick);
+            else resolve();
+          }
+          raf = requestAnimationFrame(tick);
+        });
+        if (dead()) return;
+        put(pos, { down: false });
+        await later(180);
+
+        const sTo = 0.72;
+        const vTo = 0.82;
+        await moveTo(sceneXY(svEl, sTo, 1 - vTo), 420);
+        if (dead()) return;
+        put(pos, { down: true });
+        await later(70);
+        const svStart = performance.now();
+        const sFrom = HSV0.s;
+        const vFrom = HSV0.v;
+        await new Promise((resolve) => {
+          function tick(now) {
+            if (dead()) {
+              resolve();
+              return;
+            }
+            const t = Math.min(1, (now - svStart) / 860);
+            const e = easeOut(t);
+            const s = lerp(sFrom, sTo, e);
+            const v = lerp(vFrom, vTo, e);
+            setHsv((cur) => ({ ...cur, s, v }));
+            put(sceneXY(svEl, s, 1 - v), { down: true });
+            if (t < 1) raf = requestAnimationFrame(tick);
+            else resolve();
+          }
+          raf = requestAnimationFrame(tick);
+        });
+        if (dead()) return;
+        put(pos, { down: false });
+        await later(1800);
       }
     }
 
@@ -575,7 +678,7 @@ export function DomStagePortal() {
   return (
     <div className="feature-visual rt-dom-stage-wrap rt-portal-wrap" ref={wrapRef}>
       <div className="feature-stage is-active" data-theme="branded" style={{ ["--fx-c"]: 1 }}>
-        <div className="feature-stage-art rt-portal-scene">
+        <div className="feature-stage-art rt-portal-scene" ref={sceneRef}>
           <figure className="rt-portal-photo" aria-hidden="true">
             <img
               src="https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg?auto=compress&cs=tinysrgb&w=1400"
@@ -586,30 +689,13 @@ export function DomStagePortal() {
             />
           </figure>
 
-          <div className={`rt-portal-search-wrap is-${phase}`}>
+          <div className={`rt-portal-search-wrap is-${phase}`} ref={cardRef}>
             <div
               className="rt-portal-marquee"
               style={{ width: `${sel}%`, height: `${sel}%` }}
               aria-hidden="true"
             />
             <SelectFrame />
-            {phase === "drag" ? (
-              <span
-                className="rt-portal-cursor is-down"
-                style={{ left: `${sel}%`, top: `${sel}%` }}
-                aria-hidden="true"
-              >
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M5.2 3.4l12.8 11.2-6.05.35 3.7 6.85-2.35 1.25-3.75-6.9-4.35 4.15z"
-                    fill="#111827"
-                    stroke="#fff"
-                    strokeWidth="1.4"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </span>
-            ) : null}
             <div className={`rt-portal-search${phase === "card" || phase === "pick" ? " is-in" : ""}`}>
               <strong>Return center</strong>
               <div className="rt-portal-search-row">
@@ -635,13 +721,7 @@ export function DomStagePortal() {
             </div>
           </div>
 
-          <div
-            className={`rt-portal-pick-wrap${phase === "pick" ? " is-aim" : ""}${click ? " is-click" : ""}`}
-            style={{
-              ["--mx"]: `${8 + hsv.s * 78}%`,
-              ["--my"]: `${30 + (1 - hsv.v) * 28}%`,
-            }}
-          >
+          <div className="rt-portal-pick-wrap">
             <div className="rt-portal-picker">
               <header>
                 <strong>Color picker</strong>
@@ -649,6 +729,7 @@ export function DomStagePortal() {
               </header>
               <div
                 className="rt-portal-sv"
+                ref={svRef}
                 style={{ ["--hue"]: hueColor }}
                 onPointerDown={(e) => {
                   e.currentTarget.setPointerCapture(e.pointerId);
@@ -674,6 +755,7 @@ export function DomStagePortal() {
                 <button
                   type="button"
                   className="rt-portal-hue"
+                  ref={hueRef}
                   aria-label="Hue"
                   onPointerDown={(e) => {
                     e.currentTarget.setPointerCapture(e.pointerId);
@@ -702,8 +784,23 @@ export function DomStagePortal() {
                 </label>
               </div>
             </div>
-            <PortalMouse />
           </div>
+
+          <span
+            className={`rt-portal-scene-mouse${mouse.on ? " is-on" : ""}${mouse.down ? " is-down" : ""}`}
+            style={{ ["--x"]: `${mouse.x}px`, ["--y"]: `${mouse.y}px` }}
+            aria-hidden="true"
+          >
+            <svg viewBox="0 0 24 24" fill="none">
+              <path
+                d="M5.2 3.4l12.8 11.2-6.05.35 3.7 6.85-2.35 1.25-3.75-6.9-4.35 4.15z"
+                fill="#111827"
+                stroke="#fff"
+                strokeWidth="1.4"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
 
           <article className="rt-portal-mail">
             <span className="rt-portal-mail-badge" aria-hidden="true">
@@ -765,18 +862,6 @@ const WF_RULES = [
     when: "Status = Unshipped",
     then: "Instant refund",
   },
-];
-
-const WF_STEPS = [
-  { k: "when", label: "Trigger", sub: "9 events" },
-  { k: "if", label: "Condition", sub: "Reason / value" },
-  { k: "then", label: "Action", sub: "8 actions" },
-];
-
-const WF_QUEUE = [
-  { id: "RT-1842", reason: "Quality issue", autoAt: 2 },
-  { id: "RT-1843", reason: "Unshipped", autoAt: 3 },
-  { id: "RT-1844", reason: "Arrived late", autoAt: 99 },
 ];
 
 const WF_PILLS = [
@@ -945,7 +1030,7 @@ export function DomStageAi() {
   return (
     <div className="feature-visual rt-dom-stage-wrap rt-wf-wrap" ref={wrapRef}>
       <div className="feature-stage is-active" data-theme="notify" style={{ ["--fx-c"]: 1 }}>
-        <div className="feature-stage-art rt-wf-scene">
+        <div className={`feature-stage-art rt-wf-scene${ready > 0 ? " is-split" : ""}`}>
           <div className="rt-wf-panel-wrap">
             <div className="rt-wf-panel">
               <header className="rt-wf-head">
@@ -1033,32 +1118,6 @@ export function DomStageAi() {
                 </div>
               </article>
             ))}
-          </div>
-
-          <div className="rt-wf-flow" aria-hidden="true">
-            {WF_STEPS.map((step, i) => (
-              <span className={`rt-wf-step${ready > i ? " is-on" : ""}`} key={step.k}>
-                <b>{step.label}</b>
-                <i>{step.sub}</i>
-              </span>
-            ))}
-          </div>
-
-          <div className={`rt-wf-queue${ready > 0 ? " is-in" : ""}`} aria-hidden="true">
-            <header>
-              <strong>Pending returns</strong>
-              <span>{WF_QUEUE.length}</span>
-            </header>
-            {WF_QUEUE.map((row) => {
-              const on = ready >= row.autoAt;
-              return (
-                <div className={`rt-wf-qrow${on ? " is-auto" : ""}`} key={row.id}>
-                  <b>{row.id}</b>
-                  <span>{row.reason}</span>
-                  <i>{on ? "Auto" : "Review"}</i>
-                </div>
-              );
-            })}
           </div>
 
           <div className="rt-wf-stat">

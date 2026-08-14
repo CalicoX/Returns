@@ -131,6 +131,7 @@ export const FEATURES = [
     badge: "20%+",
     badgeLabel: "Revenue Recovery Rate",
     reverse: false,
+    badgeInArt: true,
   },
   {
     title: "Multi-Carrier Rate Comparison",

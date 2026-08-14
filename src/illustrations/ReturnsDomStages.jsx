@@ -390,9 +390,9 @@ export function DomHeroReturns() {
 /** 0 · Branded portal */
 export function DomStagePortal() {
   return (
-    <div className="feature-visual rt-dom-stage-wrap">
+    <div className="feature-visual rt-dom-stage-wrap rt-portal-wrap">
       <div className="feature-stage is-active" data-theme="branded" style={{ ["--fx-c"]: 1 }}>
-        <div className="feature-stage-art" aria-hidden="true">
+        <div className="feature-stage-art rt-portal-scene" aria-hidden="true">
           <div className="fx-glass fx-main">
             <div className="fx-chrome">
               <i />
@@ -405,26 +405,26 @@ export function DomStagePortal() {
                 <strong>Select an item to return</strong>
                 <span>Self-serve · multi-language</span>
               </div>
-              <div className="fx-status-grid">
-                <b className="is-ok">
-                  Request<em>Done</em>
-                </b>
-                <b className="is-ok">
-                  Review<em>AI</em>
-                </b>
-                <b className="is-on">
-                  Label<em>Live</em>
-                </b>
-                <b>
-                  Refund<em>—</em>
-                </b>
-              </div>
             </div>
           </div>
           <div className="fx-glass fx-float-a">
             <div className="fx-illus rt-dom-illus-coat" />
             <strong>Merino Overcoat</strong>
             <span>Size M · $248</span>
+          </div>
+          <div className="fx-glass fx-float-c rt-portal-brand">
+            <strong>Brand experience</strong>
+            <span>Custom visuals · copy · theme</span>
+          </div>
+          <div className="rt-portal-marks">
+            <span className="rt-label-chip">
+              <b>Label</b>
+              <em>Live</em>
+            </span>
+            <span className="rt-label-refund">
+              <i aria-hidden="true">−</i>
+              <em>Refund</em>
+            </span>
           </div>
           <div className="fx-glass fx-float-b">
             <strong>9 milestones</strong>
@@ -433,10 +433,6 @@ export function DomStagePortal() {
               <span className="rt-dom-pill">Review</span>
               <span className="rt-dom-pill is-on">Label</span>
             </div>
-          </div>
-          <div className="fx-glass fx-float-c">
-            <strong>Brand experience</strong>
-            <span>Custom visuals · copy · theme</span>
           </div>
         </div>
       </div>

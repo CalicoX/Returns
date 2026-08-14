@@ -38,6 +38,15 @@
 
 ---
 
+## Feature 01 插图（2026-08-14）
+
+- **现构图：** 浅色网格 + `brand.com/returns` 浏览器窗 + 商品卡 + 薄荷绿 Brand experience + Label/Refund + 9 milestones。
+- **Label 样式：** 未选中 = 白底描边胶囊；选中 = 实心蓝 `#3b6cff` 白字。独立 Label 芯片 = 浅蓝底 + Live 副标。
+- **已弃用：** 登山照底板 + Return center / Color picker / 邮件卡（图二旧样式）。不要加回来。
+- 3.5x Customer LTV 仍用右下角渐变数字，不是实心青绿方块。
+
+---
+
 ## 工程教训
 
 - 本地曾不是 git 仓库；远程 `CalicoX/Returns` 从空仓推上，默认 `main`。

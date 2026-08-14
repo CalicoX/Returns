@@ -28,12 +28,18 @@ Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows →
 
 ---
 
+### Feature 01 插图
+
+浅底网格门户：浏览器窗 + Merino 商品卡 + Brand experience + Label 胶囊（描边 / 实心蓝）+ 9 milestones。不是登山照旧构图。
+
+---
+
 ## 关键路径
 
 ```
 src/components/LandingPage.jsx
 src/components/sections/Hero.jsx
-src/illustrations/ReturnsDomStages.jsx
+src/illustrations/ReturnsDomStages.jsx   # Hero + Feature 01 DomStagePortal
 src/content/returnsCopy.js
 src/styles/returns-page.css
 src/fx/useLandingEffects.js

@@ -1661,10 +1661,11 @@
 
 .rt-wf-rules {
   position: absolute;
-  left: 4%;
+  left: auto;
+  right: calc(4% + min(272px, 46%) - 64px);
   top: 16%;
   z-index: 6;
-  width: min(360px, 54%);
+  width: min(340px, 48%);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -1816,9 +1817,10 @@
   }
 
   .rt-wf-rules {
-    left: 3%;
+    left: auto;
+    right: calc(3% + min(228px, 58%) - 40px);
     top: 12%;
-    width: min(220px, 56%);
+    width: min(210px, 50%);
   }
 
   .rt-wf-rule:last-child {

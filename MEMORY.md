@@ -40,13 +40,14 @@
 
 ## Feature 01 插图（2026-08-14）
 
-对照参考图（登山照叠浮件），不要自己发挥：
+照片铺满、无外框。浮件按旧工具构图：
 
-- 照片铺满圆角容器，**无浏览器窗、无外框、无 Brand experience 卡**。
-- 右上：Merino Overcoat 商品卡。
-- 左下：3.5x 实心青绿块 + Label/Live 浅蓝块 + Refund。
-- 右下：9 milestones 玻璃条，Submitted / Review 描边，Label 实心蓝。
-- 3.5x 画在插图里（`badgeInArt`），不要再在外面叠一层。
+- 右上 **Return center** 查询框（Order number / Email / Search）。
+- 左侧真实 **Color picker**；选中色同步到 Search 按钮。
+- 取色器带 Illustrator 选中框（蚂蚁线 + 8 个锚点）和假鼠标。
+- 右下邮件卡：From/To + 正文骨架 + View return details。
+- 左下 3.5x Customer LTV。
+- 不要加回浏览器窗 / Brand experience / 商品卡。
 
 ---
 

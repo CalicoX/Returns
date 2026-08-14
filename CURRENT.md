@@ -30,7 +30,7 @@ Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows →
 
 ### Feature 01 插图
 
-登山照铺满。右上商品卡；左下 3.5x + Label/Live + Refund；右下 9 milestones。无外框。
+登山照铺满、无外框。右上 Return center 查询框；左取色器（选中色=Search 按钮）+ AI 选中框/鼠标；右下邮件骨架；左下 3.5x。
 
 ---
 

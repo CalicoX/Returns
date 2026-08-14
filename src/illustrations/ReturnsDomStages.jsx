@@ -387,13 +387,68 @@ export function DomHeroReturns() {
   );
 }
 
+function hsvToRgb(h, s, v) {
+  const hh = ((h % 360) + 360) % 360;
+  const c = v * s;
+  const x = c * (1 - Math.abs(((hh / 60) % 2) - 1));
+  const m = v - c;
+  let r = 0;
+  let g = 0;
+  let b = 0;
+  if (hh < 60) [r, g, b] = [c, x, 0];
+  else if (hh < 120) [r, g, b] = [x, c, 0];
+  else if (hh < 180) [r, g, b] = [0, c, x];
+  else if (hh < 240) [r, g, b] = [0, x, c];
+  else if (hh < 300) [r, g, b] = [x, 0, c];
+  else [r, g, b] = [c, 0, x];
+  return [Math.round((r + m) * 255), Math.round((g + m) * 255), Math.round((b + m) * 255)];
+}
+
+function toHex(r, g, b) {
+  return `#${[r, g, b].map((n) => n.toString(16).padStart(2, "0")).join("")}`;
+}
+
+function PortalMouse() {
+  return (
+    <span className="rt-portal-mouse" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path
+          d="M5.2 3.4l12.8 11.2-6.05.35 3.7 6.85-2.35 1.25-3.75-6.9-4.35 4.15z"
+          fill="#111827"
+          stroke="#fff"
+          strokeWidth="1.4"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </span>
+  );
+}
+
 /** 0 · Branded portal */
 export function DomStagePortal() {
+  const [hsv, setHsv] = useState({ h: 168, s: 0.88, v: 0.71 });
+  const [r, g, b] = hsvToRgb(hsv.h, hsv.s, hsv.v);
+  const hex = toHex(r, g, b);
+  const hueColor = `hsl(${hsv.h}, 100%, 50%)`;
+
+  function pickSv(e) {
+    const box = e.currentTarget.getBoundingClientRect();
+    const s = Math.min(1, Math.max(0, (e.clientX - box.left) / box.width));
+    const v = Math.min(1, Math.max(0, 1 - (e.clientY - box.top) / box.height));
+    setHsv((cur) => ({ ...cur, s, v }));
+  }
+
+  function pickHue(e) {
+    const box = e.currentTarget.getBoundingClientRect();
+    const h = Math.min(359, Math.max(0, ((e.clientX - box.left) / box.width) * 360));
+    setHsv((cur) => ({ ...cur, h }));
+  }
+
   return (
     <div className="feature-visual rt-dom-stage-wrap rt-portal-wrap">
       <div className="feature-stage is-active" data-theme="branded" style={{ ["--fx-c"]: 1 }}>
-        <div className="feature-stage-art rt-portal-scene" aria-hidden="true">
-          <figure className="rt-portal-photo">
+        <div className="feature-stage-art rt-portal-scene">
+          <figure className="rt-portal-photo" aria-hidden="true">
             <img
               src="https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg?auto=compress&cs=tinysrgb&w=1400"
               alt=""
@@ -403,35 +458,140 @@ export function DomStagePortal() {
             />
           </figure>
 
-          <div className="rt-portal-product">
-            <div className="rt-portal-product-img" />
-            <strong>Merino Overcoat</strong>
-            <span>Size M · $248</span>
+          <div className="rt-portal-search">
+            <strong>Return center</strong>
+            <div className="rt-portal-search-row">
+              <span className="rt-portal-search-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="10" r="3.2" stroke="currentColor" strokeWidth="1.6" />
+                  <path
+                    d="M6 18.2c1.4-2.2 3.5-3.4 6-3.4s4.6 1.2 6 3.4"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
+              <div className="rt-portal-fields">
+                <span>Order number</span>
+                <span>Email</span>
+              </div>
+            </div>
+            <button type="button" style={{ background: hex }}>
+              Search
+            </button>
           </div>
+
+          <div className="rt-portal-pick-wrap">
+            <div className="rt-ai-select" aria-hidden="true">
+              <i className="n" />
+              <i className="e" />
+              <i className="s" />
+              <i className="w" />
+              <b className="tl" />
+              <b className="tr" />
+              <b className="bl" />
+              <b className="br" />
+              <b className="tm" />
+              <b className="bm" />
+              <b className="ml" />
+              <b className="mr" />
+            </div>
+
+            <div className="rt-portal-picker">
+              <header>
+                <strong>Color picker</strong>
+                <span aria-hidden="true">×</span>
+              </header>
+              <div
+                className="rt-portal-sv"
+                style={{ ["--hue"]: hueColor }}
+                onPointerDown={(e) => {
+                  e.currentTarget.setPointerCapture(e.pointerId);
+                  pickSv(e);
+                }}
+                onPointerMove={(e) => {
+                  if (e.buttons) pickSv(e);
+                }}
+              >
+                <i style={{ left: `${hsv.s * 100}%`, top: `${(1 - hsv.v) * 100}%` }} />
+              </div>
+              <div className="rt-portal-pick-tools">
+                <em className="rt-portal-drop" style={{ background: hex }} aria-hidden="true">
+                  <svg viewBox="0 0 16 16" fill="none">
+                    <path
+                      d="M10.2 2.4l3.4 3.4-7.3 7.3H2.9v-3.4l7.3-7.3z"
+                      stroke="#fff"
+                      strokeWidth="1.3"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </em>
+                <button
+                  type="button"
+                  className="rt-portal-hue"
+                  aria-label="Hue"
+                  onPointerDown={(e) => {
+                    e.currentTarget.setPointerCapture(e.pointerId);
+                    pickHue(e);
+                  }}
+                  onPointerMove={(e) => {
+                    if (e.buttons) pickHue(e);
+                  }}
+                >
+                  <i style={{ left: `${(hsv.h / 360) * 100}%` }} />
+                </button>
+              </div>
+              <div className="rt-portal-vals">
+                <label>
+                  HEX
+                  <b>{hex}</b>
+                </label>
+                <label>
+                  R<b>{r}</b>
+                </label>
+                <label>
+                  G<b>{g}</b>
+                </label>
+                <label>
+                  B<b>{b}</b>
+                </label>
+              </div>
+            </div>
+            <PortalMouse />
+          </div>
+
+          <article className="rt-portal-mail">
+            <span className="rt-portal-mail-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <rect x="3.5" y="6" width="17" height="12.5" rx="2" stroke="#fff" strokeWidth="1.6" />
+                <path d="M4.2 7.2L12 13.1l7.8-5.9" stroke="#fff" strokeWidth="1.6" strokeLinejoin="round" />
+              </svg>
+            </span>
+            <div className="rt-portal-mail-head">
+              <i />
+              <div>
+                <span>
+                  From: <em />
+                </span>
+                <span>
+                  To: <em />
+                </span>
+              </div>
+            </div>
+            <strong>It's time to return your items</strong>
+            <p>
+              <i />
+              <i />
+              <i />
+              <i />
+            </p>
+            <button type="button">View return details</button>
+          </article>
 
           <div className="rt-portal-ltv">
             <strong>3.5x</strong>
             <span>Customer LTV</span>
-          </div>
-
-          <div className="rt-portal-dock">
-            <span className="rt-label-chip">
-              <b>Label</b>
-              <em>Live</em>
-            </span>
-            <span className="rt-label-refund">
-              <i aria-hidden="true">−</i>
-              <em>Refund</em>
-            </span>
-          </div>
-
-          <div className="rt-portal-miles">
-            <strong>9 milestones</strong>
-            <div className="rt-portal-pills">
-              <span>Submitted</span>
-              <span>Review</span>
-              <span className="is-on">Label</span>
-            </div>
           </div>
         </div>
       </div>

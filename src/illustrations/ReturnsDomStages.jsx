@@ -679,7 +679,7 @@ export function DomStagePortal() {
     <div className="feature-visual rt-dom-stage-wrap rt-portal-wrap" ref={wrapRef}>
       <div className="feature-stage is-active" data-theme="branded" style={{ ["--fx-c"]: 1 }}>
         <div className="feature-stage-art rt-portal-scene" ref={sceneRef}>
-          <figure className="rt-portal-photo" aria-hidden="true">
+          <figure className="rt-portal-photo">
             <img
               src="https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg?auto=compress&cs=tinysrgb&w=1400"
               alt=""
@@ -687,6 +687,33 @@ export function DomStagePortal() {
               height="900"
               decoding="async"
             />
+            <article className="rt-portal-mail">
+              <span className="rt-portal-mail-badge" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <rect x="3.5" y="6" width="17" height="12.5" rx="2" stroke="#fff" strokeWidth="1.6" />
+                  <path d="M4.2 7.2L12 13.1l7.8-5.9" stroke="#fff" strokeWidth="1.6" strokeLinejoin="round" />
+                </svg>
+              </span>
+              <div className="rt-portal-mail-head">
+                <i />
+                <div>
+                  <span>
+                    From: <em />
+                  </span>
+                  <span>
+                    To: <em />
+                  </span>
+                </div>
+              </div>
+              <strong>It's time to return your items</strong>
+              <p>
+                <i />
+                <i />
+                <i />
+                <i />
+              </p>
+              <button type="button">View return details</button>
+            </article>
           </figure>
 
           <div className={`rt-portal-search-wrap is-${phase}`} ref={cardRef}>
@@ -801,34 +828,6 @@ export function DomStagePortal() {
               />
             </svg>
           </span>
-
-          <article className="rt-portal-mail">
-            <span className="rt-portal-mail-badge" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none">
-                <rect x="3.5" y="6" width="17" height="12.5" rx="2" stroke="#fff" strokeWidth="1.6" />
-                <path d="M4.2 7.2L12 13.1l7.8-5.9" stroke="#fff" strokeWidth="1.6" strokeLinejoin="round" />
-              </svg>
-            </span>
-            <div className="rt-portal-mail-head">
-              <i />
-              <div>
-                <span>
-                  From: <em />
-                </span>
-                <span>
-                  To: <em />
-                </span>
-              </div>
-            </div>
-            <strong>It's time to return your items</strong>
-            <p>
-              <i />
-              <i />
-              <i />
-              <i />
-            </p>
-            <button type="button">View return details</button>
-          </article>
 
           <div className="rt-portal-ltv">
             <strong>3.5x</strong>
@@ -1327,27 +1326,29 @@ export function DomStageRecovery() {
     <div className="feature-visual rt-dom-stage-wrap rt-rv-wrap" ref={wrapRef}>
       <div className="feature-stage is-active" data-theme="recover" style={{ ["--fx-c"]: 1 }}>
         <div className={`feature-stage-art rt-rv-scene is-${phase}`} ref={sceneRef} aria-hidden="true">
-          <svg className="rt-rv-curve" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <svg className="rt-rv-curve" viewBox="0 0 640 480" preserveAspectRatio="none">
             <defs>
-              <filter id="rt-rv-glow" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="1.2" result="b" />
-                <feMerge>
-                  <feMergeNode in="b" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
+              <linearGradient id="rt-rv-area" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#14b8a6" stopOpacity="0.34" />
+                <stop offset="42%" stopColor="#14b8a6" stopOpacity="0.12" />
+                <stop offset="100%" stopColor="#14b8a6" stopOpacity="0" />
+              </linearGradient>
+              <linearGradient id="rt-rv-stroke" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#14b8a6" stopOpacity="0.2" />
+                <stop offset="40%" stopColor="#14b8a6" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="#2dd4bf" stopOpacity="1" />
+              </linearGradient>
             </defs>
             <path
-              className="rt-rv-curve-line"
-              pathLength="180"
-              d="M 42 94 C 58 98, 70 78, 80 52 S 90 20, 93 14"
-              fill="none"
-              stroke="#ff2ea6"
-              strokeWidth="2.6"
-              strokeLinecap="round"
-              filter="url(#rt-rv-glow)"
-              vectorEffect="non-scaling-stroke"
+              className="rt-rv-curve-fill"
+              d="M 0 372 C 130 364, 210 318, 292 232 S 468 78, 640 52 L 640 480 L 0 480 Z"
             />
+            <path
+              className="rt-rv-curve-line"
+              d="M 0 372 C 130 364, 210 318, 292 232 S 468 78, 640 52"
+              pathLength="180"
+            />
+            <circle className="rt-rv-curve-dot" cx="640" cy="52" r="5" />
           </svg>
 
           <div className="rt-rv-col is-left">

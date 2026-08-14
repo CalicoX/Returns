@@ -46,7 +46,7 @@
 - 左侧真实 **Color picker**；选中色同步到 Search 按钮。
 - Return center：鼠标拖出选框，松手后卡片出现 + 蚂蚁线。不要描边绕一圈。
 - 同一只鼠标滑到 Color picker：先拖色相条，再去色板选色；Search 按钮全程跟随。
-- Return center 居中。邮件往右。毛玻璃必须是 `backdrop-filter`，不要用模糊照片冒充。
+- Return center 居中。邮件往右、压在照片里。毛玻璃是 `backdrop-filter`。功能行禁止 mask-image / 常驻 transform / filter，否则玻璃失效。
 - 左下 3.5x Customer LTV。
 - 不要加回浏览器窗 / Brand experience / 商品卡。
 
@@ -70,7 +70,8 @@
 - **不要深色井**。和 01/02 一样透明拼贴，白卡片直接浮在页面上。
 - 内容锁定产品拦截 UI：Keep your item、Instant Refund $20、Store credit、Try an exchange。
 - 20%+ Revenue Recovery Rate 青绿徽章画在插图里（`badgeInArt`），不要外面再叠一个。
-- 品红曲线连 Keep / credit / exchange；自动演示倒计时后点 Accept。悬停不要暂停。
+- 背景是上升增长曲线（面积图），线下半透明青绿渐变，对到 20%+。不要品红连线。
+- 自动演示倒计时后点 Accept。悬停不要暂停。
 
 ---
 

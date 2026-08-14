@@ -81,7 +81,7 @@ export default function FeatureRows() {
       const stride = panelH + gap;
       const continuous = p * (n - 1);
       const y = -continuous * stride;
-      stack.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0)`;
+      stack.style.transform = Math.abs(y) < 0.5 ? "none" : `translate3d(0, ${y.toFixed(2)}px, 0)`;
 
       slides.forEach((slide, i) => {
         const leave = Math.abs(continuous - i);

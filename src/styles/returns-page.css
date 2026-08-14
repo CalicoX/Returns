@@ -1966,13 +1966,20 @@
 }
 
 /* 03 Recovery — keep / credit / exchange collage, no dark well */
+.rt-feature-media:has(.rt-rv-wrap),
+.rt-rv-wrap.feature-visual,
+.rt-rv-wrap .feature-stage,
+.rt-rv-wrap .feature-stage-art,
+.rt-rv-scene {
+  overflow: visible !important;
+}
+
 .rt-rv-wrap.feature-visual {
   padding: 0 !important;
   border: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
   border-radius: 0;
-  overflow: visible !important;
 }
 
 .rt-rv-wrap .feature-stage,
@@ -1980,7 +1987,6 @@
   background: transparent !important;
   border: 0 !important;
   border-radius: 0;
-  overflow: visible !important;
   isolation: auto !important;
 }
 
@@ -2001,28 +2007,31 @@
 
 .rt-rv-curve {
   position: absolute;
-  inset: 6% -6% -4% -4%;
+  inset: 10% 2% 0 0;
   z-index: 0;
   width: auto;
   height: auto;
   pointer-events: none;
   overflow: visible;
   opacity: 0;
-  clip-path: inset(0 100% 0 0);
   transition: none;
 }
 
 .rt-rv-scene.is-grow .rt-rv-curve,
 .rt-rv-scene.is-done .rt-rv-curve {
   opacity: 1;
-  clip-path: inset(0 0 0 0);
-  transition:
-    clip-path 1.25s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.18s linear;
+  transition: opacity 0.25s linear;
 }
 
 .rt-rv-curve-fill {
   fill: url(#rt-rv-area);
+  opacity: 0;
+}
+
+.rt-rv-scene.is-grow .rt-rv-curve-fill,
+.rt-rv-scene.is-done .rt-rv-curve-fill {
+  opacity: 1;
+  transition: opacity 3.2s ease;
 }
 
 .rt-rv-curve-line {
@@ -2031,12 +2040,27 @@
   stroke-width: 2.4;
   stroke-linecap: round;
   stroke-linejoin: round;
+  stroke-dasharray: 180;
+  stroke-dashoffset: 180;
+}
+
+.rt-rv-scene.is-grow .rt-rv-curve-line,
+.rt-rv-scene.is-done .rt-rv-curve-line {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 3.2s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
 .rt-rv-curve-dot {
   fill: #14b8a6;
   stroke: #fff;
   stroke-width: 2;
+  opacity: 0;
+}
+
+.rt-rv-scene.is-grow .rt-rv-curve-dot,
+.rt-rv-scene.is-done .rt-rv-curve-dot {
+  opacity: 1;
+  transition: opacity 0.45s ease 2.7s;
 }
 
 .rt-rv-col {
@@ -2495,7 +2519,7 @@
   }
 
   .rt-rv-curve {
-    inset: 20% -8% -2% -6%;
+    inset: 18% 0 0 0;
   }
 }
 
@@ -2508,9 +2532,15 @@
     transition: none !important;
   }
 
-  .rt-rv-curve {
+  .rt-rv-curve,
+  .rt-rv-curve-fill,
+  .rt-rv-curve-dot {
     opacity: 1 !important;
-    clip-path: none !important;
+    transition: none !important;
+  }
+
+  .rt-rv-curve-line {
+    stroke-dashoffset: 0 !important;
     transition: none !important;
   }
 

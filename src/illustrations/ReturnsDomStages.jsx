@@ -1295,10 +1295,10 @@ export function DomStageRecovery() {
         await later(280);
         if (isDead()) return;
         setPhase("grow");
-        await later(1400);
+        await later(3600);
         if (isDead()) return;
         setPhase("done");
-        await later(2400);
+        await later(2800);
       }
     }
 
@@ -1345,14 +1345,14 @@ export function DomStageRecovery() {
             </defs>
             <path
               className="rt-rv-curve-fill"
-              d="M 0 372 C 130 364, 210 318, 292 232 S 468 78, 640 52 L 640 480 L 0 480 Z"
+              d="M 18 368 C 140 358, 228 312, 308 230 S 468 102, 608 78 L 640 480 L 0 480 Z"
             />
             <path
               className="rt-rv-curve-line"
-              d="M 0 372 C 130 364, 210 318, 292 232 S 468 78, 640 52"
+              d="M 18 368 C 140 358, 228 312, 308 230 S 468 102, 608 78"
               pathLength="180"
             />
-            <circle className="rt-rv-curve-dot" cx="640" cy="52" r="5" />
+            <circle className="rt-rv-curve-dot" cx="608" cy="78" r="5" />
           </svg>
 
           <div className="rt-rv-col is-left">

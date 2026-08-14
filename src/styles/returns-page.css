@@ -1205,27 +1205,13 @@
   padding: 14px 14px 12px;
   border-radius: 16px;
   color: #111827;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.4) inset,
-    0 16px 36px -18px rgba(15, 23, 42, 0.28);
+  background: #fff;
+  border: 0;
+  box-shadow: 0 16px 36px -18px rgba(15, 23, 42, 0.32);
 }
 
 .rt-portal-mail-frost {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  border-radius: inherit;
-  background: rgba(255, 255, 255, 0.32);
-  -webkit-backdrop-filter: blur(24px) saturate(1.85);
-  backdrop-filter: blur(24px) saturate(1.85);
-  pointer-events: none;
-}
-
-.rt-portal-mail > *:not(.rt-portal-mail-frost) {
-  position: relative;
-  z-index: 1;
+  display: none;
 }
 
 .rt-portal-mail-badge {

@@ -1,0 +1,11 @@
+---
+description: 17 Returns always-on agent entry — read CURRENT + AGENTS + MEMORY
+alwaysApply: true
+---
+
+# 17 Returns agent entry
+
+1. 开干前读 `CURRENT.md`、`AGENTS.md`、`MEMORY.md`。
+2. **会话闭环（强制）：** 改代码前 `git pull --ff-only`；改完更新记忆（若有新决策）→ `git commit` → `git push`。细节见 `AGENTS.md`「会话闭环」。
+3. 用户说「先别提交 / 先别推」时才跳过。
+4. 尊重 `MEMORY.md` 锁定面 H1–H5。最小 diff。回复用简体中文。

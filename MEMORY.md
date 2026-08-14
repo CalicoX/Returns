@@ -40,10 +40,11 @@
 
 ## Feature 01 插图（2026-08-14）
 
-- **现构图：** 浅色网格 + `brand.com/returns` 浏览器窗 + 商品卡 + 薄荷绿 Brand experience + Label/Refund + 9 milestones。
-- **Label 样式：** 未选中 = 白底描边胶囊；选中 = 实心蓝 `#3b6cff` 白字。独立 Label 芯片 = 浅蓝底 + Live 副标。
-- **已弃用：** 登山照底板 + Return center / Color picker / 邮件卡（图二旧样式）。不要加回来。
-- 3.5x Customer LTV 仍用右下角渐变数字，不是实心青绿方块。
+- 浏览器窗里是**生活照**（登山），不是空紫渐变。
+- Brand experience 右侧贴着 Label/Live 浅蓝芯片 + Refund 方块。
+- 9 milestones：描边胶囊 / 实心蓝 Label。
+- 3.5x 用图二那种**实心青绿圆角标签**（`.is-solid-label`），不是渐变镂空字。
+- 不要退回 Return center / 取色器 / 邮件卡那套旧浮卡。
 
 ---
 

@@ -30,7 +30,7 @@ Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows →
 
 ### Feature 01 插图
 
-浅底网格门户：浏览器窗 + Merino 商品卡 + Brand experience + Label 胶囊（描边 / 实心蓝）+ 9 milestones。不是登山照旧构图。
+浏览器窗里是登山生活照；Brand 卡右侧贴 Label/Live + Refund；3.5x 是实心青绿标签。
 
 ---
 

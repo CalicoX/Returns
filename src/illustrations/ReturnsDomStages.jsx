@@ -402,6 +402,14 @@ export function DomStagePortal() {
             </div>
             <div className="fx-body">
               <div className="fx-hero-block has-photo rt-dom-photo-portal">
+                <img
+                  className="fx-hero-photo"
+                  src="https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                  alt=""
+                  width="1200"
+                  height="800"
+                  decoding="async"
+                />
                 <strong>Select an item to return</strong>
                 <span>Self-serve · multi-language</span>
               </div>
@@ -412,11 +420,11 @@ export function DomStagePortal() {
             <strong>Merino Overcoat</strong>
             <span>Size M · $248</span>
           </div>
-          <div className="fx-glass fx-float-c rt-portal-brand">
-            <strong>Brand experience</strong>
-            <span>Custom visuals · copy · theme</span>
-          </div>
-          <div className="rt-portal-marks">
+          <div className="rt-portal-dock">
+            <div className="fx-glass fx-float-c rt-portal-brand">
+              <strong>Brand experience</strong>
+              <span>Custom visuals · copy · theme</span>
+            </div>
             <span className="rt-label-chip">
               <b>Label</b>
               <em>Live</em>

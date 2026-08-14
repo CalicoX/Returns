@@ -791,8 +791,10 @@
 }
 
 /* 01 门户：浅底网格 + Label 胶囊（对齐新稿，告别登山照旧构图） */
-.rt-portal-wrap.feature-visual {
-  overflow: visible;
+.rt-portal-wrap.feature-visual,
+.rt-portal-wrap .feature-stage,
+.rt-portal-wrap .feature-stage-art {
+  overflow: visible !important;
 }
 
 .rt-portal-wrap .fx-main .fx-body {
@@ -816,15 +818,33 @@
   letter-spacing: -0.03em;
 }
 
-.rt-portal-wrap .fx-float-c {
+.rt-portal-dock {
+  position: absolute;
   left: 7%;
-  bottom: 22%;
+  bottom: 7%;
+  z-index: 6;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.rt-portal-wrap .fx-float-c {
+  position: relative;
+  left: auto;
+  bottom: auto;
+  top: auto;
+  right: auto;
 }
 
 .rt-portal-brand.fx-glass {
-  background: rgba(209, 250, 229, 0.9);
-  border-color: rgba(167, 243, 208, 0.85);
+  background: rgba(209, 250, 229, 0.92);
+  border-color: rgba(167, 243, 208, 0.9);
   padding: 14px 16px;
+}
+
+.rt-portal-marks {
+  display: none;
 }
 
 .rt-portal-wrap .fx-thumb-row .rt-dom-pill {
@@ -848,8 +868,8 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 1px;
-  padding: 8px 14px 7px;
-  border-radius: 14px;
+  padding: 10px 16px 9px;
+  border-radius: 16px;
   background: #c5d8ff;
   box-shadow: 0 10px 22px -12px rgba(37, 99, 235, 0.4);
 }
@@ -3027,6 +3047,27 @@
   line-height: 1.3;
   color: #64748b;
   max-width: 12em;
+}
+
+.rt-feature-badge.is-solid-label {
+  left: 12px;
+  bottom: 12px;
+  gap: 2px;
+  padding: 14px 18px 12px;
+  border-radius: 18px;
+  background: #2dd4bf;
+  box-shadow: 0 10px 24px -14px rgba(13, 148, 136, 0.55);
+}
+
+.rt-feature-badge.is-solid-label strong {
+  background: none;
+  color: #0b1220;
+  -webkit-text-fill-color: #0b1220;
+  filter: none;
+}
+
+.rt-feature-badge.is-solid-label span {
+  color: #115e59;
 }
 
 /* —— Plans：淡描边 · Subscribe 对齐 · Max 描边扫光 —— */

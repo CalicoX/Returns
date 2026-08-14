@@ -1198,20 +1198,35 @@
 
 .rt-portal-mail {
   position: absolute;
-  right: calc(var(--portal-inset-x) + 16px);
-  bottom: calc(var(--portal-inset-y) + 16px);
+  right: -4%;
+  bottom: calc(var(--portal-inset-y) + 22px);
   z-index: 3;
-  width: min(228px, 42%);
+  width: min(220px, 36%);
   padding: 14px 14px 12px;
   border-radius: 16px;
   color: #111827;
-  background: #fff;
-  border: 0;
-  box-shadow: 0 16px 36px -18px rgba(15, 23, 42, 0.32);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 16px 36px -18px rgba(15, 23, 42, 0.28);
 }
 
 .rt-portal-mail-frost {
-  display: none;
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.62);
+  -webkit-backdrop-filter: blur(22px) saturate(1.7);
+  backdrop-filter: blur(22px) saturate(1.7);
+  pointer-events: none;
+}
+
+.rt-portal-mail > *:not(.rt-portal-mail-frost) {
+  position: relative;
+  z-index: 1;
 }
 
 .rt-portal-mail-badge {

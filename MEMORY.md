@@ -46,7 +46,7 @@
 - 左侧真实 **Color picker**；选中色同步到 Search 按钮。
 - Return center：鼠标拖出选框，松手后卡片出现 + 蚂蚁线。不要描边绕一圈。
 - 同一只鼠标滑到 Color picker：先拖色相条，再去色板选色；Search 按钮全程跟随。
-- 右下邮件卡是白色实心面板，不要毛玻璃。
+- 右下邮件是透明白色毛玻璃，往右挪出照片，不要和 Return center 叠在一起。
 - 左下 3.5x Customer LTV。
 - 不要加回浏览器窗 / Brand experience / 商品卡。
 

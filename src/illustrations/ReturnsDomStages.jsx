@@ -471,6 +471,9 @@ export function DomStagePortal() {
   const cardRef = useRef(null);
   const hueRef = useRef(null);
   const svRef = useRef(null);
+  const photoRef = useRef(null);
+  const mailRef = useRef(null);
+  const frostImgRef = useRef(null);
   const [hsv, setHsv] = useState(HSV0);
   const [phase, setPhase] = useState("idle");
   const [sel, setSel] = useState(0);
@@ -478,6 +481,32 @@ export function DomStagePortal() {
   const [r, g, b] = hsvToRgb(hsv.h, hsv.s, hsv.v);
   const hex = toHex(r, g, b);
   const hueColor = `hsl(${hsv.h}, 100%, 50%)`;
+
+  useEffect(() => {
+    const photo = photoRef.current;
+    const mail = mailRef.current;
+    const img = frostImgRef.current;
+    if (!photo || !mail || !img) return undefined;
+
+    function sync() {
+      const mr = mail.getBoundingClientRect();
+      const pr = photo.getBoundingClientRect();
+      img.style.width = `${pr.width}px`;
+      img.style.height = `${pr.height}px`;
+      img.style.left = `${pr.left - mr.left}px`;
+      img.style.top = `${pr.top - mr.top}px`;
+    }
+
+    sync();
+    const ro = new ResizeObserver(sync);
+    ro.observe(photo);
+    ro.observe(mail);
+    window.addEventListener("resize", sync);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", sync);
+    };
+  }, []);
 
   function pickSv(e) {
     const box = e.currentTarget.getBoundingClientRect();
@@ -679,7 +708,7 @@ export function DomStagePortal() {
     <div className="feature-visual rt-dom-stage-wrap rt-portal-wrap" ref={wrapRef}>
       <div className="feature-stage is-active" data-theme="branded" style={{ ["--fx-c"]: 1 }}>
         <div className="feature-stage-art rt-portal-scene" ref={sceneRef}>
-          <figure className="rt-portal-photo" aria-hidden="true">
+          <figure className="rt-portal-photo" ref={photoRef} aria-hidden="true">
             <img
               src="https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg?auto=compress&cs=tinysrgb&w=1400"
               alt=""
@@ -802,8 +831,14 @@ export function DomStagePortal() {
             </svg>
           </span>
 
-          <article className="rt-portal-mail">
-            <span className="rt-portal-mail-frost" aria-hidden="true" />
+          <article className="rt-portal-mail" ref={mailRef}>
+            <span className="rt-portal-mail-frost" aria-hidden="true">
+              <img
+                ref={frostImgRef}
+                src="https://images.pexels.com/photos/1365425/pexels-photo-1365425.jpeg?auto=compress&cs=tinysrgb&w=1400"
+                alt=""
+              />
+            </span>
             <span className="rt-portal-mail-badge" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none">
                 <rect x="3.5" y="6" width="17" height="12.5" rx="2" stroke="#fff" strokeWidth="1.6" />

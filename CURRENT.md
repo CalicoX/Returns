@@ -24,7 +24,7 @@ Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows →
 - 左文案 / 右插图；人物卡约 620px、靠右。
 - 三张玻璃浮卡 + 假鼠标自动演示；悬停不暂停。
 - CTA：Free Trial + Book a Demo。
-- 青绿 wash shader。
+- 青绿 wash shader（无 FilmGrain，棱镜静态，白底干净）。
 
 ---
 

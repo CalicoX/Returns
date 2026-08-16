@@ -2,54 +2,50 @@
  * Returns hero background — Glass Agency Hero from shaders.com
  * (https://previews.shaders.com/sections/glass-agency-hero)
  *
- * Same stack as the API landing, recolored to Returns teal:
- *   FilmGrain(FlutedGlass(Swirl + ChromaFlow))
+ * Recolored to Returns teal. Cleaner than the stock preset:
+ * no FilmGrain (grain reads dirty on near-white), static flutes,
+ * softer swirl / glass so the wash stays clean.
+ *   FlutedGlass(Swirl + ChromaFlow)
  *
  * @returns {() => void}
  */
 const RETURNS_HERO_SHADER = {
   components: [
     {
-      type: "FilmGrain",
-      props: { strength: 0.05 },
+      type: "FlutedGlass",
+      props: {
+        aberration: 0.28,
+        angle: 31,
+        frequency: 6,
+        highlight: 0.08,
+        highlightSoftness: 0.35,
+        lightAngle: -90,
+        refraction: 2.2,
+        shape: "rounded",
+        softness: 1,
+        speed: 0,
+      },
       children: [
         {
-          type: "FlutedGlass",
+          type: "Swirl",
           props: {
-            aberration: 0.61,
-            angle: 31,
-            frequency: 8,
-            highlight: 0.12,
-            highlightSoftness: 0,
-            lightAngle: -90,
-            refraction: 4,
-            shape: "rounded",
-            softness: 1,
-            speed: 0.15,
+            colorA: "#ffffff",
+            colorB: "#f7fffc",
+            detail: 1,
           },
-          children: [
-            {
-              type: "Swirl",
-              props: {
-                colorA: "#ffffff",
-                colorB: "#f0fdfa",
-                detail: 1.7,
-              },
-            },
-            {
-              type: "ChromaFlow",
-              props: {
-                baseColor: "#ffffff",
-                downColor: "#14b8a6",
-                leftColor: "#5eead4",
-                momentum: 13,
-                radius: 3.5,
-                rightColor: "#0d9488",
-                upColor: "#99f6e4",
-                intensity: 0.85,
-              },
-            },
-          ],
+        },
+        {
+          type: "ChromaFlow",
+          props: {
+            baseColor: "#ffffff",
+            downColor: "#14b8a6",
+            leftColor: "#5eead4",
+            momentum: 13,
+            radius: 3.5,
+            rightColor: "#0d9488",
+            upColor: "#99f6e4",
+            intensity: 0.7,
+          },
         },
       ],
     },

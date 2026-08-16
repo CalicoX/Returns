@@ -101,8 +101,8 @@
 .rt-hero-blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(48px);
-  opacity: 0.55;
+  filter: blur(64px);
+  opacity: 0.32;
 }
 
 .rt-hero-blob-a {
@@ -110,7 +110,7 @@
   height: 420px;
   left: -80px;
   top: -120px;
-  background: rgba(45, 212, 191, 0.35);
+  background: rgba(45, 212, 191, 0.22);
 }
 
 .rt-hero-blob-b {
@@ -118,7 +118,7 @@
   height: 360px;
   right: 8%;
   top: 10%;
-  background: rgba(13, 148, 136, 0.18);
+  background: rgba(13, 148, 136, 0.12);
 }
 
 .rt-hero-blob-c {
@@ -126,7 +126,7 @@
   height: 280px;
   left: 38%;
   bottom: -80px;
-  background: rgba(94, 234, 212, 0.22);
+  background: rgba(94, 234, 212, 0.14);
 }
 
 .rt-hero .hero-inner.rt-hero-inner {

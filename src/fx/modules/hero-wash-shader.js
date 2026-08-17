@@ -6,13 +6,15 @@
  *   Pass 2 (screen): FlutedGlass refraction + linear→sRGB
  *
  * 色板跟 Returns 青绿（H4），不要 API 的紫 / 蓝 / 橙：
- *   Swirl:      #FFFFFF / #f7fffc
+ *   Swirl:      #FFFFFF / #e9f2ee（对齐 API #EBEBEB 的明度、带青绿倾向；
+ *               近白 #f7fffc 静止时几乎看不见，Park 2026-08-17 要求可见）
  *   ChromaFlow: base #FFFFFF
  *               up #99f6e4 · right #0f766e · down #14b8a6
  *               left #0d9488（替换 API 橙色 #FF3805）
  *   FilmGrain:  关闭（白底发脏，H5）
  *
- * 兼容：WebGL1 主路径；WebGL2 仅可选加速。fragment 用 mediump。
+ * 兼容：WebGL1 主路径；WebGL2 仅可选加速。fragment 支持 highp 就用 highp，
+ * 否则降 mediump（GL_FRAGMENT_PRECISION_HIGH 宏判断）。
  * 浮点 FBO / RGBA16F 探测失败就走 RGBA8。context lost → 青绿 fallback。
  *
  * @returns {() => void}
@@ -200,7 +202,7 @@ export function mount() {
     };
 
     const SWIRL_A = lin("#FFFFFF");
-    const SWIRL_B = lin("#f7fffc");
+    const SWIRL_B = lin("#e9f2ee");
     const CF_BASE = lin("#FFFFFF");
     const CF_UP = lin("#99f6e4");
     const CF_DOWN = lin("#14b8a6");
@@ -215,8 +217,16 @@ void main(){
   gl_Position = vec4(aPos, 0.0, 1.0);
 }`;
 
-    const FRAG_SCENE = `${fieldPacked ? "#define FIELD_PACKED\n" : ""}
+    // 支持 highp 的设备用 highp（mediump 在部分 GPU 是 16-bit，玻璃棱边界会出锯齿），
+    // 不支持的老移动端仍降回 mediump，不影响兼容。
+    const PRECISION = `#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
 precision mediump float;
+#endif`;
+
+    const FRAG_SCENE = `${fieldPacked ? "#define FIELD_PACKED\n" : ""}
+${PRECISION}
 varying vec2 vUv;
 uniform sampler2D uField;
 uniform float uSwirlTime;
@@ -305,7 +315,7 @@ void main(){
 }`;
 
     const FRAG_GLASS = `
-precision mediump float;
+${PRECISION}
 varying vec2 vUv;
 uniform sampler2D uScene;
 uniform vec2 uRes;
@@ -682,8 +692,9 @@ void main(){
     let cssW = Math.max(1, section.clientWidth);
     let cssH = Math.max(1, section.clientHeight);
     let resizeTimer = 0;
-    const MAX_SIDE = 1920;
-    const dprCap = weakGpu ? 1.25 : 1.5;
+    // 强 GPU 按 API 版跑满 2x，弱 GPU 才压分辨率——1.5x/1920 会让玻璃棱边界出锯齿。
+    const MAX_SIDE = weakGpu ? 1920 : 2880;
+    const dprCap = weakGpu ? 1.25 : 2;
 
     function pickDpr() {
       const raw = window.devicePixelRatio || 1;

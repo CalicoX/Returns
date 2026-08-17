@@ -13,7 +13,7 @@
 | **H2** | Hero 插图 | 人像照片 + 三张玻璃浮卡（商品 / 原因 / 方式）+ 假鼠标自动演示。禁止退回 Safari 门户。 |
 | **H3** | 自动演示 | 假鼠标循环：外套 → 原因 → Green Return。**悬停只做 3D 倾斜，禁止暂停演示。** |
 | **H4** | 主题色 | 青绿 `#0d9488` / `#14b8a6` / `#0f766e`，对齐定价「订阅」按钮。 |
-| **H5** | Hero 背景 | API 同款自研 WebGL（Swirl + ChromaFlow + FlutedGlass），**不走 npm `shaders` 包**。青绿：left `#0d9488`（替换 API 橙 `#FF3805`）、down `#14b8a6`、right `#0f766e`、up `#99f6e4`。**不要 FilmGrain**（白底发脏）；Swirl 近白 `#f7fffc`。窄屏 / 减动效用静态青绿渐变。 |
+| **H5** | Hero 背景 | API 同款自研 WebGL（Swirl + ChromaFlow + FlutedGlass），**不走 npm `shaders` 包**。青绿：left `#0d9488`（替换 API 橙 `#FF3805`）、down `#14b8a6`、right `#0f766e`、up `#99f6e4`。**不要 FilmGrain**（白底发脏）；Swirl 副色 `#e9f2ee`（2026-08-17：近白 `#f7fffc` 静止时几乎看不见，Park 要求对齐 API `#EBEBEB` 的可见度，带青绿倾向）。窄屏 / 减动效用静态青绿渐变。 |
 
 ---
 
@@ -107,7 +107,7 @@ Park 要看的档：480 / 768 / 1024 / 1200 / 1440。Returns 专属写在 `retur
 Park：最大兼容，但效果与动画保持、不卡。不要用「更多设备关 shader / 砍动画」交差。
 
 - **减动效约定不变**：`__reduceFx` / 窄屏 / `prefers-reduced-motion` 仍按现有门闩。不要再扩一圈「弱设备直接关」。
-- **Hero shader**：WebGL1 能跑通（byte-packed 流场 + RGBA8 FBO）；WebGL2 / RGBA16F 仅探测后可选。fragment `mediump`。context lost / 编译失败 → `hero-shader-fallback`，不抛错。DPR cap 1.5（弱 GPU 1.25）；画布长边 ≤1920；离屏与 `document.hidden` 停 rAF；resize debounce。弱 GPU 流场 96，其余 128。色板仍是青绿，无 FilmGrain。
+- **Hero shader**：WebGL1 能跑通（byte-packed 流场 + RGBA8 FBO）；WebGL2 / RGBA16F 仅探测后可选。fragment 精度：支持 `GL_FRAGMENT_PRECISION_HIGH` 就 `highp`，否则 `mediump`（2026-08-17：全 mediump + 低分辨率导致玻璃棱锯齿，Park 反馈后放开）。context lost / 编译失败 → `hero-shader-fallback`，不抛错。DPR cap 2 / 长边 ≤2880（弱 GPU 1.25 / ≤1920，别再全局压回 1.5，会出锯齿）；离屏与 `document.hidden` 停 rAF；resize debounce。弱 GPU 流场 96，其余 128。色板仍是青绿，无 FilmGrain。
 - **滚动**：Lenis 切标签停 rAF，回来继续。Feature sticky 跟滚动/Lenis 合帧，不要整页常驻 rAF。
 - **Dock**：Returns 用 frosted；无 WebGL2 / 编译失败仍走毛玻璃，不要白屏。
 - **CSS**：`100vh` 写在 `100dvh` 前面；无 `backdrop-filter` 时玻璃卡白底更实。不要改 `landing.css`。

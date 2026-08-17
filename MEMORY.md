@@ -39,9 +39,11 @@
 
 ## ROI 区背景动效（2026-08-17）
 
-- Park 要「淡淡的」背景动画：`.rt-roi::before/::after` 两团青绿 radial 光晕，纯 CSS keyframes（transform + opacity，26s/34s 呼吸漂移），**无 rAF、无新 fx 模块**。
-- 必须淡（alpha ≤0.1），不抢白字/输入框。降级：`prefers-reduced-motion` 与 `html.is-reduce-fx`（`responsive-fx.js` 挂的类，含 ≤768）停动画留静态光晕。
-- ROI 区没有挂任何 WebGL 背景模块，别再叠一层 shader。
+- CSS 层：`.rt-roi::before/::after` 两团青绿 radial 光晕，纯 CSS keyframes（26s/34s 呼吸漂移）。必须淡（alpha ≤0.1），不抢白字/输入框。
+- WebGL 层（同日 Park 追加）：shaders.com **Point Waves 1**（preset 569774bc）自研复刻 `src/fx/modules/roi-point-waves.js`，**不走 npm `shaders` 包**。配方来自页面 payload：SolidColor ← Surface3D(DotGrid ← LinearGradient 亮度 map)。关键参数锁定：density 57 · dotSize=亮度×0.21 · amp .3 · freq 1.5 · octaves 2 · tilt 70° · zoom 1.05 · farCutoff .105 · light(.4,-.6,.7)。「淡一点」= 点透明度 ×0.62 + 底色用面板同色 `#141414`（原 #080808）。
+- 复刻架构：Pass1 raymarch（MRT RGBA16F：uvMask+lit，内部长边 ≤**1024**）→ Pass2 全分辨率点阵合成；鼠标涟漪 = 256² CPU 波动方程（settle ~5.6s 后停算）。**需要 WebGL2 + EXT_color_buffer_float**（MaterialX 整数哈希要 uint 位运算）；不支持 / 弱 GPU / 减动效 / ≤768 → 不挂载，CSS 光晕就是降级。
+- 性能：原引擎 compute 长边 1600，WebGL fragment 跑同样数学在 M2 Pro 只有 ~12fps；降到 1024 + 30fps 节流后观感无损（UV 场平滑、点在 Pass2 全分辨率画）。别把 COMPUTE_MAX 加回 1600。
+- 测试坑：Lenis 页面里 `scrollIntoView` 会被弹回顶部，IntersectionObserver 不触发；验证自动挂载要直接设 `scrollTop` 或真实滚动。
 
 ## 响应式断点（2026-08-17）
 

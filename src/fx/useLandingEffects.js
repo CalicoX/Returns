@@ -24,6 +24,7 @@ const FX_LOADERS = {
   aiLab: () => import("./modules/ai-lab.js"),
   aiTitleParticles: () => import("./modules/ai-title-particles.js"),
   bottomCta: () => import("./modules/bottom-cta-shader.js"),
+  roiPointWaves: () => import("./modules/roi-point-waves.js"),
 };
 
 /**
@@ -119,6 +120,23 @@ export function useLandingEffects() {
           mountNamed("impactMetrics");
           if (!shouldReduceFx()) mountNamed("impactBg");
         })
+      );
+    }
+
+    // —— ROI point waves deferred（Point Waves 复刻，WebGL2-only）——
+    const roi = document.getElementById("returns-roi");
+    if (roi && !shouldReduceFx()) {
+      let loaded = false;
+      disposers.push(
+        observeVisibility(
+          roi,
+          (vis) => {
+            if (!vis || loaded) return;
+            loaded = true;
+            mountNamed("roiPointWaves");
+          },
+          { rootMargin: "120px" }
+        )
       );
     }
 

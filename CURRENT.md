@@ -19,6 +19,8 @@
 
 Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows → Plans → Faq → ExploreMore → BrandsSay → Credentials → BottomCta → Footer + ProductDock
 
+RoiCalculator 背景：CSS 青绿光晕 + Point Waves 复刻（`roi-point-waves.js`，WebGL2-only，滚动到区块才挂载）。
+
 ### Hero 现状
 
 - 左文案 / 右插图；人物卡约 620px、靠右。
@@ -54,4 +56,5 @@ src/content/returnsCopy.js
 src/styles/returns-page.css
 src/fx/useLandingEffects.js
 src/fx/modules/hero-wash-shader.js
+src/fx/modules/roi-point-waves.js        # ROI 背景 Point Waves 复刻
 ```

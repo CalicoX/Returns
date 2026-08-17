@@ -1,0 +1,83 @@
+/**
+ * Returns Hero 主 CTA（Free Trial）border beam。
+ * tracking 里同款效果由 ai-lab.js 的 switchBtnFx 挂载，但该模块只在
+ * 页面存在 #ai-lab 时加载；Returns 页没有 AI Lab 区块，所以单独挂。
+ * 色板用 border-beam.js 的 teal 变体，hueRange 收窄避免飘出青绿域。
+ * @returns {() => void}
+ */
+export function mount() {
+  const cleanups = [];
+  try {
+    if (typeof window.mountBorderBeam !== "function") return () => {};
+    var btns = document.querySelectorAll(".rt-hero-cta .btn-switch");
+    if (!btns.length) return () => {};
+
+    var io =
+      typeof IntersectionObserver !== "undefined"
+        ? new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                  e.target.setAttribute("data-active", "");
+                  e.target.removeAttribute("data-paused");
+                } else {
+                  e.target.setAttribute("data-paused", "");
+                }
+              });
+            },
+            { threshold: 0.05 }
+          )
+        : null;
+
+    btns.forEach(function (el, i) {
+      if (!el.querySelector(".btn-switch-shader")) {
+        var sh = document.createElement("span");
+        sh.className = "btn-switch-shader";
+        sh.setAttribute("aria-hidden", "true");
+        el.insertBefore(sh, el.firstChild);
+      }
+
+      if (el.getAttribute("data-beam")) return;
+
+      var h = el.getBoundingClientRect().height || 44;
+      var radius = Math.round(h / 2);
+
+      window.mountBorderBeam(el, {
+        id: "rt-hero-cta-" + i,
+        theme: "dark",
+        colorVariant: "teal",
+        borderRadius: radius,
+        borderWidth: 1,
+        duration: 2.05,
+        brightness: 1.5,
+        saturation: 1.35,
+        strength: 1,
+        strokeOpacity: 0.52,
+        innerOpacity: 0.55,
+        bloomOpacity: 0.42,
+        hueRange: 10,
+        active: true,
+      });
+
+      if (io) io.observe(el);
+    });
+
+    if (io) {
+      cleanups.push(function () {
+        io.disconnect();
+      });
+    }
+  } catch (err) {
+    console.warn("[fx:returns-cta-beam.js]", err);
+  }
+  return function dispose() {
+    while (cleanups.length) {
+      var fn = cleanups.pop();
+      try {
+        if (typeof fn === "function") fn();
+      } catch {
+        /* ignore */
+      }
+    }
+  };
+}

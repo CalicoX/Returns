@@ -28,6 +28,11 @@
 
 **踩坑：** 曾经在 `pointerenter` 里 `pause()` 自动演示，Park 两次明确不要。不要加回来。
 
+## Hero CTA（2026-08-17）
+
+- **阴影只向下投**：`.returns-page .btn-switch` 的外阴影要满足 offset ≥ blur − |spread|（现为 `0 2px 3px -1px`，hover `0 10px 18px -8px`）。原 `0 4px 14px` 的模糊晕圈会溢到胶囊顶上方，Retina 下叠着 wash 灰纹读成一条「黑边」（Park 截图反馈过）。
+- **Border beam**：tracking 的 `.btn-switch` beam 由 `ai-lab.js` 的 `switchBtnFx` 挂，只在页面有 `#ai-lab` 时加载；Returns 没有 AI Lab 区块，所以单独建 `src/fx/modules/returns-cta-beam.js` 挂到 `.rt-hero-cta .btn-switch`。色板用 `border-beam.js` 新增的 **teal** 变体（teal/mint/cyan 家族），`hueRange: 10` 锁色相，别用默认 colorful（会飘蓝紫）。
+
 ---
 
 ## 布局约定

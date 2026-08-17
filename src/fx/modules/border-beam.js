@@ -24,6 +24,20 @@ export function mount() {
         { color: "rgb(180, 40, 240)", pos: "100% 27.1%", size: "52px 48px" },
       ],
     },
+    /* Returns 青绿主题：同构图，色相锁在 teal/mint/cyan 家族 */
+    teal: {
+      border: [
+        { color: "rgb(94, 234, 212)", pos: "33% -7.4%", size: "70px 40px" },
+        { color: "rgb(45, 212, 191)", pos: "12% -5%", size: "60px 35px" },
+        { color: "rgb(16, 185, 129)", pos: "2.1% 68.3%", size: "40px 70px" },
+        { color: "rgb(13, 148, 136)", pos: "2.1% 68.3%", size: "20px 35px" },
+        { color: "rgb(34, 211, 238)", pos: "74.4% 100%", size: "180px 32px" },
+        { color: "rgb(45, 212, 191)", pos: "55% 100%", size: "85px 26px" },
+        { color: "rgb(153, 246, 228)", pos: "93.9% 0%", size: "74px 32px" },
+        { color: "rgb(20, 184, 166)", pos: "100% 27.1%", size: "26px 42px" },
+        { color: "rgb(94, 234, 212)", pos: "100% 27.1%", size: "52px 48px" },
+      ],
+    },
   };
 
   var THEME = {

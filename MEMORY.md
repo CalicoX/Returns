@@ -73,8 +73,8 @@ Park 要看的档：480 / 768 / 1024 / 1200 / 1440。Returns 专属写在 `retur
 ## Feature 板块布局（2026-08-17 Park 重排）
 
 - 四块同构「太平平无奇」→ 用 `FEATURES[].reverse` 交错：2/4 块图左文右（`rt-feature-slide--flip`，grid 列互换 + order）。≤960 堆叠时翻转失效、恢复文上图下。
-- 每块专属主题色 `--ft-accent/--ft-tint`（nth-child：青绿 #0d9488 / 紫 #7c5cfc / 琥珀 #d97706 / 蓝 #2563eb），吃色的有：标题上方短色条（`rt-feature-copy::before`）、勾选圆点、插图后错位圆角衬底（`rt-feature-media::before`，翻转块镜像）。
-- **已删除，别加回**：01/04 步进计数（`rt-feature-step`）、视口顶部白雾（`rt-feature-viewport::before`）、滚动离场 blur（`--fp-blur`/`is-leaving`）。滚动只留轻透明度衰减（--fp-op ≥0.4）。
+- 每块专属主题色 `--ft-accent/--ft-tint`（nth-child：青绿 #0d9488 / 紫 #7c5cfc / 琥珀 #d97706 / 蓝 #2563eb），吃色的只有两处：标题上方短色条（`rt-feature-copy::before`）、勾选圆点。
+- **已删除，别加回**：01/04 步进计数（`rt-feature-step`）、视口顶部白雾（`rt-feature-viewport::before`）、滚动离场 blur（`--fp-blur`/`is-leaving`）、插图后主题色衬底（`rt-feature-media::before`，Park：「features 都不需要背景」）。滚动只留轻透明度衰减（--fp-op ≥0.4）。
 
 ---
 

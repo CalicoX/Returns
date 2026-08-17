@@ -769,22 +769,6 @@
   min-height: 280px;
   overflow: visible;
 }
-
-/* 插图后的主题色衬底：错位圆角块，给每屏一点纵深和色彩身份 */
-.rt-feature-media::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  inset: 10% -22px -22px 12%;
-  border-radius: 28px;
-  background: linear-gradient(135deg, var(--ft-tint, rgba(13, 148, 136, 0.09)), transparent 78%);
-}
-
-.rt-feature-slide--flip .rt-feature-media::before {
-  inset: 10% 12% -22px -22px;
-  background: linear-gradient(225deg, var(--ft-tint, rgba(13, 148, 136, 0.09)), transparent 78%);
-}
-
 .rt-dom-stage-wrap.feature-visual {
   position: relative;
   width: 100%;

@@ -10,7 +10,6 @@ export default function FeatureRows() {
   const stickyRef = useRef(null);
   const viewportRef = useRef(null);
   const stackRef = useRef(null);
-  const total = String(FEATURES.length).padStart(2, "0");
 
   useEffect(() => {
     const track = trackRef.current;
@@ -53,7 +52,6 @@ export default function FeatureRows() {
         viewport.style.height = "";
         slides.forEach((s) => {
           s.style.height = "";
-          s.style.removeProperty("--fp-blur");
           s.style.removeProperty("--fp-op");
         });
         stack.style.transform = "";
@@ -91,17 +89,13 @@ export default function FeatureRows() {
       slides.forEach((slide, i) => {
         const leave = Math.abs(continuous - i);
         slide.classList.toggle("is-active", leave < 0.45);
-        let blur = 0;
+        // Park 2026-08-17：去掉滚动时的模糊，只保留轻微透明度衰减
         let op = 1;
         if (leave > 0.22) {
           const t = Math.min(1, (leave - 0.22) / 0.78);
-          const ease = t * t;
-          blur = ease * 12;
-          op = 1 - ease * 0.45;
+          op = 1 - t * t * 0.45;
         }
-        slide.style.setProperty("--fp-blur", `${blur.toFixed(2)}px`);
         slide.style.setProperty("--fp-op", Math.max(0.4, op).toFixed(3));
-        slide.classList.toggle("is-leaving", blur > 0.2);
         const stage = slide.querySelector(".feature-stage");
         if (stage) {
           let c = Math.max(0, 1 - leave);
@@ -202,7 +196,6 @@ export default function FeatureRows() {
       stack.style.transform = "";
       slides.forEach((s) => {
         s.style.height = "";
-        s.style.removeProperty("--fp-blur");
         s.style.removeProperty("--fp-op");
       });
     };
@@ -217,12 +210,14 @@ export default function FeatureRows() {
               {FEATURES.map((f, i) => {
                 const Stage = FEATURE_STAGES[i];
                 return (
-                  <li key={f.title} className={`rt-feature-slide${i === 0 ? " is-active" : ""}`}>
+                  <li
+                    key={f.title}
+                    className={`rt-feature-slide${i === 0 ? " is-active" : ""}${
+                      f.reverse ? " rt-feature-slide--flip" : ""
+                    }`}
+                  >
                     <div className="rt-feature-inner rt-wrap">
                       <div className="rt-feature-copy">
-                        <span className="rt-feature-step">
-                          {String(i + 1).padStart(2, "0")} / {total}
-                        </span>
                         <h2>{f.title}</h2>
                         {f.summary ? <p className="rt-feature-summary">{f.summary}</p> : null}
                         {f.body ? <p className="rt-feature-body">{f.body}</p> : null}

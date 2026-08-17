@@ -770,6 +770,21 @@
   overflow: visible;
 }
 
+/* 插图后的主题色衬底：错位圆角块，给每屏一点纵深和色彩身份 */
+.rt-feature-media::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 10% -22px -22px 12%;
+  border-radius: 28px;
+  background: linear-gradient(135deg, var(--ft-tint, rgba(13, 148, 136, 0.09)), transparent 78%);
+}
+
+.rt-feature-slide--flip .rt-feature-media::before {
+  inset: 10% 12% -22px -22px;
+  background: linear-gradient(225deg, var(--ft-tint, rgba(13, 148, 136, 0.09)), transparent 78%);
+}
+
 .rt-dom-stage-wrap.feature-visual {
   position: relative;
   width: 100%;
@@ -4737,7 +4752,7 @@ html.is-reduce-fx .rt-roi::after {
   overflow: hidden;
 }
 
-.rt-feature-viewport::before,
+/* Park 2026-08-17：顶部白雾（::before）去掉，只留底部渐隐 */
 .rt-feature-viewport::after {
   content: "";
   position: absolute;
@@ -4746,11 +4761,6 @@ html.is-reduce-fx .rt-roi::after {
   z-index: 8;
   height: 7%;
   pointer-events: none;
-}
-
-.rt-feature-viewport::before {
-  top: 0;
-  background: linear-gradient(180deg, #fff, transparent);
 }
 
 .rt-feature-viewport::after {
@@ -4773,14 +4783,26 @@ html.is-reduce-fx .rt-roi::after {
   height: calc(100dvh - var(--rt-feature-pin));
   box-sizing: border-box;
   margin: 0;
-  --fp-blur: 0px;
   --fp-op: 1;
-  filter: none;
   opacity: var(--fp-op);
+  /* 每块专属主题色：色条 / 勾选 / 插图衬底 */
+  --ft-accent: #0d9488;
+  --ft-tint: rgba(13, 148, 136, 0.09);
 }
 
-.rt-feature-slide.is-leaving {
-  filter: blur(var(--fp-blur));
+.rt-feature-slide:nth-child(2) {
+  --ft-accent: #7c5cfc;
+  --ft-tint: rgba(124, 92, 252, 0.09);
+}
+
+.rt-feature-slide:nth-child(3) {
+  --ft-accent: #d97706;
+  --ft-tint: rgba(217, 119, 6, 0.1);
+}
+
+.rt-feature-slide:nth-child(4) {
+  --ft-accent: #2563eb;
+  --ft-tint: rgba(37, 99, 235, 0.09);
 }
 
 .rt-feature-inner {
@@ -4793,24 +4815,39 @@ html.is-reduce-fx .rt-roi::after {
   padding-block: 28px 36px;
 }
 
+/* 2、4 块翻转：图左文右，打破四块同构 */
+.rt-feature-slide--flip .rt-feature-inner {
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+}
+
+.rt-feature-slide--flip .rt-feature-copy {
+  order: 2;
+}
+
+.rt-feature-slide--flip .rt-feature-media {
+  order: 1;
+}
+
 .rt-feature-copy {
   max-width: 520px;
 }
 
-.rt-feature-step {
+/* 01/04 计数已删（Park），改为主题色短条压阵 */
+.rt-feature-copy::before {
+  content: "";
   display: block;
-  margin-bottom: 14px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: #14b8a6;
+  width: 44px;
+  height: 4px;
+  margin-bottom: 20px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--ft-accent), transparent 160%);
 }
 
 .rt-feature-copy h2 {
   margin: 0 0 14px;
-  font-size: clamp(1.5rem, 2.4vw, 2rem);
-  line-height: 1.25;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.65rem, 2.7vw, 2.3rem);
+  line-height: 1.18;
+  letter-spacing: -0.025em;
   color: #0f172a;
 }
 
@@ -4851,8 +4888,8 @@ html.is-reduce-fx .rt-roi::after {
   justify-content: center;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #2563eb;
-  background: rgba(37, 99, 235, 0.1);
+  color: var(--ft-accent, #2563eb);
+  background: var(--ft-tint, rgba(37, 99, 235, 0.1));
 }
 
 .rt-feature-badge {
@@ -5536,6 +5573,16 @@ html.is-reduce-fx .rt-roi::after {
     gap: 28px;
     height: auto;
     padding-block: 0;
+  }
+
+  /* 窄屏恢复文上图下，翻转失效 */
+  .rt-feature-slide--flip .rt-feature-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .rt-feature-slide--flip .rt-feature-copy,
+  .rt-feature-slide--flip .rt-feature-media {
+    order: 0;
   }
 
   .rt-feature-copy {

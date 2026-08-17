@@ -85,7 +85,7 @@ export function mount() {
     gl.disable(gl.DEPTH_TEST);
     gl.disable(gl.BLEND);
 
-    // ═══ 预设常量（锁定，对齐 payload / dist 默认值） ═══
+    // ═══ 预设常量（对齐 payload / dist 默认值；标注 Park 调整项） ═══
     const AMP = 0.3;
     const FREQ = 1.5;
     const SEED = 0;
@@ -99,7 +99,7 @@ export function mount() {
     const FAR_CUTOFF = 0.105; // guide 0.09–0.12
     const LIGHTING = 30 * 0.035;
     const GLOSS = 0;
-    const HIGHLIGHTS = 15 * 0.04;
+    const HIGHLIGHTS = 15 * 0.02; // 原 ×0.04；Park：太亮 → 高光减半
     const LIGHT_DIR = [0.4, -0.6, 0.7];
     const FOCAL = 1.5;
     const MARCH_STEPS = 16;
@@ -108,8 +108,8 @@ export function mount() {
     const HEIGHT_SLAB_PAD = 0.02;
 
     const DENSITY = 57;
-    const DOT_OUT_MAX = 0.21;
-    const DOT_FADE = 0.62; // Park 2026-08-17：颜色稍微淡一点
+    const DOT_OUT_MAX = 0.14; // 原预设 0.21；Park：圆点太大 → 缩小
+    const DOT_FADE = 0.38; // Park 两轮：淡一点(0.62) → 还是太亮(0.38)
 
     // 鼠标涟漪（Surface3D 默认 cursorIntensity 1 / cursorSpeed .5）
     const WAVE_GRID = 256;
@@ -288,6 +288,7 @@ precision highp int;
 in vec2 vUv;
 layout(location = 0) out vec4 outUvMask;
 layout(location = 1) out vec4 outLit;
+layout(location = 2) out vec4 outJac;
 uniform float uAspect;
 uniform float uT;
 uniform float uEnvelope;
@@ -371,6 +372,8 @@ void main(){
   float finalMask = hit * nearMask * farMask;
   outUvMask = vec4(finalUV, finalMask, 0.0);
   outLit = vec4(lit, 0.0);
+  // UV 对屏幕像素的雅可比 —— 在本 pass 全精度值上取导数（半精度纹理上取会是量化噪声）
+  outJac = vec4(dFdx(finalUV), dFdy(finalUV));
 }`;
 
     // Pass 2 — DotGrid（dotGridCellCenterUV / dotGridAlpha verbatim；
@@ -381,7 +384,9 @@ in vec2 vUv;
 out vec4 outColor;
 uniform sampler2D uUvMask;
 uniform sampler2D uLit;
+uniform sampler2D uJac;
 uniform vec2 uRes;
+uniform float uJacScale; // Pass1 像素 → Pass2 像素的导数换算（cw / w）
 vec3 encodeSrgb(vec3 c){
   c = clamp(c, 0.0, 1.0);
   vec3 lo = c * 12.92;
@@ -396,26 +401,57 @@ vec2 dotGridCellCenterUV(vec2 uv, vec2 viewport, float density){
   float ccy = (floor(correctedY * density) + 0.5) / density;
   return vec2(ccx / aspect, 1.0 - ccy);
 }
-float dotGridAlpha(vec2 uv, vec2 viewport, float density, float dotSize){
+/*
+ * 与原版 dotGridAlpha 的差异（Park 2026-08-17「不够圆」）：
+ * 原版在贴附后的网格空间量 fract 距离，透视会把点剪切成斜杠（官方缩略图同样）。
+ * 这里用 UV 雅可比逆变换把偏移换算回屏幕像素位移 —— 点永远是屏幕正圆，
+ * 半径仍按 √|det J|（透视缩放的几何均值）衰减，远小近大的节奏不变。
+ * 雅可比来自 Pass1 全精度导数（uJac），不能在半精度 UV 纹理上取 fwidth（量化噪声）。
+ */
+float dotGridAlpha(vec2 uv, vec4 jac, vec2 viewport, float density, float dotSize){
   float aspect = viewport.x / viewport.y;
   vec2 correctedUV = vec2(uv.x * aspect, 1.0 - uv.y);
   vec2 gridUV = correctedUV * density;
-  float centerDistance = length(fract(gridUV) - 0.5);
-  float pixelSize = length(fwidth(correctedUV * density));
+  // grid = (u·aspect, 1−v)·density → 链式法则换算雅可比（y 分量取反不影响度量）
+  vec2 gx = vec2(jac.x * aspect, -jac.y) * density * uJacScale;
+  vec2 gy = vec2(jac.z * aspect, -jac.w) * density * uJacScale;
+  float det = gx.x * gy.y - gx.y * gy.x;
+  if (abs(det) < 1e-12) return 0.0;
+  vec2 d = fract(gridUV) - 0.5;
+  // Δp = J⁻¹·d：回到该 cell 中心所需的屏幕位移（像素）
+  vec2 dp = vec2(gy.y * d.x - gy.x * d.y, -gx.y * d.x + gx.x * d.y) / det;
+  float s = sqrt(abs(det));
+  float centerDistance = length(dp) * s;
+  float pixelSize = s;
   return 1.0 - smoothstep(dotSize * 0.5 - pixelSize * 0.5, dotSize * 0.5, centerDistance);
+}
+// uvMask 是 RGBA32F + NEAREST（32F 线性过滤是扩展），手动双线性
+vec4 sampleUvMask(vec2 uv){
+  vec2 ts = vec2(textureSize(uUvMask, 0));
+  vec2 ph = uv * ts - 0.5;
+  vec2 base = floor(ph);
+  vec2 f = ph - base;
+  vec2 lo = clamp(base, vec2(0.0), ts - 1.0);
+  vec2 hi = clamp(base + 1.0, vec2(0.0), ts - 1.0);
+  vec4 t00 = texelFetch(uUvMask, ivec2(lo), 0);
+  vec4 t10 = texelFetch(uUvMask, ivec2(hi.x, lo.y), 0);
+  vec4 t01 = texelFetch(uUvMask, ivec2(lo.x, hi.y), 0);
+  vec4 t11 = texelFetch(uUvMask, ivec2(hi), 0);
+  return mix(mix(t00, t10, f.x), mix(t01, t11, f.x), f.y);
 }
 void main(){
   vec2 screenUv = vec2(vUv.x, 1.0 - vUv.y);
   vec2 texUv = vec2(screenUv.x, 1.0 - screenUv.y);
-  vec4 uvMask = texture(uUvMask, texUv);
+  vec4 uvMask = sampleUvMask(texUv);
   vec3 lit = texture(uLit, texUv).rgb;
+  vec4 jac = texture(uJac, texUv);
   vec2 drapedUV = uvMask.xy;
   float mask = uvMask.z;
   // LinearGradient：白在底(#fff)黑在顶，linear 空间即 lum = v（y-down）
   vec2 cell = dotGridCellCenterUV(drapedUV, uRes, ${DENSITY.toFixed(1)});
   float lum = clamp(cell.y, 0.0, 1.0);
   float dotSize = lum * ${DOT_OUT_MAX.toFixed(4)};
-  float alpha = dotGridAlpha(drapedUV, uRes, ${DENSITY.toFixed(1)}, dotSize) * ${DOT_FADE.toFixed(4)};
+  float alpha = dotGridAlpha(drapedUV, jac, uRes, ${DENSITY.toFixed(1)}, dotSize) * ${DOT_FADE.toFixed(4)};
   vec3 dotRgb = clamp(vec3(${DOT[0].toFixed(6)}, ${DOT[1].toFixed(6)}, ${DOT[2].toFixed(6)}) * lit, 0.0, 1.0);
   float a = alpha * mask;
   vec3 bg = vec3(${BG[0].toFixed(6)}, ${BG[1].toFixed(6)}, ${BG[2].toFixed(6)});
@@ -564,17 +600,24 @@ void main(){
     // ═══ Pass 1 MRT 目标 ═══
     const uvMaskTex = gl.createTexture();
     const litTex = gl.createTexture();
+    const jacTex = gl.createTexture();
     const marchFbo = gl.createFramebuffer();
     let compW = 0;
     let compH = 0;
 
-    function allocTarget(tex, w, h) {
+    function allocTarget(tex, w, h, float32) {
       gl.bindTexture(gl.TEXTURE_2D, tex);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      // 32F 线性过滤需要 OES_texture_float_linear，一律 NEAREST + shader 里手动双线性
+      const filter = float32 ? gl.NEAREST : gl.LINEAR;
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, filter);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, filter);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, w, h, 0, gl.RGBA, gl.HALF_FLOAT, null);
+      if (float32) {
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, w, h, 0, gl.RGBA, gl.FLOAT, null);
+      } else {
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, w, h, 0, gl.RGBA, gl.HALF_FLOAT, null);
+      }
     }
 
     function ensureCompute(w, h) {
@@ -582,12 +625,15 @@ void main(){
       compW = w;
       compH = h;
       try {
-        allocTarget(uvMaskTex, w, h);
+        // UV 必须 32F：半精度量化(~5e-4)在点判定里就是可见噪声
+        allocTarget(uvMaskTex, w, h, true);
         allocTarget(litTex, w, h);
+        allocTarget(jacTex, w, h);
         gl.bindFramebuffer(gl.FRAMEBUFFER, marchFbo);
         gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, uvMaskTex, 0);
         gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT1, gl.TEXTURE_2D, litTex, 0);
-        gl.drawBuffers([gl.COLOR_ATTACHMENT0, gl.COLOR_ATTACHMENT1]);
+        gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT2, gl.TEXTURE_2D, jacTex, 0);
+        gl.drawBuffers([gl.COLOR_ATTACHMENT0, gl.COLOR_ATTACHMENT1, gl.COLOR_ATTACHMENT2]);
         const ok = gl.checkFramebufferStatus(gl.FRAMEBUFFER) === gl.FRAMEBUFFER_COMPLETE;
         gl.bindFramebuffer(gl.FRAMEBUFFER, null);
         if (!ok) fail();
@@ -610,7 +656,9 @@ void main(){
       aPos: gl.getAttribLocation(progDots, "aPos"),
       uUvMask: gl.getUniformLocation(progDots, "uUvMask"),
       uLit: gl.getUniformLocation(progDots, "uLit"),
+      uJac: gl.getUniformLocation(progDots, "uJac"),
       uRes: gl.getUniformLocation(progDots, "uRes"),
+      uJacScale: gl.getUniformLocation(progDots, "uJacScale"),
     };
 
     gl.useProgram(progMarch);
@@ -618,6 +666,7 @@ void main(){
     gl.useProgram(progDots);
     gl.uniform1i(locsDots.uUvMask, 0);
     gl.uniform1i(locsDots.uLit, 1);
+    gl.uniform1i(locsDots.uJac, 2);
 
     function drawQuad(aPos) {
       gl.bindBuffer(gl.ARRAY_BUFFER, quad);
@@ -753,7 +802,10 @@ void main(){
         gl.bindTexture(gl.TEXTURE_2D, uvMaskTex);
         gl.activeTexture(gl.TEXTURE1);
         gl.bindTexture(gl.TEXTURE_2D, litTex);
+        gl.activeTexture(gl.TEXTURE2);
+        gl.bindTexture(gl.TEXTURE_2D, jacTex);
         gl.uniform2f(locsDots.uRes, w, h);
+        gl.uniform1f(locsDots.uJacScale, cw / w);
         drawQuad(locsDots.aPos);
         gl.activeTexture(gl.TEXTURE0);
       } catch (err) {
@@ -848,6 +900,7 @@ void main(){
         gl.deleteTexture(waveTex);
         gl.deleteTexture(uvMaskTex);
         gl.deleteTexture(litTex);
+        gl.deleteTexture(jacTex);
         gl.deleteFramebuffer(marchFbo);
         gl.deleteBuffer(quad);
         gl.deleteProgram(progMarch);

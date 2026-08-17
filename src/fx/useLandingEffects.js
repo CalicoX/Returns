@@ -85,7 +85,7 @@ export function useLandingEffects() {
         console.warn("[useLandingEffects] product dock", err);
       }
 
-      // Returns hero: shaders.com glass wash (immediate, like API)
+      // Returns hero: API 同款自研 WebGL wash（青绿，立即挂载）
       const isReturns = document.querySelector(".returns-page");
       const hero = document.querySelector(".hero");
       if (hero && isReturns && !shouldReduceFx()) {

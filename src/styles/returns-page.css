@@ -84,6 +84,21 @@
   display: none;
 }
 
+.rt-hero.hero.hero-shader-fallback {
+  background:
+    repeating-linear-gradient(
+      31deg,
+      rgba(255, 255, 255, 0) 0px,
+      rgba(255, 255, 255, 0) 11px,
+      rgba(240, 253, 250, 0.35) 15px,
+      rgba(255, 255, 255, 0.75) 19px,
+      rgba(255, 255, 255, 0) 24px
+    ),
+    radial-gradient(ellipse 90% 70% at 12% 0%, rgba(20, 184, 166, 0.1), transparent 55%),
+    radial-gradient(ellipse 70% 60% at 92% 18%, rgba(45, 212, 191, 0.08), transparent 50%),
+    linear-gradient(180deg, #f7fffd 0%, #ffffff 42%, #ffffff 100%);
+}
+
 .rt-hero-ambient {
   position: absolute;
   inset: 0;

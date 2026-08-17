@@ -26,6 +26,7 @@ Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows →
 - CTA：Free Trial + Book a Demo。
 - 青绿自研 WebGL wash（API 同款双通道；无橙/紫/蓝；无 FilmGrain）。
 - 整页兼容：WebGL1 主路径 + mediump；无 WebGL / context lost 走青绿 fallback。动画不砍，离屏/切标签才停 rAF。
+- 响应式：1440/1200 桌面双栏；1024 双栏收比例；≤768 Hero 堆叠；≤480 Stats/ROI 单列。Feature sticky 在 960 改为堆叠。预览用 DevTools 切 480/768/1024/1200/1440。
 
 ---
 

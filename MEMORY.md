@@ -36,6 +36,26 @@
 - Hero 栅格：文案列 `minmax(0, 500px)`，插图列吃剩余并右对齐。
 - Returns 专属覆盖写 `src/styles/returns-page.css`；共享壳/动效在 `src/styles/landing.css` 与 `src/fx/`。
 
+## 响应式断点（2026-08-17）
+
+Park 要看的档：480 / 768 / 1024 / 1200 / 1440。Returns 专属写在 `returns-page.css`，不要改 `landing.css`。
+
+| 宽度 | gutter | 布局 |
+|------|--------|------|
+| **1440** | 48 | 桌面：Hero 双栏、Feature sticky 双栏 |
+| **1200** | 40 | 仍桌面构图，只收 gutter |
+| **1024** | 32 | Hero 双栏改比例（文案可缩、插图吃更多）；Feature 仍 sticky 双栏；Stats 标题可换行、标签可折行 |
+| **768** | 20 | Hero 堆叠；浮卡收进照片内，禁止 `left: -48px` 撑出横向滚动；shader 仍关；运单/FAQ 收紧 |
+| **480** | 16 | 小屏：Stats 四象限改单列；ROI 单列；Feature 02 只留中间 AI 面板（规则卡会裁切）；CTA 全宽、热区 ≥44px |
+| **960**（内部） | 24 | Feature sticky **在此改为堆叠**（CSS + `FeatureRows.jsx` `matchMedia` 必须一致）。Plans 单列。 |
+
+移动端铁律：
+
+- 不横向溢出。Hero 用 `overflow-x: clip`；功能行插图列 `overflow: hidden`。
+- 窄屏浮卡贴照片内缘，不要为了「压左缘」伸出视口。
+- Dock：`max-width: calc(100% - 24px)`，`--dock-bottom` 吃 `safe-area-inset-bottom`。
+- 不要为了手机把 1200/1440 桌面构图改坏。
+
 ---
 
 ## Feature 01 插图（2026-08-14）

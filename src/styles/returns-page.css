@@ -200,7 +200,8 @@
 .returns-page .btn-switch {
   --sw-bg0: #0f766e;
   --sw-bg1: #2dd4bf;
-  border-color: rgba(153, 246, 228, 0.35);
+  /* 常亮薄荷描边：beam 高光扫到弱相位时按钮边缘也保持点亮（对齐 tracking 观感） */
+  border-color: rgba(204, 251, 241, 0.7);
   background: linear-gradient(180deg, var(--sw-bg1) 0%, var(--brand-primary) 48%, var(--sw-bg0) 100%);
   color: #f0fdfa;
   /* 阴影只向下投（offset ≥ blur - |spread|），否则模糊晕圈会溢到胶囊顶上方，Retina 下读成一条暗边 */

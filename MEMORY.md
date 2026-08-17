@@ -33,6 +33,8 @@
 - **阴影只向下投**：`.returns-page .btn-switch` 的外阴影要满足 offset ≥ blur − |spread|（现为 `0 2px 3px -1px`，hover `0 10px 18px -8px`）。原 `0 4px 14px` 的模糊晕圈会溢到胶囊顶上方，Retina 下叠着 wash 灰纹读成一条「黑边」（Park 截图反馈过）。
 - **Border beam**：tracking 的 `.btn-switch` beam 由 `ai-lab.js` 的 `switchBtnFx` 挂，只在页面有 `#ai-lab` 时加载；Returns 没有 AI Lab 区块，所以单独建 `src/fx/modules/returns-cta-beam.js` 挂到 `.rt-hero-cta .btn-switch`。色板用 `border-beam.js` 新增的 **teal** 变体，`hueRange: 10` 锁色相，别用默认 colorful（会飘蓝紫）。
 - **Beam 可见性踩坑**（同日 Park「效果没看到」）：光斑颜色必须用**亮 mint/冰青**（teal-100/200、cyan-200 档）——中深 teal 打在青绿按钮上同色隐身；参数要 `borderWidth: 2` + stroke 0.95 / inner 0.75 / bloom 0.65，首版 1px + 0.5 档肉眼看不出。挂载本身当时是通的（data-beam/style 都在），别只查挂载不查对比度。
+- **端口对照**（勿混）：5173 = Tracking API · 5174 = Order Tracking · **5175 = Returns**。验证 Returns 一律打 5175，别信 vite 终端里旧的启动日志。
+- **弱相位兜底**：beam 遮罩一圈里有约 1/3 弧段是暗区，扫到弱相位时整颗按钮会瞬间「没效果」。按钮静态描边提亮为常亮薄荷 `rgba(204,251,241,.7)`（原 .35 mint），任意瞬间边缘都点亮，beam 高光在其上扫动（对齐 tracking 常亮 rim 观感）。
 
 ---
 

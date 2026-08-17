@@ -623,13 +623,14 @@ export function DomStagePortal() {
 
         const sTo = 0.72;
         const vTo = 0.82;
-        await moveTo(sceneXY(svEl, sTo, 1 - vTo), 420);
+        const sFrom = HSV0.s;
+        const vFrom = HSV0.v;
+        // 先飞到取色环当前位置再按下拖动；直接飞终点会在按下瞬间跳回起点（闪动）
+        await moveTo(sceneXY(svEl, sFrom, 1 - vFrom), 420);
         if (dead()) return;
         put(pos, { down: true });
         await later(70);
         const svStart = performance.now();
-        const sFrom = HSV0.s;
-        const vFrom = HSV0.v;
         await new Promise((resolve) => {
           function tick(now) {
             if (dead()) {

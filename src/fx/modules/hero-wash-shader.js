@@ -12,6 +12,9 @@
  *               left #0d9488（替换 API 橙色 #FF3805）
  *   FilmGrain:  关闭（白底发脏，H5）
  *
+ * 兼容：WebGL1 主路径；WebGL2 仅可选加速。fragment 用 mediump。
+ * 浮点 FBO / RGBA16F 探测失败就走 RGBA8。context lost → 青绿 fallback。
+ *
  * @returns {() => void}
  */
 export function mount() {
@@ -43,22 +46,81 @@ export function mount() {
     canvas.style.cssText =
       "width:100%;height:100%;display:block;pointer-events:none;";
 
-    const ctxOpts = {
-      alpha: false,
-      antialias: true,
-      premultipliedAlpha: false,
-      powerPreference: "high-performance",
-    };
-    const gl2 = canvas.getContext("webgl2", ctxOpts);
-    const gl =
-      gl2 ||
-      canvas.getContext("webgl", ctxOpts) ||
-      canvas.getContext("experimental-webgl", ctxOpts);
-    const isGL2 = !!gl2;
+    function getGL() {
+      const tries = [
+        {
+          type: "webgl2",
+          opts: {
+            alpha: false,
+            antialias: false,
+            premultipliedAlpha: false,
+            preserveDrawingBuffer: false,
+            powerPreference: "high-performance",
+            failIfMajorPerformanceCaveat: false,
+          },
+        },
+        {
+          type: "webgl",
+          opts: {
+            alpha: false,
+            antialias: false,
+            premultipliedAlpha: false,
+            preserveDrawingBuffer: false,
+            powerPreference: "high-performance",
+            failIfMajorPerformanceCaveat: false,
+          },
+        },
+        {
+          type: "webgl",
+          opts: {
+            alpha: false,
+            antialias: false,
+            premultipliedAlpha: false,
+            preserveDrawingBuffer: false,
+          },
+        },
+        {
+          type: "experimental-webgl",
+          opts: { alpha: false, antialias: false, preserveDrawingBuffer: false },
+        },
+      ];
+      for (let i = 0; i < tries.length; i++) {
+        try {
+          const gl = canvas.getContext(tries[i].type, tries[i].opts);
+          if (gl && !gl.isContextLost()) {
+            return { gl, isGL2: tries[i].type === "webgl2" };
+          }
+        } catch {
+          /* next */
+        }
+      }
+      return { gl: null, isGL2: false };
+    }
+
+    const got = getGL();
+    const gl = got.gl;
+    const isGL2 = got.isGL2;
+
+    let failed = false;
+    let raf = 0;
+    let running = true;
+    let visible = true;
+    function fail() {
+      if (failed) return;
+      failed = true;
+      running = false;
+      visible = false;
+      if (raf) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
+      section.classList.remove("has-hero-shader");
+      section.classList.add("hero-shader-fallback");
+      if (canvas) canvas.style.display = "none";
+    }
 
     if (!gl) {
-      section.classList.add("hero-shader-fallback");
-      canvas.style.display = "none";
+      fail();
       return () => {};
     }
 
@@ -66,23 +128,51 @@ export function mount() {
     gl.disable(gl.DEPTH_TEST);
     gl.disable(gl.BLEND);
 
-    // Half-float scene FBO when renderable (original RTT is rgba16f linear).
+    function isWeakGpu() {
+      try {
+        const info = gl.getExtension("WEBGL_debug_renderer_info");
+        const raw = info
+          ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL) || "")
+          : String(gl.getParameter(gl.RENDERER) || "");
+        const n = raw.toLowerCase();
+        return /swiftshader|llvmpipe|softpipe|microsoft basic render|gdi generic|mali-4|mali-t6|mali-t7|adreno 3[0-9]{2}([^0-9]|$)|adreno 4[0-1][0-9]([^0-9]|$)|powervr sgx/.test(
+          n
+        );
+      } catch {
+        return false;
+      }
+    }
+
+    function canUseHalfFloatField() {
+      if (!isGL2 || !gl.RGBA16F || !gl.HALF_FLOAT) return false;
+      try {
+        const t = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, t);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, 4, 4, 0, gl.RGBA, gl.HALF_FLOAT, null);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        const err = gl.getError();
+        gl.deleteTexture(t);
+        return err === gl.NO_ERROR;
+      } catch {
+        return false;
+      }
+    }
+
+    const weakGpu = isWeakGpu();
+    const fieldPacked = !canUseHalfFloatField();
     const extColorHalf = isGL2 ? gl.getExtension("EXT_color_buffer_float") : null;
-    // Field texture: RGBA16F in WebGL2 (filterable core), byte-packed fallback in WebGL1.
-    const fieldPacked = !isGL2;
 
     // —— Preset props (locked) ——
     const SW_DETAIL = 1;
     const SW_BLEND = 50;
     const SW_SPEED = 1;
 
-    const CF_GRID = 128;
+    const CF_GRID = weakGpu ? 96 : 128;
     const CF_RADIUS = 3.5;
     const CF_MOMENTUM = 13;
-    // Design tweaks over the original preset (0.85 / fade ×1):
-    // stronger ink deposits, slower trail decay.
     const CF_INTENSITY = 1.2;
-    const CF_FADE_SCALE = 0.45; // 1 = original decay speed; lower = slower
+    const CF_FADE_SCALE = 0.45;
 
     const FG_ANGLE = 31;
     const FG_FREQ = 8;
@@ -92,13 +182,12 @@ export function mount() {
     const FG_LIGHT = -90;
     const FG_HIGHLIGHT = 0.12;
     const FG_HIGHLIGHT_SOFT = 0.3;
-    const FG_EXP_HI = 8; // rounded shape
+    const FG_EXP_HI = 8;
     const FG_EXP_LO = 3;
 
     const GRAIN_STRENGTH = 0;
     const GRAIN_BIAS = 2;
 
-    // sRGB → linear (matches colorjs srgb-linear used by the original transformColor)
     const s2l = (c) =>
       c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
     const lin = (hex) => {
@@ -126,12 +215,8 @@ void main(){
   gl_Position = vec4(aPos, 0.0, 1.0);
 }`;
 
-    // ═══════════════════════════════════════════════════════════
-    // PASS 1 — Swirl (exact port) + ChromaFlow (exact port),
-    // premultiplied "over" composite in linear space.
-    // ═══════════════════════════════════════════════════════════
     const FRAG_SCENE = `${fieldPacked ? "#define FIELD_PACKED\n" : ""}
-precision highp float;
+precision mediump float;
 varying vec2 vUv;
 uniform sampler2D uField;
 uniform float uSwirlTime;
@@ -141,7 +226,6 @@ uniform vec3 uCfBase, uCfUp, uCfDown, uCfLeft, uCfRight;
 const float SW_DETAIL = ${SW_DETAIL.toFixed(1)};
 const float SW_BLEND = ${SW_BLEND.toFixed(1)};
 
-// Swirl — verbatim port of swirlField (shaders/dist/core/Swirl)
 vec2 swirlField(vec2 uv, float t){
   float freq1 = SW_DETAIL;
   vec2 d1 = vec2(
@@ -176,7 +260,6 @@ vec4 fieldTap(vec2 uv){
   return s;
 }
 
-// ChromaFlow — verbatim port of chromaFlowColor (returns premultiplied rgba)
 vec4 chromaFlow(vec2 uv){
   float px = 1.0 / ${CF_GRID.toFixed(1)};
   vec4 s0 = fieldTap(uv);
@@ -213,23 +296,16 @@ vec4 chromaFlow(vec2 uv){
 }
 
 void main(){
-  // original ctx.uv is y-down (pointer.y = (clientY-top)/height, field rows
-  // y-down); the whole pass works in y-down coords, ported literally
   vec2 uvDown = vec2(vUv.x, 1.0 - vUv.y);
   vec2 f = swirlField(uvDown, uSwirlTime);
   vec3 swirl = mix(uSwirlA, uSwirlB, f.x) * f.y;
   vec4 cf = chromaFlow(uvDown);
-  // premultiplied over
   vec3 scene = cf.rgb + swirl * (1.0 - cf.a);
   gl_FragColor = vec4(scene, 1.0);
 }`;
 
-    // ═══════════════════════════════════════════════════════════
-    // PASS 2 — FlutedGlass (exact port, speed 0 → static flutes)
-    // + FilmGrain + linear→sRGB encode.
-    // ═══════════════════════════════════════════════════════════
     const FRAG_GLASS = `
-precision highp float;
+precision mediump float;
 varying vec2 vUv;
 uniform sampler2D uScene;
 uniform vec2 uRes;
@@ -248,7 +324,6 @@ const float EXP_LO = ${FG_EXP_LO.toFixed(1)};
 const float GRAIN_STRENGTH = ${GRAIN_STRENGTH.toFixed(3)};
 const float GRAIN_BIAS = ${GRAIN_BIAS.toFixed(1)};
 
-// edges: mirror (verbatim edgeMirrorUV)
 vec2 mirrorUV(vec2 uv){
   vec2 m = mod(abs(uv), 2.0);
   return mix(m, 2.0 - m, step(1.0, m));
@@ -261,18 +336,15 @@ vec3 encodeSrgb(vec3 c){
   return mix(lo, hi, step(0.0031308, c));
 }
 
-// FBO is y-up; the original engine works in y-down uv space.
-// Do all geometry in y-down coords (literal port), flip only when sampling.
 vec3 sampleScene(vec2 uvDown){
   vec2 m = mirrorUV(uvDown);
   return texture2D(uScene, vec2(m.x, 1.0 - m.y)).rgb;
 }
 
 void main(){
-  vec2 uv = vec2(vUv.x, 1.0 - vUv.y); // y-down, like ctx.uv in the original
+  vec2 uv = vec2(vUv.x, 1.0 - vUv.y);
   float aspect = uRes.x / max(uRes.y, 1.0);
 
-  // —— flutedGlassGeom (verbatim, t = 0) ——
   float r = ANGLE_DEG * PI / 180.0;
   float cosA = cos(r);
   float sinA = sin(r);
@@ -304,16 +376,13 @@ void main(){
   float fresnelMix = 0.04 + 0.96 * fresnel;
   float spec = pow(nDotH, shininess) * fresnelMix * HIGHLIGHT;
 
-  // RGB split across the refraction direction, mirror edges
   vec3 col;
   col.r = sampleScene(refractedUV + chrOff).r;
   col.g = sampleScene(refractedUV).g;
   col.b = sampleScene(refractedUV - chrOff).b;
 
-  // specular highlight (highlightColor = white, alpha = 1)
   col += vec3(spec);
 
-  // —— FilmGrain (verbatim, static) ——
   float noise = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);
   float grain = noise * 2.0 - 1.0;
   float brightness = clamp(dot(col, vec3(0.2126, 0.7152, 0.0722)), 0.0, 1.0);
@@ -355,8 +424,7 @@ void main(){
     const progScene = link(VERT, FRAG_SCENE);
     const progGlass = link(VERT, FRAG_GLASS);
     if (!progScene || !progGlass) {
-      section.classList.add("hero-shader-fallback");
-      canvas.style.display = "none";
+      fail();
       return () => {};
     }
 
@@ -368,13 +436,11 @@ void main(){
       gl.STATIC_DRAW
     );
 
-    // ─── ChromaFlow field state (rgba16float in the original) ───
     const fieldData = new Float32Array(CF_GRID * CF_GRID * 4);
     const tempField = new Float32Array(CF_GRID * CF_GRID * 4);
     const fieldHalf = fieldPacked ? null : new Uint16Array(CF_GRID * CF_GRID * 4);
     const fieldBytes = fieldPacked ? new Uint8Array(CF_GRID * CF_GRID * 4) : null;
 
-    // Float32 → half-float bits (matches the original toHalfFloat)
     const f32buf = new Float32Array(1);
     const u32buf = new Uint32Array(f32buf.buffer);
     function toHalf(v) {
@@ -421,12 +487,11 @@ void main(){
       }
     }
 
-    // ─── Scene FBO (the layer FlutedGlass refracts) ───
     const sceneTex = gl.createTexture();
     const sceneFbo = gl.createFramebuffer();
     let fullW = 0;
     let fullH = 0;
-    let sceneIsHalfFloat = !!extColorHalf;
+    let sceneIsHalfFloat = !!(extColorHalf && isGL2 && gl.RGBA16F && gl.HALF_FLOAT);
 
     function allocScene(w, h) {
       gl.bindTexture(gl.TEXTURE_2D, sceneTex);
@@ -434,10 +499,16 @@ void main(){
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      if (sceneIsHalfFloat) {
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, w, h, 0, gl.RGBA, gl.HALF_FLOAT, null);
-      } else {
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+      try {
+        if (sceneIsHalfFloat) {
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA16F, w, h, 0, gl.RGBA, gl.HALF_FLOAT, null);
+        } else if (isGL2) {
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+        } else {
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, w, h, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+        }
+      } catch {
+        return false;
       }
       gl.bindFramebuffer(gl.FRAMEBUFFER, sceneFbo);
       gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, sceneTex, 0);
@@ -447,15 +518,18 @@ void main(){
     }
 
     function ensureFull(w, h) {
-      if (w === fullW && h === fullH) return;
+      if (w === fullW && h === fullH) return true;
       fullW = w;
       fullH = h;
       canvas.width = w;
       canvas.height = h;
-      if (!allocScene(w, h) && sceneIsHalfFloat) {
+      if (allocScene(w, h)) return true;
+      if (sceneIsHalfFloat) {
         sceneIsHalfFloat = false;
-        allocScene(w, h);
+        if (allocScene(w, h)) return true;
       }
+      fail();
+      return false;
     }
 
     const locsScene = {
@@ -476,6 +550,18 @@ void main(){
       uRes: gl.getUniformLocation(progGlass, "uRes"),
     };
 
+    gl.useProgram(progScene);
+    gl.uniform1i(locsScene.uField, 0);
+    gl.uniform3fv(locsScene.uSwirlA, SWIRL_A);
+    gl.uniform3fv(locsScene.uSwirlB, SWIRL_B);
+    gl.uniform3fv(locsScene.uCfBase, CF_BASE);
+    gl.uniform3fv(locsScene.uCfUp, CF_UP);
+    gl.uniform3fv(locsScene.uCfDown, CF_DOWN);
+    gl.uniform3fv(locsScene.uCfLeft, CF_LEFT);
+    gl.uniform3fv(locsScene.uCfRight, CF_RIGHT);
+    gl.useProgram(progGlass);
+    gl.uniform1i(locsGlass.uScene, 0);
+
     function drawQuad(aPos) {
       gl.bindBuffer(gl.ARRAY_BUFFER, quad);
       gl.enableVertexAttribArray(aPos);
@@ -483,19 +569,17 @@ void main(){
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
 
-    // ─── ChromaFlow CPU simulation — verbatim port of the original
-    //     onBeforeRender (pointer normalized, y-down like the engine). ───
     let ptrX = 0.5;
     let ptrY = 0.5;
     let prevX = 0.5;
     let prevY = 0.5;
     let mouseVelX = 0;
     let mouseVelY = 0;
-    let lastSimTime = Date.now();
+    let lastSimTime = performance.now();
     let fieldMax = 0;
 
     function stepFlowField(aspect) {
-      const currentTime = Date.now();
+      const currentTime = performance.now();
       const dt = Math.min((currentTime - lastSimTime) / 1000, 0.016);
       lastSimTime = currentTime;
 
@@ -593,60 +677,84 @@ void main(){
       uploadField();
     }
 
-    let raf = 0;
-    let running = true;
-    let visible = true;
     let swirlTime = 0;
     let lastFrame = performance.now();
+    let cssW = Math.max(1, section.clientWidth);
+    let cssH = Math.max(1, section.clientHeight);
+    let resizeTimer = 0;
+    const MAX_SIDE = 1920;
+    const dprCap = weakGpu ? 1.25 : 1.5;
 
-    function draw(now) {
-      if (!running) return;
-      raf = requestAnimationFrame(draw);
-      if (!visible) return;
-
-      const rect = section.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = Math.max(1, Math.floor(rect.width * dpr));
-      const h = Math.max(1, Math.floor(rect.height * dpr));
-      ensureFull(w, h);
-
-      const rawDt = Math.min(0.1, Math.max(0, (now - lastFrame) * 0.001));
-      lastFrame = now;
-      swirlTime += rawDt * SW_SPEED; // Swirl _animTime (speed 1); FlutedGlass speed 0 → static
-      const aspect = w / Math.max(h, 1);
-
-      stepFlowField(aspect);
-
-      // Pass 1: Swirl + ChromaFlow over-composite → FBO (linear space)
-      gl.bindFramebuffer(gl.FRAMEBUFFER, sceneFbo);
-      gl.viewport(0, 0, w, h);
-      gl.useProgram(progScene);
-      gl.activeTexture(gl.TEXTURE0);
-      gl.bindTexture(gl.TEXTURE_2D, fieldTex);
-      gl.uniform1i(locsScene.uField, 0);
-      gl.uniform1f(locsScene.uSwirlTime, swirlTime);
-      gl.uniform3fv(locsScene.uSwirlA, SWIRL_A);
-      gl.uniform3fv(locsScene.uSwirlB, SWIRL_B);
-      gl.uniform3fv(locsScene.uCfBase, CF_BASE);
-      gl.uniform3fv(locsScene.uCfUp, CF_UP);
-      gl.uniform3fv(locsScene.uCfDown, CF_DOWN);
-      gl.uniform3fv(locsScene.uCfLeft, CF_LEFT);
-      gl.uniform3fv(locsScene.uCfRight, CF_RIGHT);
-      drawQuad(locsScene.aPos);
-
-      // Pass 2: FlutedGlass + FilmGrain + sRGB encode → screen
-      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
-      gl.viewport(0, 0, w, h);
-      gl.useProgram(progGlass);
-      gl.activeTexture(gl.TEXTURE0);
-      gl.bindTexture(gl.TEXTURE_2D, sceneTex);
-      gl.uniform1i(locsGlass.uScene, 0);
-      gl.uniform2f(locsGlass.uRes, w, h);
-      drawQuad(locsGlass.aPos);
+    function pickDpr() {
+      const raw = window.devicePixelRatio || 1;
+      return Math.min(raw, dprCap);
     }
 
-    // Literal port of the engine's pointer handler: y-down normalized against
-    // the section rect, tracked globally, NOT clamped to [0,1].
+    function measureCss() {
+      cssW = Math.max(1, section.clientWidth);
+      cssH = Math.max(1, section.clientHeight);
+    }
+
+    function bufferSize() {
+      const dpr = pickDpr();
+      let w = Math.max(1, Math.floor(cssW * dpr));
+      let h = Math.max(1, Math.floor(cssH * dpr));
+      if (w > MAX_SIDE) {
+        h = Math.max(1, Math.floor((h * MAX_SIDE) / w));
+        w = MAX_SIDE;
+      }
+      if (h > MAX_SIDE) {
+        w = Math.max(1, Math.floor((w * MAX_SIDE) / h));
+        h = MAX_SIDE;
+      }
+      return { w, h };
+    }
+
+    function shouldDraw() {
+      return running && visible && !failed && !document.hidden && !gl.isContextLost();
+    }
+
+    function kick() {
+      if (!raf && shouldDraw()) raf = requestAnimationFrame(draw);
+    }
+
+    function draw(now) {
+      raf = 0;
+      if (!shouldDraw()) return;
+      try {
+        const { w, h } = bufferSize();
+        if (!ensureFull(w, h)) return;
+
+        const rawDt = Math.min(0.1, Math.max(0, (now - lastFrame) * 0.001));
+        lastFrame = now;
+        swirlTime += rawDt * SW_SPEED;
+        const aspect = w / Math.max(h, 1);
+
+        stepFlowField(aspect);
+
+        gl.bindFramebuffer(gl.FRAMEBUFFER, sceneFbo);
+        gl.viewport(0, 0, w, h);
+        gl.useProgram(progScene);
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, fieldTex);
+        gl.uniform1f(locsScene.uSwirlTime, swirlTime);
+        drawQuad(locsScene.aPos);
+
+        gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+        gl.viewport(0, 0, w, h);
+        gl.useProgram(progGlass);
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, sceneTex);
+        gl.uniform2f(locsGlass.uRes, w, h);
+        drawQuad(locsGlass.aPos);
+      } catch (err) {
+        console.warn("[hero-wash] draw", err);
+        fail();
+        return;
+      }
+      if (shouldDraw()) raf = requestAnimationFrame(draw);
+    }
+
     function onPointer(e) {
       const rect = section.getBoundingClientRect();
       if (rect.width < 1 || rect.height < 1) return;
@@ -654,8 +762,38 @@ void main(){
       ptrY = (e.clientY - rect.top) / rect.height;
     }
 
+    function onResize() {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        resizeTimer = 0;
+        measureCss();
+        kick();
+      }, 80);
+    }
+
+    function onVisibility() {
+      if (document.hidden) {
+        if (raf) {
+          cancelAnimationFrame(raf);
+          raf = 0;
+        }
+        return;
+      }
+      lastFrame = performance.now();
+      lastSimTime = lastFrame;
+      kick();
+    }
+
+    function onContextLost(e) {
+      e.preventDefault();
+      fail();
+    }
+
     window.addEventListener("pointermove", onPointer, { passive: true });
     window.addEventListener("pointerdown", onPointer, { passive: true });
+    window.addEventListener("resize", onResize, { passive: true });
+    document.addEventListener("visibilitychange", onVisibility);
+    canvas.addEventListener("webglcontextlost", onContextLost, false);
 
     let io = null;
     if (typeof IntersectionObserver !== "undefined") {
@@ -663,22 +801,51 @@ void main(){
         (entries) => {
           entries.forEach((en) => {
             visible = en.isIntersecting;
+            if (visible) {
+              lastFrame = performance.now();
+              lastSimTime = lastFrame;
+              kick();
+            } else if (raf) {
+              cancelAnimationFrame(raf);
+              raf = 0;
+            }
           });
         },
         { threshold: 0.02, rootMargin: "40px" }
       );
       io.observe(section);
+    } else {
+      visible = true;
+    }
+
+    let ro = null;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(onResize);
+      ro.observe(section);
     }
 
     uploadField();
-    raf = requestAnimationFrame(draw);
+    measureCss();
+    kick();
 
     teardown = () => {
       running = false;
-      cancelAnimationFrame(raf);
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+      if (resizeTimer) clearTimeout(resizeTimer);
       window.removeEventListener("pointermove", onPointer);
       window.removeEventListener("pointerdown", onPointer);
+      window.removeEventListener("resize", onResize);
+      document.removeEventListener("visibilitychange", onVisibility);
+      canvas.removeEventListener("webglcontextlost", onContextLost);
       if (io) io.disconnect();
+      if (ro) {
+        try {
+          ro.disconnect();
+        } catch {
+          /* ignore */
+        }
+      }
       try {
         gl.deleteTexture(fieldTex);
         gl.deleteTexture(sceneTex);
@@ -688,20 +855,31 @@ void main(){
         gl.deleteProgram(progGlass);
         const ext = gl.getExtension("WEBGL_lose_context");
         if (ext) ext.loseContext();
-      } catch (e) {
+      } catch {
         /* ignore */
       }
       section.classList.remove("has-hero-shader");
     };
   } catch (err) {
     console.warn("[fx:hero-wash-shader.js]", err);
+    try {
+      const section = document.getElementById("returns-hero");
+      if (section) {
+        section.classList.remove("has-hero-shader");
+        section.classList.add("hero-shader-fallback");
+      }
+      const canvas = document.getElementById("rt-hero-shader");
+      if (canvas) canvas.style.display = "none";
+    } catch {
+      /* ignore */
+    }
   }
 
   return function dispose() {
     if (typeof teardown === "function") {
       try {
         teardown();
-      } catch (e) {
+      } catch {
         /* ignore */
       }
       teardown = null;

@@ -154,7 +154,9 @@ void main(){
     gl.shaderSource(sh, src);
     gl.compileShader(sh);
     if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
-      console.error(gl.getShaderInfoLog(sh));
+      console.warn("[liquid-glass-dock]", gl.getShaderInfoLog(sh));
+      gl.deleteShader(sh);
+      return null;
     }
     return sh;
   }
@@ -403,53 +405,81 @@ void main(){
       }
     }
 
-    var gl = output.getContext("webgl2", {
-      alpha: true,
-      depth: false,
-      stencil: false,
-      antialias: false,
-      premultipliedAlpha: true,
-    });
-    if (!gl || gl.isContextLost()) {
-      status("无 WebGL2");
-      root.classList.add("glass-mode-frosted");
-      return null;
+    var gl = null;
+    try {
+      gl = output.getContext("webgl2", {
+        alpha: true,
+        depth: false,
+        stencil: false,
+        antialias: false,
+        premultipliedAlpha: true,
+        preserveDrawingBuffer: false,
+        failIfMajorPerformanceCaveat: false,
+      });
+    } catch {
+      gl = null;
     }
+    if (gl && gl.isContextLost()) gl = null;
 
-    var vs = compile(gl, gl.VERTEX_SHADER, VERT);
-    var fs = compile(gl, gl.FRAGMENT_SHADER, FRAG);
-    var program = gl.createProgram();
-    gl.attachShader(program, vs);
-    gl.attachShader(program, fs);
-    gl.linkProgram(program);
-    gl.useProgram(program);
-
+    var program = null;
     var uniforms = {};
-    var nU = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
-    for (var i = 0; i < nU; i++) {
-      var info = gl.getActiveUniform(program, i);
-      uniforms[info.name] = gl.getUniformLocation(program, info.name);
+    var quad = null;
+    var tex = null;
+    var scene = null;
+    var sctx = null;
+
+    if (gl) {
+      var vs = compile(gl, gl.VERTEX_SHADER, VERT);
+      var fs = compile(gl, gl.FRAGMENT_SHADER, FRAG);
+      if (!vs || !fs) {
+        gl = null;
+      } else {
+        program = gl.createProgram();
+        gl.attachShader(program, vs);
+        gl.attachShader(program, fs);
+        gl.linkProgram(program);
+        gl.deleteShader(vs);
+        gl.deleteShader(fs);
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+          console.warn("[liquid-glass-dock] link", gl.getProgramInfoLog(program));
+          gl.deleteProgram(program);
+          program = null;
+          gl = null;
+        }
+      }
     }
 
-    var quad = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, quad);
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
-      gl.STATIC_DRAW
-    );
-    gl.enableVertexAttribArray(0);
-    gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+    if (gl && program) {
+      gl.useProgram(program);
+      var nU = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
+      for (var i = 0; i < nU; i++) {
+        var info = gl.getActiveUniform(program, i);
+        uniforms[info.name] = gl.getUniformLocation(program, info.name);
+      }
 
-    var tex = gl.createTexture();
-    gl.bindTexture(gl.TEXTURE_2D, tex);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      quad = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, quad);
+      gl.bufferData(
+        gl.ARRAY_BUFFER,
+        new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
+        gl.STATIC_DRAW
+      );
+      gl.enableVertexAttribArray(0);
+      gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 
-    var scene = document.createElement("canvas");
-    var sctx = scene.getContext("2d", { alpha: false });
+      tex = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+
+      scene = document.createElement("canvas");
+      sctx = scene.getContext("2d", { alpha: false });
+    } else {
+      status("无 WebGL2 · 毛玻璃");
+      root.classList.add("glass-mode-frosted");
+    }
 
     var destroyed = false;
     var running = false;
@@ -501,7 +531,8 @@ void main(){
     }
 
     function syncSize() {
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      if (!gl || !output) return;
+      var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       cssW = Math.max(1, window.innerWidth);
       cssH = Math.max(1, window.innerHeight);
       var w = Math.round(cssW * dpr);
@@ -615,7 +646,7 @@ void main(){
     }
 
     function render() {
-      if (mode !== "liquid" || destroyed) return;
+      if (mode !== "liquid" || destroyed || !gl || !program) return;
       drawScene();
 
       var dpr = output.width / Math.max(cssW, 1);
@@ -665,7 +696,7 @@ void main(){
     }
 
     function start() {
-      if (destroyed || mode !== "liquid") return;
+      if (destroyed || mode !== "liquid" || !gl || !program) return;
       if (running) return;
       running = true;
       requestAnimationFrame(function frame() {
@@ -734,12 +765,15 @@ void main(){
     });
     window.__updateDockTheme = updateDockTheme;
 
-    var ro = new ResizeObserver(function () {
-      syncSize();
-      start();
-    });
-    ro.observe(tabsEl);
-    ro.observe(output);
+    var ro = null;
+    if (typeof ResizeObserver !== "undefined" && tabsEl) {
+      ro = new ResizeObserver(function () {
+        syncSize();
+        start();
+      });
+      ro.observe(tabsEl);
+      if (output) ro.observe(output);
+    }
 
     var api = {
       opts: config,
@@ -752,6 +786,7 @@ void main(){
       },
       setMode: function (m) {
         mode = m || "frosted";
+        if (mode === "liquid" && !gl) mode = "frosted";
         setUiClasses();
         if (mode === "liquid") start();
         else running = false;
@@ -775,7 +810,7 @@ void main(){
         start();
       },
       webglOk: function () {
-        return true;
+        return !!(gl && program);
       },
       htmlInCanvas: false,
       destroy: function () {

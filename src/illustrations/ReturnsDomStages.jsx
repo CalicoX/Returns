@@ -653,6 +653,15 @@ export function DomStagePortal() {
       }
     }
 
+    if (typeof IntersectionObserver === "undefined") {
+      play();
+      return () => {
+        gen += 1;
+        if (raf) cancelAnimationFrame(raf);
+        timers.forEach((id) => window.clearTimeout(id));
+      };
+    }
+
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {
@@ -1006,6 +1015,14 @@ export function DomStageAi() {
       }
     }
 
+    if (typeof IntersectionObserver === "undefined") {
+      play();
+      return () => {
+        gen += 1;
+        timers.forEach((id) => window.clearTimeout(id));
+      };
+    }
+
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {
@@ -1301,6 +1318,15 @@ export function DomStageRecovery() {
       if (isDead()) return;
       setGrown(true);
       setPhase("done");
+    }
+
+    if (typeof IntersectionObserver === "undefined") {
+      play();
+      return () => {
+        gen += 1;
+        timers.forEach((id) => window.clearTimeout(id));
+        if (raf) cancelAnimationFrame(raf);
+      };
     }
 
     const io = new IntersectionObserver(

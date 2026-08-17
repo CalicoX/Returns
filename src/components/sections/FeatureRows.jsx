@@ -29,6 +29,11 @@ export default function FeatureRows() {
     let travel = 1;
     let lastP = -1;
     let raf = 0;
+    let sectionVisible = true;
+    let lenisOff = null;
+    let hookTimer = 0;
+    let hookTimeout = 0;
+    let resizeTimer = 0;
 
     function pinTop() {
       const topbar = document.querySelector(".topbar");
@@ -107,33 +112,91 @@ export default function FeatureRows() {
     }
 
     function onScroll() {
-      if (mq.matches) return;
-      if (panelH < 80) measure();
-      apply(progress());
-    }
-
-    function tick() {
-      raf = requestAnimationFrame(tick);
-      if (mq.matches) return;
-      const p = progress();
-      if (Math.abs(p - lastP) > 0.0005) apply(p);
+      if (mq.matches || !sectionVisible || document.hidden) return;
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        if (panelH < 80) measure();
+        apply(progress());
+      });
     }
 
     function onResize() {
-      measure();
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        resizeTimer = 0;
+        measure();
+        onScroll();
+      }, 80);
+    }
+
+    function listenMq(fn) {
+      if (mq.addEventListener) mq.addEventListener("change", fn);
+      else if (mq.addListener) mq.addListener(fn);
+    }
+    function unlistenMq(fn) {
+      if (mq.removeEventListener) mq.removeEventListener("change", fn);
+      else if (mq.removeListener) mq.removeListener(fn);
+    }
+
+    function hookLenis() {
+      if (lenisOff || !window.__lenis || typeof window.__lenis.on !== "function") return;
+      window.__lenis.on("scroll", onScroll);
+      lenisOff = () => {
+        try {
+          window.__lenis?.off?.("scroll", onScroll);
+        } catch {
+          /* ignore */
+        }
+      };
+    }
+
+    function onVisibility() {
+      if (document.hidden) {
+        if (raf) cancelAnimationFrame(raf);
+        raf = 0;
+        return;
+      }
       onScroll();
     }
 
     measure();
     onScroll();
-    raf = requestAnimationFrame(tick);
+    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
-    mq.addEventListener("change", onResize);
+    document.addEventListener("visibilitychange", onVisibility);
+    listenMq(onResize);
+    hookLenis();
+    hookTimer = window.setInterval(hookLenis, 200);
+    hookTimeout = window.setTimeout(() => clearInterval(hookTimer), 2500);
+
+    let io = null;
+    if (typeof IntersectionObserver !== "undefined") {
+      io = new IntersectionObserver(
+        ([entry]) => {
+          sectionVisible = !!entry?.isIntersecting;
+          if (sectionVisible) onScroll();
+          else if (raf) {
+            cancelAnimationFrame(raf);
+            raf = 0;
+          }
+        },
+        { threshold: 0.01, rootMargin: "80px" }
+      );
+      io.observe(track);
+    }
 
     return () => {
-      cancelAnimationFrame(raf);
+      if (raf) cancelAnimationFrame(raf);
+      clearInterval(hookTimer);
+      clearTimeout(hookTimeout);
+      if (resizeTimer) clearTimeout(resizeTimer);
+      if (lenisOff) lenisOff();
+      window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
-      mq.removeEventListener("change", onResize);
+      document.removeEventListener("visibilitychange", onVisibility);
+      unlistenMq(onResize);
+      if (io) io.disconnect();
       track.style.height = "";
       viewport.style.height = "";
       stack.style.transform = "";

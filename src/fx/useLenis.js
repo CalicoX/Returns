@@ -28,10 +28,27 @@ export function useLenis() {
 
     let raf = 0;
     const frame = (time) => {
+      if (document.hidden) {
+        raf = 0;
+        return;
+      }
       lenis.raf(time);
       raf = requestAnimationFrame(frame);
     };
-    raf = requestAnimationFrame(frame);
+    const kick = () => {
+      if (!raf && !document.hidden) raf = requestAnimationFrame(frame);
+    };
+    kick();
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        if (raf) cancelAnimationFrame(raf);
+        raf = 0;
+        return;
+      }
+      kick();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
 
     const onScroll = () => {
       if (typeof window.__updateAiScroll === "function") {
@@ -41,6 +58,7 @@ export function useLenis() {
     lenis.on("scroll", onScroll);
 
     return () => {
+      document.removeEventListener("visibilitychange", onVisibility);
       cancelAnimationFrame(raf);
       try {
         lenis.off("scroll", onScroll);

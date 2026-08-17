@@ -448,6 +448,11 @@ export default function StatsRow() {
       return undefined;
     }
 
+    if (typeof IntersectionObserver === "undefined") {
+      setAccentIn(true);
+      return undefined;
+    }
+
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {

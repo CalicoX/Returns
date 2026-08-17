@@ -75,6 +75,17 @@
 
 ---
 
+## 整页兼容（2026-08-17）
+
+Park：最大兼容，但效果与动画保持、不卡。不要用「更多设备关 shader / 砍动画」交差。
+
+- **减动效约定不变**：`__reduceFx` / 窄屏 / `prefers-reduced-motion` 仍按现有门闩。不要再扩一圈「弱设备直接关」。
+- **Hero shader**：WebGL1 能跑通（byte-packed 流场 + RGBA8 FBO）；WebGL2 / RGBA16F 仅探测后可选。fragment `mediump`。context lost / 编译失败 → `hero-shader-fallback`，不抛错。DPR cap 1.5（弱 GPU 1.25）；画布长边 ≤1920；离屏与 `document.hidden` 停 rAF；resize debounce。弱 GPU 流场 96，其余 128。色板仍是青绿，无 FilmGrain。
+- **滚动**：Lenis 切标签停 rAF，回来继续。Feature sticky 跟滚动/Lenis 合帧，不要整页常驻 rAF。
+- **Dock**：Returns 用 frosted；无 WebGL2 / 编译失败仍走毛玻璃，不要白屏。
+- **CSS**：`100vh` 写在 `100dvh` 前面；无 `backdrop-filter` 时玻璃卡白底更实。不要改 `landing.css`。
+- **插图**：无 IntersectionObserver 时演示仍要播；不要改 Hero 构图，悬停仍不暂停自动演示。
+
 ## 工程教训
 
 - 本地曾不是 git 仓库；远程 `CalicoX/Returns` 从空仓推上，默认 `main`。

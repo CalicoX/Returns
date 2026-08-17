@@ -758,6 +758,7 @@
 .rt-feature-media {
   position: relative;
   min-width: 0;
+  height: min(560px, calc(100vh - var(--topbar-h, 64px) - 96px));
   height: min(560px, calc(100dvh - var(--topbar-h, 64px) - 96px));
   min-height: 280px;
   overflow: visible;
@@ -4556,12 +4557,17 @@
 .rt-feature-scroll {
   position: relative;
   height: calc(
+    (100vh - var(--rt-feature-pin)) + (var(--rt-feature-n) - 1) *
+      (100vh - var(--rt-feature-pin) + var(--rt-feature-gap))
+  );
+  height: calc(
     (100dvh - var(--rt-feature-pin)) + (var(--rt-feature-n) - 1) *
       (100dvh - var(--rt-feature-pin) + var(--rt-feature-gap))
   );
 }
 
 .rt-feature-sticky {
+  position: -webkit-sticky;
   position: sticky;
   top: var(--rt-feature-pin);
   height: calc(100vh - var(--rt-feature-pin));
@@ -5470,5 +5476,22 @@
     right: 8px;
     bottom: 12px;
     width: min(70%, 240px);
+  }
+}
+
+/* 旧引擎：无 backdrop-filter 时白底更实，卡片仍可读；不关动画 */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .returns-page .rt-glass-card,
+  .returns-page .rt-portal-mail,
+  .returns-page .rt-wf-rule.is-in:first-child,
+  .returns-page .rt-rate-card {
+    background: rgba(255, 255, 255, 0.94);
+  }
+}
+
+/* 无 aspect-ratio 时用 padding 撑出运单比例 */
+@supports not (aspect-ratio: 1) {
+  .rt-ship-label {
+    min-height: 380px;
   }
 }

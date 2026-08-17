@@ -34,7 +34,7 @@ export function mount() {
       alpha: false,
       antialias: false,
     });
-  if (!gl) return;
+  if (!gl || (gl.isContextLost && gl.isContextLost())) return;
 
   var VERT =
     "attribute vec2 aPos;\n" +
@@ -234,9 +234,9 @@ export function mount() {
   }
 
   function frame(now) {
-    if (!visible) {
+    if (!visible || document.hidden || (gl.isContextLost && gl.isContextLost())) {
       running = false;
-      releaseBackbuffer();
+      if (!visible) releaseBackbuffer();
       return;
     }
     requestAnimationFrame(frame);
@@ -250,10 +250,30 @@ export function mount() {
   }
 
   function start() {
-    if (running || !visible) return;
+    if (running || !visible || document.hidden) return;
+    if (gl.isContextLost && gl.isContextLost()) return;
     running = true;
     lastDraw = 0;
     requestAnimationFrame(frame);
+  }
+
+  function onContextLost(e) {
+    e.preventDefault();
+    running = false;
+    visible = false;
+    try {
+      canvas.style.display = "none";
+    } catch {
+      /* ignore */
+    }
+  }
+
+  function onVisibility() {
+    if (document.hidden) {
+      running = false;
+      return;
+    }
+    if (visible) start();
   }
 
   var io = null;
@@ -281,6 +301,8 @@ export function mount() {
     if (visible) resize();
   }
   window.addEventListener("resize", onResize, { passive: true });
+  document.addEventListener("visibilitychange", onVisibility);
+  canvas.addEventListener("webglcontextlost", onContextLost, false);
 
   teardown = function () {
     running = false;
@@ -293,6 +315,8 @@ export function mount() {
       }
     }
     window.removeEventListener("resize", onResize);
+    document.removeEventListener("visibilitychange", onVisibility);
+    canvas.removeEventListener("webglcontextlost", onContextLost);
     try {
       releaseBackbuffer();
     } catch {

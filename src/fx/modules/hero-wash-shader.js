@@ -6,8 +6,8 @@
  *   Pass 2 (screen): FlutedGlass refraction + linear→sRGB
  *
  * 色板跟 Returns 青绿（H4），不要 API 的紫 / 蓝 / 橙：
- *   Swirl:      #FFFFFF / #e9f2ee（对齐 API #EBEBEB 的明度、带青绿倾向；
- *               近白 #f7fffc 静止时几乎看不见，Park 2026-08-17 要求可见）
+ *   Swirl:      #FFFFFF / #f0f7f3（带青绿倾向；#f7fffc 静止时几乎看不见，
+ *               #e9f2ee 又太亮抢插图，Park 2026-08-17 两轮调到中间值）
  *   ChromaFlow: base #FFFFFF
  *               up #99f6e4 · right #0f766e · down #14b8a6
  *               left #0d9488（替换 API 橙色 #FF3805）
@@ -202,7 +202,7 @@ export function mount() {
     };
 
     const SWIRL_A = lin("#FFFFFF");
-    const SWIRL_B = lin("#e9f2ee");
+    const SWIRL_B = lin("#f0f7f3");
     const CF_BASE = lin("#FFFFFF");
     const CF_UP = lin("#99f6e4");
     const CF_DOWN = lin("#14b8a6");

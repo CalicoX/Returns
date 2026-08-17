@@ -13,7 +13,7 @@
 | **H2** | Hero 插图 | 人像照片 + 三张玻璃浮卡（商品 / 原因 / 方式）+ 假鼠标自动演示。禁止退回 Safari 门户。 |
 | **H3** | 自动演示 | 假鼠标循环：外套 → 原因 → Green Return。**悬停只做 3D 倾斜，禁止暂停演示。** |
 | **H4** | 主题色 | 青绿 `#0d9488` / `#14b8a6` / `#0f766e`，对齐定价「订阅」按钮。 |
-| **H5** | Hero 背景 | API 同款自研 WebGL（Swirl + ChromaFlow + FlutedGlass），**不走 npm `shaders` 包**。青绿：left `#0d9488`（替换 API 橙 `#FF3805`）、down `#14b8a6`、right `#0f766e`、up `#99f6e4`。**不要 FilmGrain**（白底发脏）；Swirl 副色 `#e9f2ee`（2026-08-17：近白 `#f7fffc` 静止时几乎看不见，Park 要求对齐 API `#EBEBEB` 的可见度，带青绿倾向）。窄屏 / 减动效用静态青绿渐变。 |
+| **H5** | Hero 背景 | API 同款自研 WebGL（Swirl + ChromaFlow + FlutedGlass），**不走 npm `shaders` 包**。青绿：left `#0d9488`（替换 API 橙 `#FF3805`）、down `#14b8a6`、right `#0f766e`、up `#99f6e4`。**不要 FilmGrain**（白底发脏）；Swirl 副色 `#f0f7f3`（2026-08-17 两轮调出：近白 `#f7fffc` 静止时几乎看不见；`#e9f2ee` 又太亮抢插图，最终取中间值——静止可见、不压插图）。窄屏 / 减动效用静态青绿渐变。 |
 
 ---
 

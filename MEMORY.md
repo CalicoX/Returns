@@ -35,6 +35,13 @@
 - 画布 1440 · 左右 gutter 48（`returns-page.css` 顶部变量）。
 - Hero 栅格：文案列 `minmax(0, 500px)`，插图列吃剩余并右对齐。
 - Returns 专属覆盖写 `src/styles/returns-page.css`；共享壳/动效在 `src/styles/landing.css` 与 `src/fx/`。
+- Stats 四象限底部边距比顶部多留一截（2026-08-17 Park）：`--rt-stats-gap-bottom = gap-y + 64px`（≤960 收成 +44px），别改回上下对称。
+
+## ROI 区背景动效（2026-08-17）
+
+- Park 要「淡淡的」背景动画：`.rt-roi::before/::after` 两团青绿 radial 光晕，纯 CSS keyframes（transform + opacity，26s/34s 呼吸漂移），**无 rAF、无新 fx 模块**。
+- 必须淡（alpha ≤0.1），不抢白字/输入框。降级：`prefers-reduced-motion` 与 `html.is-reduce-fx`（`responsive-fx.js` 挂的类，含 ≤768）停动画留静态光晕。
+- ROI 区没有挂任何 WebGL 背景模块，别再叠一层 shader。
 
 ## 响应式断点（2026-08-17）
 

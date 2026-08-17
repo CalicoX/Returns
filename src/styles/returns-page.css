@@ -3364,6 +3364,8 @@
    * 上下边距按屏高；整体再略收窄收矮（含标题）
    */
   --rt-stats-gap-y: clamp(48px, 12vh, 148px);
+  /* Park 2026-08-17：底部与下一区块（ROI）之间再多留一口气 */
+  --rt-stats-gap-bottom: calc(var(--rt-stats-gap-y) + 64px);
   /* 四象限整体再略加高，单格更舒展 */
   --rt-stats-h: min(900px, calc(100vh - 2 * var(--rt-stats-gap-y) - 6vh));
   --rt-stats-h: min(900px, calc(100dvh - 2 * var(--rt-stats-gap-y) - 6vh));
@@ -3371,7 +3373,7 @@
   position: relative;
   box-sizing: border-box;
   margin-top: var(--rt-stats-gap-y);
-  margin-bottom: var(--rt-stats-gap-y);
+  margin-bottom: var(--rt-stats-gap-bottom);
   margin-left: 0;
   margin-right: 0;
   padding: 0;
@@ -4201,18 +4203,91 @@
 /* 保证上下边距不被其它 section 规则清掉 */
 .returns-page .rt-stats {
   margin-top: var(--rt-stats-gap-y, clamp(48px, 12vh, 148px));
-  margin-bottom: var(--rt-stats-gap-y, clamp(48px, 12vh, 148px));
+  margin-bottom: var(--rt-stats-gap-bottom, clamp(112px, calc(12vh + 64px), 212px));
 }
 
 /* —— ROI calculator —— */
 /* —— ROI Calculator：深灰 · 上结果 / 下滑杆 —— */
 .rt-roi {
+  position: relative;
+  /* 让 ::before/::after 的 z-index:-1 垫在内容下、又不掉到页面底下 */
+  isolation: isolate;
+  overflow: hidden;
   padding: clamp(96px, 12vh, 140px) 0;
   background:
     radial-gradient(ellipse 70% 55% at 18% 20%, rgba(13, 148, 136, 0.07), transparent 58%),
     radial-gradient(ellipse 55% 45% at 88% 70%, rgba(255, 255, 255, 0.03), transparent 55%),
     #141414;
   color: #e2e8f0;
+}
+
+/*
+ * 背景微动效（Park 2026-08-17）：两团青绿光晕缓慢漂移 + 呼吸。
+ * 纯 CSS（transform/opacity keyframes），无 rAF；必须「淡」，不抢白字与输入框。
+ * 降级：prefers-reduced-motion 或 html.is-reduce-fx（含 ≤768 窄屏）时停动画，
+ * 留静态光晕，与原静态背景观感一致。
+ */
+.rt-roi::before,
+.rt-roi::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.rt-roi::before {
+  width: min(900px, 74vw);
+  aspect-ratio: 1;
+  left: -12%;
+  top: -28%;
+  background: radial-gradient(circle, rgba(13, 148, 136, 0.1), transparent 62%);
+  animation: rt-roi-glow-a 26s ease-in-out infinite;
+}
+
+.rt-roi::after {
+  width: min(760px, 64vw);
+  aspect-ratio: 1;
+  right: -14%;
+  bottom: -34%;
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.07), transparent 60%);
+  animation: rt-roi-glow-b 34s ease-in-out infinite;
+}
+
+@keyframes rt-roi-glow-a {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate3d(6%, 5%, 0) scale(1.12);
+    opacity: 1;
+  }
+}
+
+@keyframes rt-roi-glow-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1.08);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translate3d(-5%, -6%, 0) scale(1);
+    opacity: 0.5;
+  }
+}
+
+html.is-reduce-fx .rt-roi::before,
+html.is-reduce-fx .rt-roi::after {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rt-roi::before,
+  .rt-roi::after {
+    animation: none;
+  }
 }
 
 .rt-roi-inner {
@@ -5371,8 +5446,10 @@
     --rt-stats-h: min(820px, calc(100vh - 2 * var(--rt-stats-gap-y) - 6vh));
     --rt-stats-h: min(820px, calc(100dvh - 2 * var(--rt-stats-gap-y) - 6vh));
     --rt-stats-w: min(1100px, 100%);
+    /* 窄屏底部增量收小，保持节奏 */
+    --rt-stats-gap-bottom: calc(var(--rt-stats-gap-y) + 44px);
     margin-top: var(--rt-stats-gap-y);
-    margin-bottom: var(--rt-stats-gap-y);
+    margin-bottom: var(--rt-stats-gap-bottom);
     height: var(--rt-stats-h);
     min-height: var(--rt-stats-h);
     max-height: var(--rt-stats-h);

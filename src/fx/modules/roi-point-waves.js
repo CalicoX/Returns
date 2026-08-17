@@ -6,16 +6,16 @@
  *     ← Surface3D( DotGrid( dotSize ← LinearGradient 亮度 map ) )
  *
  * 复刻管线（与原引擎 compute→fragment 架构一致）：
- *   Pass 1 (MRT, ≤1600 长边):  分形高度场 raymarch → uvMask(RGBA16F) + lit(RGBA16F)
+ *   Pass 1 (MRT, ≤1024 长边):  分形高度场 raymarch → uvMask(32F) + lit + UV 雅可比
  *   Pass 2 (全分辨率):         mirror 边缘 + 渐变亮度驱动 DotGrid + 光照合成 + sRGB
- *   CPU:                       256² 波动方程鼠标涟漪（verbatim propagate kernel）
+ *   （鼠标涟漪交互已按 Park 要求移除，见下方波场纹理注释）
  *
  * 预设参数（Point Waves 1；guide 给区间的取中值）：
  *   Surface3D: amp .3 · freq 1.5 · octaves 2(fractal+域扭曲) · speed .5
  *              tilt 70° · roll 0 · zoom 1.05 · farCutoff .105 · edges mirror
- *              lighting 30→1.05 · highlights 15→.6 · light(.4,-.6,.7)
- *   DotGrid:   density 57 · dotSize = 渐变亮度×0.21（白在底黑在顶）· 白点
- *   底色:      面板同色 #141414（原 #080808）；点透明度 ×0.62 —— Park 要「稍微淡一点」
+ *              lighting 30→1.05 · highlights 减半 · light(.4,-.6,.7)
+ *   DotGrid:   density 57 · dotSize = 渐变亮度×0.14 · 白点（屏幕空间正圆判定）
+ *   底色:      面板同色 #141414（原 #080808）；点透明度 ×0.38 —— Park 调淡两轮
  *
  * 兼容：需要 WebGL2 + EXT_color_buffer_float（整数位运算哈希 + 16F MRT）。
  * 不满足 / 弱 GPU / 减动效 / 窄屏 → 不挂载，保留现有静态背景与 CSS 光晕。
@@ -111,22 +111,10 @@ export function mount() {
     const DOT_OUT_MAX = 0.14; // 原预设 0.21；Park：圆点太大 → 缩小
     const DOT_FADE = 0.38; // Park 两轮：淡一点(0.62) → 还是太亮(0.38)
 
-    // 鼠标涟漪（Surface3D 默认 cursorIntensity 1 / cursorSpeed .5）
+    // 波场（涟漪交互已禁用，仅保留 shader 采样路径所需常量）
     const WAVE_GRID = 256;
-    const WAVE_MAX = WAVE_GRID - 1;
     const WAVE_HALFEXTENT = 3;
     const CURSOR_INTENSITY = 1;
-    const WAVE_SPEED = 0.5;
-    const WAVE_DECAY = 10;
-    const WAVE_DECAY_PER_STEP = 0.004;
-    const WAVE_DAMP = 1 - WAVE_DECAY * WAVE_DECAY_PER_STEP;
-    const WAVE_SETTLE_MS = Math.min(
-      3e4,
-      (Math.log(1e-6) / Math.log(Math.max(WAVE_DAMP, 0.001))) * 16.67
-    );
-    const CURSOR_WAVE_BOUND = 6;
-    const WAVE_RADIUS = 0.025;
-    const WAVE_DT = 0.016;
 
     // 原 COMPUTE_MAX 桌面 1600（WebGPU compute）。WebGL fragment 跑同样的
     // raymarch 数学更贵：M2 Pro 实测 1600@60fps 只有 ~12fps。降到 1024 +
@@ -518,27 +506,11 @@ void main(){
       gl.STATIC_DRAW
     );
 
-    // ═══ 鼠标涟漪 CPU 波动方程（makePropagateKernel verbatim） ═══
+    // ═══ 波场纹理 ═══
+    // Park 2026-08-17：鼠标划过抖动太厉害 → 移除涟漪交互（指针监听 +
+    // CPU 波动方程整段删掉）。纹理保留全零，shader 的 uCursorActive 恒为 0。
     const CELLS = WAVE_GRID * WAVE_GRID;
-    let bufA = new Float32Array(CELLS);
-    let bufB = new Float32Array(CELLS);
     const waveHalf = new Uint16Array(CELLS);
-    const f32buf = new Float32Array(1);
-    const u32buf = new Uint32Array(f32buf.buffer);
-    function toHalf(v) {
-      f32buf[0] = v;
-      const x = u32buf[0];
-      const sign = (x >>> 16) & 0x8000;
-      const exp = (x >>> 23) & 0xff;
-      let mant = x & 0x7fffff;
-      if (exp < 103) return sign;
-      if (exp > 142) return sign | 0x7c00;
-      if (exp < 113) {
-        mant |= 0x800000;
-        return sign | ((mant >> (126 - exp)) + ((mant >> (125 - exp)) & 1));
-      }
-      return sign | ((exp - 112) << 10) | (mant >> 13);
-    }
 
     const waveTex = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, waveTex);
@@ -549,53 +521,6 @@ void main(){
     gl.pixelStorei(gl.UNPACK_ALIGNMENT, 2);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.R16F, WAVE_GRID, WAVE_GRID, 0, gl.RED, gl.HALF_FLOAT, waveHalf);
     gl.pixelStorei(gl.UNPACK_ALIGNMENT, 4);
-
-    function uploadWave(src) {
-      for (let k = 0; k < CELLS; k++) waveHalf[k] = toHalf(src[k]);
-      gl.bindTexture(gl.TEXTURE_2D, waveTex);
-      gl.pixelStorei(gl.UNPACK_ALIGNMENT, 2);
-      gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, WAVE_GRID, WAVE_GRID, gl.RED, gl.HALF_FLOAT, waveHalf);
-      gl.pixelStorei(gl.UNPACK_ALIGNMENT, 4);
-    }
-
-    // propagate：readSrc=cur, writeBuf=prev(被覆写为 next)。damp/k2/注入/clamp 全 verbatim
-    function stepWave(mouseSpeed, cwx, cwy) {
-      const cur = bufA;
-      const prevBuf = bufB;
-      const damp = 1 - WAVE_DECAY * WAVE_DECAY_PER_STEP;
-      const k2 = 0.5 * WAVE_SPEED * WAVE_SPEED;
-      const injecting = mouseSpeed > 0.01;
-      const influenceRadius = WAVE_RADIUS * 3;
-      const infRadSq = influenceRadius * influenceRadius;
-      const radSq = Math.max(WAVE_RADIUS * WAVE_RADIUS, 1e-4);
-      for (let cy = 1; cy < WAVE_MAX; cy++) {
-        const row = cy * WAVE_GRID;
-        for (let cx = 1; cx < WAVE_MAX; cx++) {
-          const idx = row + cx;
-          const center = cur[idx];
-          const sum = cur[idx - 1] + cur[idx + 1] + cur[idx - WAVE_GRID] + cur[idx + WAVE_GRID];
-          const lap = sum - center * 4;
-          let next = (center * 2 + lap * k2 - prevBuf[idx]) * damp;
-          if (injecting) {
-            const cellU = (cx + 0.5) / WAVE_GRID;
-            const cellV = (cy + 0.5) / WAVE_GRID;
-            const ddx = cellU - cwx;
-            const ddy = cellV - cwy;
-            const distSq = ddx * ddx + ddy * ddy;
-            if (distSq < infRadSq) {
-              const influence = Math.exp(-distSq / radSq);
-              next -= influence * mouseSpeed * WAVE_DT * 3;
-            }
-          }
-          if (next > CURSOR_WAVE_BOUND) next = CURSOR_WAVE_BOUND;
-          else if (next < -CURSOR_WAVE_BOUND) next = -CURSOR_WAVE_BOUND;
-          prevBuf[idx] = next;
-        }
-      }
-      bufA = prevBuf;
-      bufB = cur;
-      uploadWave(bufA);
-    }
 
     // ═══ Pass 1 MRT 目标 ═══
     const uvMaskTex = gl.createTexture();
@@ -675,43 +600,11 @@ void main(){
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
 
-    // ═══ 指针（原 pointer verbatim：对 section 归一化 y-down，不 clamp） ═══
-    let ptrX = 0.5;
-    let ptrY = 0.5;
-    let prevX = 0.5;
-    let prevY = 0.5;
-    let lastActive = 0;
     let animT = 0;
     let lastFrame = performance.now();
     let cssW = Math.max(1, section.clientWidth);
     let cssH = Math.max(1, section.clientHeight);
     let resizeTimer = 0;
-
-    function onPointer(e) {
-      const rect = section.getBoundingClientRect();
-      if (rect.width < 1 || rect.height < 1) return;
-      ptrX = (e.clientX - rect.left) / rect.width;
-      ptrY = (e.clientY - rect.top) / rect.height;
-    }
-
-    // 指针 → 地面交点 → 波场 UV（writeParams cursor 段 verbatim）
-    function cursorWaveUV(aspect) {
-      const cNdcX = (ptrX - 0.5) * 2 * aspect;
-      const cNdcY = -(ptrY - 0.5) * 2;
-      const rd = norm3([
-        fwd[0] * FOCAL + camRight[0] * cNdcX + camUp[0] * cNdcY,
-        fwd[1] * FOCAL + camRight[1] * cNdcX + camUp[1] * cNdcY,
-        fwd[2] * FOCAL + camRight[2] * cNdcX + camUp[2] * cNdcY,
-      ]);
-      const cRayDownZ = Math.max(-rd[2], 0.001);
-      const cT0 = camPos[2] / cRayDownZ;
-      const wx = camPos[0] + rd[0] * cT0;
-      const wy = camPos[1] + rd[1] * cT0;
-      return [
-        ((wx * 0.5 + 0.5) - 0.5) / WAVE_HALFEXTENT + 0.5,
-        ((wy * 0.5 + 0.5) - 0.5) / WAVE_HALFEXTENT + 0.5,
-      ];
-    }
 
     function measure() {
       cssW = Math.max(1, section.clientWidth);
@@ -767,20 +660,9 @@ void main(){
         animT += dt * SURF_SPEED;
         const aspect = w / Math.max(h, 1);
 
-        // 指针速度 + 涟漪模拟（settle 后停算）
-        const velX = dt > 0 ? (ptrX - prevX) / dt : 0;
-        const velY = dt > 0 ? (ptrY - prevY) / dt : 0;
-        prevX = ptrX;
-        prevY = ptrY;
-        const mouseSpeed = Math.min(Math.hypot(velX, velY), 2);
-        if (mouseSpeed > 0.01) lastActive = now;
-        const cursorActive = now - lastActive < WAVE_SETTLE_MS ? 1 : 0;
-        if (cursorActive) {
-          const [cwx, cwy] = cursorWaveUV(aspect);
-          stepWave(mouseSpeed, cwx, cwy);
-        }
-        const envelope =
-          AMP + HEIGHT_SLAB_PAD + (cursorActive ? CURSOR_INTENSITY * 0.05 * CURSOR_WAVE_BOUND : 0);
+        // 涟漪交互已禁用（Park）：cursorActive 恒 0，shader 跳过波场采样
+        const cursorActive = 0;
+        const envelope = AMP + HEIGHT_SLAB_PAD;
 
         // Pass 1: raymarch → uvMask + lit
         gl.bindFramebuffer(gl.FRAMEBUFFER, marchFbo);
@@ -842,8 +724,6 @@ void main(){
       fail();
     }
 
-    window.addEventListener("pointermove", onPointer, { passive: true });
-    window.addEventListener("pointerdown", onPointer, { passive: true });
     window.addEventListener("resize", onResize, { passive: true });
     document.addEventListener("visibilitychange", onVisibility);
     canvas.addEventListener("webglcontextlost", onContextLost, false);
@@ -874,7 +754,6 @@ void main(){
       ro.observe(section);
     }
 
-    uploadWave(bufA);
     measure();
     kick();
 
@@ -883,8 +762,6 @@ void main(){
       if (raf) cancelAnimationFrame(raf);
       raf = 0;
       if (resizeTimer) clearTimeout(resizeTimer);
-      window.removeEventListener("pointermove", onPointer);
-      window.removeEventListener("pointerdown", onPointer);
       window.removeEventListener("resize", onResize);
       document.removeEventListener("visibilitychange", onVisibility);
       if (canvas) canvas.removeEventListener("webglcontextlost", onContextLost);

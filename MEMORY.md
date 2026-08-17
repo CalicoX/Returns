@@ -41,7 +41,7 @@
 
 - CSS 层：`.rt-roi::before/::after` 两团青绿 radial 光晕，纯 CSS keyframes（26s/34s 呼吸漂移）。必须淡（alpha ≤0.1），不抢白字/输入框。
 - WebGL 层（同日 Park 追加）：shaders.com **Point Waves 1**（preset 569774bc）自研复刻 `src/fx/modules/roi-point-waves.js`，**不走 npm `shaders` 包**。配方来自页面 payload：SolidColor ← Surface3D(DotGrid ← LinearGradient 亮度 map)。关键参数：density 57 · amp .3 · freq 1.5 · octaves 2 · tilt 70° · zoom 1.05 · farCutoff .105 · light(.4,-.6,.7)。
-- Park 两轮口味调整（勿回退）：dotSize=亮度×**0.14**（原 .21，嫌大）· 点透明度 ×**0.38**（0.62 仍嫌亮）· 高光 ×0.02（原 ×0.04）· 底色面板同色 `#141414`。
+- Park 三轮口味调整（勿回退）：dotSize=亮度×**0.14**（原 .21，嫌大）· 点透明度 ×**0.30**（0.62→0.38→0.30，两次嫌亮）· 高光 ×0.02（原 ×0.04）· 底色面板同色 `#141414` · **点屏幕半径封顶 CSS 2.6px**（近景大点会被波面畸变拉成不规则团块，封顶后畸变无放大空间，轮廓处导数异常也只会缩没不会成团）。
 - **圆点判定改屏幕空间**（Park「不够圆」）：原版在贴附网格空间量 fract 距离，透视把点剪成斜杠（官方缩略图同样）。现用 Pass1 输出的 UV 雅可比（第三个 MRT 目标）逆变换到屏幕像素距离，点恒为正圆、半径按 √|detJ| 随距离衰减。两个坑：① 雅可比必须在 Pass1 全精度里 dFdx，别在半精度纹理上取 fwidth（量化噪声=雪花）；② uvMask 目标必须 **RGBA32F + NEAREST + shader 手动双线性**（32F 线性过滤是 OES_texture_float_linear 扩展；半精度 UV 的 ~5e-4 量化在点判定里是可见毛边）。
 - 复刻架构：Pass1 raymarch（MRT×3：uvMask 32F + lit/jac 16F，内部长边 ≤**1024**）→ Pass2 全分辨率点阵合成。**需要 WebGL2 + EXT_color_buffer_float**（MaterialX 整数哈希要 uint 位运算）；不支持 / 弱 GPU / 减动效 / ≤768 → 不挂载，CSS 光晕就是降级。
 - **鼠标涟漪交互已删**（Park 同日：「划过抖动太厉害，禁止鼠标滑动动画」）：指针监听 + 256² CPU 波动方程整段移除，shader 的 uCursorActive 恒 0、波场纹理保留全零。只留 animT 驱动的自动波浪。别加回来。

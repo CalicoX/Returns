@@ -109,7 +109,9 @@ export function mount() {
 
     const DENSITY = 57;
     const DOT_OUT_MAX = 0.14; // 原预设 0.21；Park：圆点太大 → 缩小
-    const DOT_FADE = 0.38; // Park 两轮：淡一点(0.62) → 还是太亮(0.38)
+    const DOT_FADE = 0.3; // Park 三轮：0.62 → 0.38 → 还是亮 → 0.30
+    // Park：近景大点会被波面畸变拉歪（不规则团块）→ 屏幕半径封顶，CSS px
+    const DOT_MAX_RADIUS_CSS = 2.6;
 
     // 波场（涟漪交互已禁用，仅保留 shader 采样路径所需常量）
     const WAVE_GRID = 256;
@@ -375,6 +377,7 @@ uniform sampler2D uLit;
 uniform sampler2D uJac;
 uniform vec2 uRes;
 uniform float uJacScale; // Pass1 像素 → Pass2 像素的导数换算（cw / w）
+uniform float uDotMaxPx; // 点半径上限（设备像素）：抑制近景畸变团块
 vec3 encodeSrgb(vec3 c){
   c = clamp(c, 0.0, 1.0);
   vec3 lo = c * 12.92;
@@ -409,9 +412,10 @@ float dotGridAlpha(vec2 uv, vec4 jac, vec2 viewport, float density, float dotSiz
   // Δp = J⁻¹·d：回到该 cell 中心所需的屏幕位移（像素）
   vec2 dp = vec2(gy.y * d.x - gy.x * d.y, -gx.y * d.x + gx.x * d.y) / det;
   float s = sqrt(abs(det));
-  float centerDistance = length(dp) * s;
-  float pixelSize = s;
-  return 1.0 - smoothstep(dotSize * 0.5 - pixelSize * 0.5, dotSize * 0.5, centerDistance);
+  // 半径封顶（设备像素）：近景点不放大 → 波面畸变没有可见空间；
+  // 轮廓处 s 异常时点自然缩没，不会变成不规则团块
+  float rPx = min(dotSize * 0.5 / s, uDotMaxPx);
+  return 1.0 - smoothstep(rPx - 0.5, rPx, length(dp));
 }
 // uvMask 是 RGBA32F + NEAREST（32F 线性过滤是扩展），手动双线性
 vec4 sampleUvMask(vec2 uv){
@@ -584,6 +588,7 @@ void main(){
       uJac: gl.getUniformLocation(progDots, "uJac"),
       uRes: gl.getUniformLocation(progDots, "uRes"),
       uJacScale: gl.getUniformLocation(progDots, "uJacScale"),
+      uDotMaxPx: gl.getUniformLocation(progDots, "uDotMaxPx"),
     };
 
     gl.useProgram(progMarch);
@@ -688,6 +693,7 @@ void main(){
         gl.bindTexture(gl.TEXTURE_2D, jacTex);
         gl.uniform2f(locsDots.uRes, w, h);
         gl.uniform1f(locsDots.uJacScale, cw / w);
+        gl.uniform1f(locsDots.uDotMaxPx, DOT_MAX_RADIUS_CSS * (w / Math.max(cssW, 1)));
         drawQuad(locsDots.aPos);
         gl.activeTexture(gl.TEXTURE0);
       } catch (err) {

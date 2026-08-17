@@ -42,19 +42,20 @@ export function mount() {
       var h = el.getBoundingClientRect().height || 44;
       var radius = Math.round(h / 2);
 
+      /* 2px 描边 + 高不透明度：1px/0.5 档在青绿底上肉眼看不出 */
       window.mountBorderBeam(el, {
         id: "rt-hero-cta-" + i,
         theme: "dark",
         colorVariant: "teal",
         borderRadius: radius,
-        borderWidth: 1,
+        borderWidth: 2,
         duration: 2.05,
-        brightness: 1.5,
+        brightness: 1.6,
         saturation: 1.35,
         strength: 1,
-        strokeOpacity: 0.52,
-        innerOpacity: 0.55,
-        bloomOpacity: 0.42,
+        strokeOpacity: 0.95,
+        innerOpacity: 0.75,
+        bloomOpacity: 0.65,
         hueRange: 10,
         active: true,
       });

@@ -31,7 +31,8 @@
 ## Hero CTA（2026-08-17）
 
 - **阴影只向下投**：`.returns-page .btn-switch` 的外阴影要满足 offset ≥ blur − |spread|（现为 `0 2px 3px -1px`，hover `0 10px 18px -8px`）。原 `0 4px 14px` 的模糊晕圈会溢到胶囊顶上方，Retina 下叠着 wash 灰纹读成一条「黑边」（Park 截图反馈过）。
-- **Border beam**：tracking 的 `.btn-switch` beam 由 `ai-lab.js` 的 `switchBtnFx` 挂，只在页面有 `#ai-lab` 时加载；Returns 没有 AI Lab 区块，所以单独建 `src/fx/modules/returns-cta-beam.js` 挂到 `.rt-hero-cta .btn-switch`。色板用 `border-beam.js` 新增的 **teal** 变体（teal/mint/cyan 家族），`hueRange: 10` 锁色相，别用默认 colorful（会飘蓝紫）。
+- **Border beam**：tracking 的 `.btn-switch` beam 由 `ai-lab.js` 的 `switchBtnFx` 挂，只在页面有 `#ai-lab` 时加载；Returns 没有 AI Lab 区块，所以单独建 `src/fx/modules/returns-cta-beam.js` 挂到 `.rt-hero-cta .btn-switch`。色板用 `border-beam.js` 新增的 **teal** 变体，`hueRange: 10` 锁色相，别用默认 colorful（会飘蓝紫）。
+- **Beam 可见性踩坑**（同日 Park「效果没看到」）：光斑颜色必须用**亮 mint/冰青**（teal-100/200、cyan-200 档）——中深 teal 打在青绿按钮上同色隐身；参数要 `borderWidth: 2` + stroke 0.95 / inner 0.75 / bloom 0.65，首版 1px + 0.5 档肉眼看不出。挂载本身当时是通的（data-beam/style 都在），别只查挂载不查对比度。
 
 ---
 

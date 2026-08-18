@@ -2782,20 +2782,22 @@
   overflow: visible;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+  justify-content: stretch;
+  align-items: stretch;
   gap: 0;
   height: 100%;
   min-height: 100%;
-  padding: 4px 4px 4px 0;
+  padding: 0;
 }
 
 .rt-carrier-pair {
   display: grid;
-  grid-template-columns: minmax(0, 360px) minmax(228px, 260px);
-  align-items: center;
+  grid-template-columns: minmax(0, 1.15fr) minmax(228px, 260px);
+  align-items: stretch;
+  flex: 1 1 auto;
   width: 100%;
-  max-width: 620px;
+  max-width: 680px;
+  min-height: 0;
 }
 
 .rt-carrier-hero {
@@ -2807,8 +2809,10 @@
   left: auto;
   top: auto;
   width: 100%;
+  height: 100%;
+  min-height: 0;
   margin: 0;
-  padding: 12px 13px 10px;
+  padding: 14px 15px 12px;
   border-radius: 3px;
   background: linear-gradient(180deg, #faf8f2 0%, #f0ebe0 100%);
   color: #111;
@@ -3004,8 +3008,9 @@
 
 .rt-ship-addr {
   display: grid;
-  gap: 10px;
+  gap: 14px;
   margin-bottom: 8px;
+  flex: 1 1 auto;
 }
 
 .rt-ship-from p,
@@ -3067,9 +3072,11 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  justify-content: center;
   gap: 10px;
   margin-left: -28px;
   min-width: 0;
+  align-self: center;
 }
 
 .rt-carrier-stat {
@@ -3355,7 +3362,7 @@
 
 @media (max-width: 768px) {
   .rt-carrier-pair {
-    grid-template-columns: minmax(0, 260px) minmax(168px, 210px);
+    grid-template-columns: minmax(0, 1fr) minmax(168px, 210px);
     max-width: none;
   }
 
@@ -5667,6 +5674,13 @@ html.is-reduce-fx .rt-roi::after {
     grid-template-columns: 1fr;
     justify-items: center;
     max-width: none;
+    flex: none;
+    align-items: start;
+  }
+
+  .rt-ship-label {
+    height: auto;
+    min-height: 300px;
   }
 
   .rt-rate-stack {

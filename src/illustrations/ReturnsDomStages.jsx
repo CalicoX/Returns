@@ -1662,6 +1662,11 @@ export function DomStageCarriers() {
             </div>
             </div>
 
+            <div className="rt-rate-col">
+            <div className="rt-carrier-stat">
+              <strong>18%+</strong>
+              <span>Reduce Return Shipping Costs</span>
+            </div>
             <div className="rt-rate-stack">
             {RATE_CARDS.map((c, i) => (
               <div
@@ -1697,11 +1702,7 @@ export function DomStageCarriers() {
               </div>
             ))}
             </div>
-          </div>
-
-          <div className="rt-carrier-stat">
-            <strong>18%+</strong>
-            <span>Reduce Return Shipping Costs</span>
+            </div>
           </div>
         </div>
       </div>

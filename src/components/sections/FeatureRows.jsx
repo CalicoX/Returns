@@ -23,7 +23,7 @@ export default function FeatureRows() {
     if (!n) return undefined;
 
     const mq = window.matchMedia("(max-width: 960px)");
-    const gap = 36;
+    const gap = 12;
     let panelH = 0;
     let travel = 1;
     let lastP = -1;
@@ -62,7 +62,7 @@ export default function FeatureRows() {
 
       const pt = pinTop();
       const stickyH = Math.max(320, window.innerHeight - pt);
-      panelH = Math.round(stickyH);
+      panelH = Math.round(Math.min(stickyH, Math.max(520, stickyH - 96)));
       slides.forEach((s) => {
         s.style.height = `${panelH}px`;
       });

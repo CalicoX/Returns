@@ -21,7 +21,7 @@ Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows →
 
 RoiCalculator 背景：CSS 青绿光晕 + Point Waves 复刻（`roi-point-waves.js`，WebGL2-only，滚动到区块才挂载）。
 
-FeatureRows：sticky 叠屏；2/4 块翻转（图左文右）；每块主题色只体现在勾选圆点（青绿/紫/琥珀/蓝）；无 01/04 计数、无标题色条、无插图衬底、无顶部白雾、滚动无 blur（只有轻透明度衰减）。
+FeatureRows：sticky 叠屏；2/4 块翻转（图左文右）；每块略矮于视口（下一块会露一点），文案/插图列间距收紧；每块主题色只体现在勾选圆点（青绿/紫/琥珀/蓝）；无 01/04 计数、无标题色条、无插图衬底、无顶部白雾、滚动无 blur（只有轻透明度衰减）。
 
 ### Hero 现状
 

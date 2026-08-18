@@ -4741,7 +4741,7 @@ html.is-reduce-fx .rt-roi::after {
 .rt-features {
   --rt-feature-pin: var(--topbar-h, 64px);
   --rt-feature-n: 4;
-  --rt-feature-gap: 36px;
+  --rt-feature-gap: 12px;
   padding: 0;
   background: #fff;
 }
@@ -4805,8 +4805,8 @@ html.is-reduce-fx .rt-roi::after {
 
 .rt-feature-slide {
   flex: 0 0 auto;
-  height: calc(100vh - var(--rt-feature-pin));
-  height: calc(100dvh - var(--rt-feature-pin));
+  height: calc(100vh - var(--rt-feature-pin) - 96px);
+  height: calc(100dvh - var(--rt-feature-pin) - 96px);
   box-sizing: border-box;
   margin: 0;
   --fp-op: 1;
@@ -4833,12 +4833,12 @@ html.is-reduce-fx .rt-roi::after {
 
 .rt-feature-inner {
   display: grid;
-  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-  gap: 40px 56px;
+  grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.04fr);
+  gap: 24px 28px;
   align-items: center;
   height: 100%;
   box-sizing: border-box;
-  padding-block: 28px 36px;
+  padding-block: 16px 20px;
 }
 
 /* 2、4 块翻转：图左文右，打破四块同构 */
@@ -4855,7 +4855,7 @@ html.is-reduce-fx .rt-roi::after {
 }
 
 .rt-feature-copy {
-  max-width: 520px;
+  max-width: 500px;
 }
 
 .rt-feature-copy h2 {
@@ -5485,8 +5485,8 @@ html.is-reduce-fx .rt-roi::after {
   }
 
   .rt-feature-inner {
-    gap: 28px 36px;
-    padding-block: 20px 28px;
+    gap: 20px 24px;
+    padding-block: 16px 20px;
   }
 
   .rt-stats-title {
@@ -5578,7 +5578,7 @@ html.is-reduce-fx .rt-roi::after {
 
   .rt-feature-slide {
     height: auto !important;
-    padding: 48px 0;
+    padding: 32px 0;
     filter: none !important;
     opacity: 1 !important;
   }

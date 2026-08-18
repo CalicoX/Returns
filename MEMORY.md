@@ -40,6 +40,7 @@
 
 ## 布局约定
 
+- Feature 四块：桌面每块高度 `viewport − topbar − 96`，块间距 12。文案/插图 `gap` 28，不要再拉回全屏 + 56 中缝。
 - 画布 1440 · 左右 gutter 48（`returns-page.css` 顶部变量）。
 - Hero 栅格：文案列 `minmax(0, 500px)`，插图列吃剩余并右对齐。
 - Returns 专属覆盖写 `src/styles/returns-page.css`；共享壳/动效在 `src/styles/landing.css` 与 `src/fx/`。

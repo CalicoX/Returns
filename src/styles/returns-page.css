@@ -3131,7 +3131,7 @@
   max-width: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 18px;
   justify-content: center;
   margin-left: 0;
   transform: none;
@@ -3389,7 +3389,7 @@
 
   .rt-rate-stack {
     max-width: 210px;
-    gap: 7px;
+    gap: 12px;
   }
 
   .rt-rate-card {

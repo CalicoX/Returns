@@ -44,7 +44,7 @@ FeatureRows：sticky 叠屏；2/4 块翻转（图左文右）；每块主题色�
 
 ### Feature 03 插图
 
-透明底，无路线图 / 无深色井。真实拦截 UI：Keep your item + Instant Refund、$20 store credit、Try an exchange。背景是上升增长曲线，线下半透明青绿渐变。20%+ 青绿徽章在画里。自动演示：倒计时 → 点 Accept → 积分卡 → 换货卡 → 曲线最后出现并增长，画完留着。
+透明底，无路线图 / 无深色井。真实拦截 UI：Keep your item + Instant Refund、$20 store credit、Try an exchange。拼贴居中成一团，exchange 略压 Keep，20%+ 贴换货卡上方。背景是上升增长曲线，线下半透明青绿渐变。自动演示：倒计时 → 点 Accept → 积分卡 → 换货卡 → 曲线最后出现并增长，画完留着。
 
 ---
 

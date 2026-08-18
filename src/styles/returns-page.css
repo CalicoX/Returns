@@ -2780,21 +2780,26 @@
 .rt-carrier-scene {
   position: relative;
   overflow: visible;
-  display: grid;
-  grid-template-columns: minmax(220px, 300px) minmax(200px, 1fr);
-  justify-content: stretch;
-  align-items: center;
-  gap: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
   height: 100%;
   min-height: 100%;
-  padding: 0 2px 8px 0;
+  padding: 8px 4px 8px 0;
+}
+
+.rt-carrier-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 292px) minmax(220px, 248px);
+  align-items: center;
+  width: 100%;
+  max-width: 520px;
 }
 
 .rt-carrier-hero {
-  position: relative;
-  z-index: 1;
-  min-width: 0;
-  padding: 0 0 72px;
+  display: contents;
 }
 
 .rt-ship-label {
@@ -3055,15 +3060,15 @@
   color: #222;
 }
 
-/* 18%+：挂在运单左下角，不另起一行、不甩到画布角落 */
+/* 18%+：在运单+比价卡这一组下面，左对齐纸面 */
 .rt-carrier-stat {
-  position: absolute;
-  left: 0;
-  bottom: 0;
+  position: relative;
+  left: auto;
+  bottom: auto;
   top: auto;
   z-index: 6;
   width: auto;
-  max-width: 12em;
+  max-width: 14em;
   margin: 0;
   padding: 0;
   background: none;
@@ -3106,14 +3111,13 @@
   top: auto;
   z-index: 5;
   width: 100%;
-  max-width: 252px;
+  max-width: 248px;
   display: flex;
   flex-direction: column;
   gap: 8px;
   justify-content: center;
-  justify-self: start;
   align-self: center;
-  margin-left: -56px;
+  margin-left: -28px;
   transform: none;
 }
 
@@ -3341,13 +3345,8 @@
 }
 
 @media (max-width: 768px) {
-  .rt-carrier-scene {
-    grid-template-columns: minmax(0, 1fr) minmax(160px, 0.9fr);
-    padding-bottom: 8px;
-  }
-
-  .rt-carrier-hero {
-    padding: 0 0 56px;
+  .rt-carrier-pair {
+    grid-template-columns: minmax(0, 240px) minmax(160px, 210px);
   }
 
   .rt-ship-label {
@@ -3355,7 +3354,7 @@
   }
 
   .rt-rate-stack {
-    margin-left: -24px;
+    margin-left: -16px;
   }
 
   .rt-carrier-stat {
@@ -5653,13 +5652,10 @@ html.is-reduce-fx .rt-roi::after {
     width: min(64%, 220px);
   }
 
-  .rt-carrier-scene {
+  .rt-carrier-pair {
     grid-template-columns: 1fr;
     justify-items: center;
-  }
-
-  .rt-carrier-hero {
-    padding-right: 0;
+    max-width: none;
   }
 
   .rt-rate-stack {

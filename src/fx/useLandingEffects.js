@@ -75,8 +75,8 @@ export function useLandingEffects() {
     (async () => {
       await mountNamed("responsive");
       await mountNamed("borderBeam");
-      // Returns hero CTA beam（tracking 由 ai-lab.js 挂，Returns 无 #ai-lab）
-      if (document.querySelector(".rt-hero-cta .btn-switch")) {
+      // Returns 全站 .btn-switch beam（tracking 由 ai-lab.js 挂，Returns 无 #ai-lab）
+      if (document.querySelector(".returns-page .btn-switch")) {
         await mountNamed("returnsCtaBeam");
       }
       // Topbar height + on-dark (independent of AI Lab)

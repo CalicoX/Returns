@@ -1,7 +1,9 @@
 /**
- * Returns Hero 主 CTA（Free Trial）border beam。
+ * Returns 全站 .btn-switch（Free Trial 胶囊）border beam。
  * tracking 里同款效果由 ai-lab.js 的 switchBtnFx 挂载，但该模块只在
  * 页面存在 #ai-lab 时加载；Returns 页没有 AI Lab 区块，所以单独挂。
+ * 覆盖 Hero / FeatureRows×4 / Plans / BrandsSay / BottomCta；
+ * 离屏实例由 IntersectionObserver 加 data-paused 停动画。
  * 色板用 border-beam.js 的 teal 变体，hueRange 收窄避免飘出青绿域。
  * @returns {() => void}
  */
@@ -9,7 +11,7 @@ export function mount() {
   const cleanups = [];
   try {
     if (typeof window.mountBorderBeam !== "function") return () => {};
-    var btns = document.querySelectorAll(".rt-hero-cta .btn-switch");
+    var btns = document.querySelectorAll(".returns-page .btn-switch");
     if (!btns.length) return () => {};
 
     var io =
@@ -44,12 +46,12 @@ export function mount() {
 
       /* 2px 描边 + 高不透明度：1px/0.5 档在青绿底上肉眼看不出 */
       window.mountBorderBeam(el, {
-        id: "rt-hero-cta-" + i,
+        id: "rt-cta-" + i,
         theme: "dark",
         colorVariant: "teal",
         borderRadius: radius,
         borderWidth: 2,
-        duration: 2.05,
+        duration: 2.05 + i * 0.12,
         brightness: 1.6,
         saturation: 1.35,
         strength: 1,

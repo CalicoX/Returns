@@ -27,7 +27,7 @@ FeatureRows：sticky 叠屏；2/4 块翻转（图左文右）；每块主题色�
 
 - 左文案 / 右插图；人物卡约 620px、靠右。
 - 三张玻璃浮卡 + 假鼠标自动演示；悬停不暂停。
-- CTA：Free Trial + Book a Demo。Free Trial 带青绿 border beam（`returns-cta-beam.js`，teal 变体）。
+- CTA：Free Trial + Book a Demo。全站 `.btn-switch`（Hero / Feature×4 / Plans / BrandsSay / BottomCta）带青绿 border beam（`returns-cta-beam.js`，teal 变体，离屏暂停）。
 - 青绿自研 WebGL wash（API 同款双通道；无橙/紫/蓝；无 FilmGrain）。
 - 整页兼容：WebGL1 主路径 + mediump；无 WebGL / context lost 走青绿 fallback。动画不砍，离屏/切标签才停 rAF。
 - 响应式：1440/1200 桌面双栏；1024 双栏收比例；≤768 Hero 堆叠；≤480 Stats/ROI 单列。Feature sticky 在 960 改为堆叠。预览用 DevTools 切 480/768/1024/1200/1440。

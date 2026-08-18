@@ -2781,27 +2781,27 @@
   position: relative;
   overflow: visible;
   display: grid;
-  grid-template-columns: minmax(240px, 300px) minmax(220px, 256px);
-  justify-content: center;
+  grid-template-columns: minmax(220px, 300px) minmax(200px, 1fr);
+  justify-content: stretch;
   align-items: center;
   gap: 0;
   height: 100%;
   min-height: 100%;
-  padding: 8px 4px 8px 0;
+  padding: 0 2px 8px 0;
 }
 
 .rt-carrier-hero {
   position: relative;
   z-index: 1;
-  padding: 0 28px 0 0;
+  min-width: 0;
+  padding: 0 0 72px;
 }
 
 .rt-ship-label {
   position: relative;
   left: auto;
   top: auto;
-  width: min(100%, 292px);
-  aspect-ratio: 3 / 4.15;
+  width: 100%;
   margin: 0;
   padding: 10px 11px 8px;
   border-radius: 3px;
@@ -3027,6 +3027,7 @@
   margin-top: auto;
   padding-top: 4px;
   border-top: 1px solid rgba(17, 17, 17, 0.35);
+  flex: 0 0 auto;
 }
 
 .rt-ship-barcode {
@@ -3054,16 +3055,16 @@
   color: #222;
 }
 
-/* 18%+：贴在运单左下，跟纸面成一组 */
+/* 18%+：挂在运单左下角，不另起一行、不甩到画布角落 */
 .rt-carrier-stat {
-  position: relative;
-  left: auto;
-  bottom: auto;
+  position: absolute;
+  left: 0;
+  bottom: 0;
   top: auto;
   z-index: 6;
   width: auto;
-  max-width: none;
-  margin-top: 14px;
+  max-width: 12em;
+  margin: 0;
   padding: 0;
   background: none;
   box-shadow: none;
@@ -3074,7 +3075,7 @@
 
 .rt-carrier-stat strong {
   display: block;
-  font-size: clamp(36px, 6.5vw, 52px);
+  font-size: clamp(32px, 5.2vw, 44px);
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 0.95;
@@ -3105,13 +3106,14 @@
   top: auto;
   z-index: 5;
   width: 100%;
-  max-width: 248px;
+  max-width: 252px;
   display: flex;
   flex-direction: column;
   gap: 8px;
   justify-content: center;
   justify-self: start;
-  margin-left: -36px;
+  align-self: center;
+  margin-left: -56px;
   transform: none;
 }
 
@@ -3341,11 +3343,11 @@
 @media (max-width: 768px) {
   .rt-carrier-scene {
     grid-template-columns: minmax(0, 1fr) minmax(160px, 0.9fr);
-    padding-bottom: 12px;
+    padding-bottom: 8px;
   }
 
   .rt-carrier-hero {
-    padding-right: 16px;
+    padding: 0 0 56px;
   }
 
   .rt-ship-label {
@@ -3353,12 +3355,11 @@
   }
 
   .rt-rate-stack {
-    margin-left: -20px;
+    margin-left: -24px;
   }
 
   .rt-carrier-stat {
-    max-width: none;
-    margin-top: 10px;
+    max-width: 11em;
   }
 
   .rt-carrier-stat strong {

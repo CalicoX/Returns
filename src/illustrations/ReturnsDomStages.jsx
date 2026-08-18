@@ -1614,14 +1614,9 @@ export function DomStageCarriers() {
     <div className="feature-visual rt-dom-stage-wrap rt-carrier-wrap">
       <div className="feature-stage is-active" data-theme="carriers" style={{ ["--fx-c"]: 1 }}>
         <div className="feature-stage-art rt-carrier-scene" ref={sceneRef} aria-hidden="true">
-          {/* Gradient savings mark — no solid box */}
-          <div className="rt-carrier-stat">
-            <strong>18%+</strong>
-            <span>Reduce Return Shipping Costs</span>
-          </div>
-
-          {/* Realistic USPS Priority Mail shipping label */}
-          <div className="rt-ship-label">
+          <div className="rt-carrier-hero">
+            {/* Realistic USPS Priority Mail shipping label */}
+            <div className="rt-ship-label">
             <div className="rt-ship-top rt-ship-anim" style={{ ["--d"]: 0 }}>
               <div className="rt-ship-p">P</div>
               <div className="rt-ship-postage">
@@ -1665,6 +1660,11 @@ export function DomStageCarriers() {
               <ShipBarcode />
               <div className="rt-ship-track">420 94085 0247 0007 6509 57</div>
               <div className="rt-ship-footer">Electronic Rate Approved #128882300</div>
+            </div>
+            </div>
+            <div className="rt-carrier-stat">
+              <strong>18%+</strong>
+              <span>Reduce Return Shipping Costs</span>
             </div>
           </div>
 

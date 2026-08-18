@@ -2781,11 +2781,19 @@
   position: relative;
   overflow: visible;
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(210px, 0.85fr);
+  grid-template-columns: minmax(240px, 300px) minmax(220px, 256px);
+  justify-content: center;
   align-items: center;
+  gap: 0;
   height: 100%;
   min-height: 100%;
-  padding: 4px 2px 28px 0;
+  padding: 8px 4px 8px 0;
+}
+
+.rt-carrier-hero {
+  position: relative;
+  z-index: 1;
+  padding: 0 28px 0 0;
 }
 
 .rt-ship-label {
@@ -2794,8 +2802,7 @@
   top: auto;
   width: min(100%, 292px);
   aspect-ratio: 3 / 4.15;
-  margin: 0 auto;
-  margin-right: -14%;
+  margin: 0;
   padding: 10px 11px 8px;
   border-radius: 3px;
   background: linear-gradient(180deg, #faf8f2 0%, #f0ebe0 100%);
@@ -3047,15 +3054,16 @@
   color: #222;
 }
 
-/* 18%+：无底框，落在左下，避开 label */
+/* 18%+：贴在运单左下，跟纸面成一组 */
 .rt-carrier-stat {
-  position: absolute;
-  left: 0;
-  bottom: 0;
+  position: relative;
+  left: auto;
+  bottom: auto;
   top: auto;
   z-index: 6;
   width: auto;
-  max-width: 38%;
+  max-width: none;
+  margin-top: 14px;
   padding: 0;
   background: none;
   box-shadow: none;
@@ -3102,7 +3110,8 @@
   flex-direction: column;
   gap: 8px;
   justify-content: center;
-  justify-self: end;
+  justify-self: start;
+  margin-left: -36px;
   transform: none;
 }
 
@@ -3332,17 +3341,24 @@
 @media (max-width: 768px) {
   .rt-carrier-scene {
     grid-template-columns: minmax(0, 1fr) minmax(160px, 0.9fr);
-    padding-bottom: 36px;
+    padding-bottom: 12px;
+  }
+
+  .rt-carrier-hero {
+    padding-right: 16px;
   }
 
   .rt-ship-label {
     width: min(100%, 240px);
-    margin-right: -8%;
+  }
+
+  .rt-rate-stack {
+    margin-left: -20px;
   }
 
   .rt-carrier-stat {
-    max-width: 48%;
-    bottom: 0;
+    max-width: none;
+    margin-top: 10px;
   }
 
   .rt-carrier-stat strong {
@@ -5641,8 +5657,12 @@ html.is-reduce-fx .rt-roi::after {
     justify-items: center;
   }
 
-  .rt-ship-label {
-    margin-right: 0;
+  .rt-carrier-hero {
+    padding-right: 0;
+  }
+
+  .rt-rate-stack {
+    margin-left: 0;
   }
 }
 

@@ -135,6 +135,11 @@ Park：最大兼容，但效果与动画保持、不卡。不要用「更多设�
 - **CSS**：`100vh` 写在 `100dvh` 前面；无 `backdrop-filter` 时玻璃卡白底更实。不要改 `landing.css`。
 - **插图**：无 IntersectionObserver 时演示仍要播；不要改 Hero 构图，悬停仍不暂停自动演示。
 
+## Feature 04 运单插图
+
+- 运单和三张比价卡是一组，居中；18%+ 跟在运单下面，不要 `position:absolute` 甩到场景左下角。
+- 比价卡从右边略压住运单。
+
 ## 工程教训
 
 - 本地曾不是 git 仓库；远程 `CalicoX/Returns` 从空仓推上，默认 `main`。

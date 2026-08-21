@@ -5914,6 +5914,60 @@ html.is-reduce-fx .rt-roi::after {
     0 6px 16px rgba(0, 32, 90, 0.22);
 }
 
+/* 时钟 icon：描边播放 + 分针扫过，对齐 Returns/API 的 hover play */
+.returns-page .explore-title-ico-tracking .ico-t-rim,
+.returns-page .explore-title-ico-tracking .ico-t-hour,
+.returns-page .explore-title-ico-tracking .ico-t-min {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+}
+.returns-page .explore-title-ico-tracking .ico-t-rim {
+  stroke-dasharray: 57;
+  stroke-dashoffset: 0;
+}
+.returns-page .explore-title-ico-tracking .ico-t-hour {
+  stroke-dasharray: 6;
+  stroke-dashoffset: 0;
+}
+.returns-page .explore-title-ico-tracking .ico-t-min {
+  stroke-dasharray: 8;
+  stroke-dashoffset: 0;
+}
+.returns-page .explore-card-tracking:hover .explore-title-ico-tracking .ico-t-rim,
+.returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking .ico-t-rim {
+  animation: ico-track-rim 1.35s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+}
+.returns-page .explore-card-tracking:hover .explore-title-ico-tracking .ico-t-hour,
+.returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking .ico-t-hour {
+  animation: ico-track-hour 1.35s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+}
+.returns-page .explore-card-tracking:hover .explore-title-ico-tracking .ico-t-min,
+.returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking .ico-t-min {
+  animation: ico-track-min 1.35s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+}
+@keyframes ico-track-rim {
+  0%   { stroke-dashoffset: 57; opacity: 0.35; }
+  20%  { stroke-dashoffset: 0;  opacity: 1; }
+  72%  { stroke-dashoffset: 0;  opacity: 1; }
+  90%  { stroke-dashoffset: -8; opacity: 0.55; }
+  100% { stroke-dashoffset: 57; opacity: 0.35; }
+}
+@keyframes ico-track-hour {
+  0%   { stroke-dashoffset: 6; opacity: 0.35; transform: rotate(0deg); }
+  16%  { stroke-dashoffset: 0; opacity: 1; transform: rotate(0deg); }
+  55%  { stroke-dashoffset: 0; opacity: 1; transform: rotate(8deg); }
+  78%  { stroke-dashoffset: 0; opacity: 1; transform: rotate(14deg); }
+  100% { stroke-dashoffset: 6; opacity: 0.4; transform: rotate(0deg); }
+}
+@keyframes ico-track-min {
+  0%   { stroke-dashoffset: 8; opacity: 0; transform: rotate(0deg); }
+  14%  { stroke-dashoffset: 0; opacity: 1; transform: rotate(0deg); }
+  48%  { stroke-dashoffset: 0; opacity: 1; transform: rotate(70deg); }
+  72%  { stroke-dashoffset: 0; opacity: 1; transform: rotate(110deg); }
+  90%  { stroke-dashoffset: -3; opacity: 0.45; transform: rotate(130deg); }
+  100% { stroke-dashoffset: 8; opacity: 0; transform: rotate(0deg); }
+}
+
 .returns-page .explore-card-tracking .explore-link {
   border-color: rgba(255, 255, 255, 0.72);
   background: linear-gradient(
@@ -6314,6 +6368,15 @@ html.is-reduce-fx .rt-roi::after {
   .returns-page .explore-card-tracking .explore-card-copy {
     transform: none !important;
     transition: none !important;
+  }
+  .returns-page .explore-card-tracking:hover .explore-title-ico-tracking path,
+  .returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking path,
+  .returns-page .explore-card-tracking:hover .explore-title-ico-tracking circle,
+  .returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking circle {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 

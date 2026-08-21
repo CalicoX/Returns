@@ -6184,7 +6184,7 @@ html.is-reduce-fx .rt-roi::after {
 
 .returns-page .track-ui-wismo {
   left: -8px;
-  top: 148px;
+  top: 208px;
   bottom: auto;
   width: 168px;
   padding: 8px 10px 8px;
@@ -6277,7 +6277,7 @@ html.is-reduce-fx .rt-roi::after {
 }
 
 .returns-page .track-ui-video {
-  top: 72px;
+  top: 132px;
   right: -8px;
   width: 164px;
   padding: 7px 8px 8px;
@@ -6511,12 +6511,12 @@ html.is-reduce-fx .rt-roi::after {
   .returns-page .track-ui-video {
     width: 148px;
     right: -4px;
-    top: 64px;
+    top: 120px;
   }
   .returns-page .track-ui-wismo {
     width: 152px;
     left: -4px;
-    top: 140px;
+    top: 196px;
   }
 }
 
@@ -6536,11 +6536,11 @@ html.is-reduce-fx .rt-roi::after {
   .returns-page .track-ui-video {
     width: 144px;
     right: 6px;
-    top: 56px;
+    top: 108px;
   }
   .returns-page .track-ui-wismo {
     left: 8px;
-    top: 132px;
+    top: 184px;
     bottom: auto;
     width: 148px;
   }
@@ -6563,12 +6563,12 @@ html.is-reduce-fx .rt-roi::after {
   .returns-page .track-ui-video {
     width: 136px;
     right: 6px;
-    top: 48px;
+    top: 96px;
   }
   .returns-page .track-ui-wismo {
     width: 144px;
     left: 6px;
-    top: 120px;
+    top: 168px;
     bottom: auto;
   }
   .returns-page .track-ui-ev:nth-child(n + 4) {

@@ -19,7 +19,7 @@
 
 Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows → Plans → Faq → ExploreMore → BrandsSay → Credentials → BottomCta → Footer + ProductDock
 
-ExploreMore Tracking 卡：17TRACK 蓝；包裹 icon；右侧悬浮拼贴。API 卡要有 ASCII 底纹。两张卡 hover 3D tilt（landing-inline 挂在 `.explore-grid`）。
+ExploreMore Tracking 卡：17TRACK 蓝；包裹 icon；右侧小浮卡（WISMO / video）+ 下方 Shipping Events 竖轨。API 卡 ASCII 底纹。两张卡 hover 3D tilt。
 
 RoiCalculator 背景：CSS 青绿光晕 + Point Waves 复刻（`roi-point-waves.js`，WebGL2-only，滚动到区块才挂载）。
 

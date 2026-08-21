@@ -226,6 +226,7 @@ export function mount() {
           setLayer(card.querySelector(".track-ui"), ox, oy, 12, 10);
           /* 轨迹卡 vs 上面两张浮卡反向 */
           setLayer(card.querySelector(".track-ui-board"), px, py, 11, 9);
+          setLayer(card.querySelector(".track-ui-events"), px, py, 10, 8);
           setLayer(card.querySelector(".track-ui-wismo"), ox, oy, 16, 12);
           setLayer(card.querySelector(".track-ui-video"), ox, oy, 16, 12);
         }

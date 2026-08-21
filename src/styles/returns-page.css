@@ -6117,7 +6117,7 @@ html.is-reduce-fx .rt-roi::after {
   align-items: center;
   position: relative;
   margin: 0 4px;
-  padding-right: 188px;
+  padding-right: 156px;
 }
 
 .returns-page .track-ui-progress::before {
@@ -6159,7 +6159,7 @@ html.is-reduce-fx .rt-roi::after {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   margin: 5px 0 0;
-  padding-right: 188px;
+  padding-right: 156px;
   flex-shrink: 0;
   font-size: 7.5px;
   letter-spacing: 0.03em;
@@ -6186,8 +6186,8 @@ html.is-reduce-fx .rt-roi::after {
   left: -8px;
   top: 148px;
   bottom: auto;
-  width: 200px;
-  padding: 9px 12px 10px;
+  width: 168px;
+  padding: 8px 10px 8px;
   z-index: 4;
   transform: translate3d(var(--layer-x), var(--layer-y), 22px);
 }
@@ -6229,7 +6229,7 @@ html.is-reduce-fx .rt-roi::after {
   align-items: baseline;
   gap: 3px;
   margin: 0 0 5px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 750;
   letter-spacing: -0.045em;
   line-height: 1;
@@ -6243,8 +6243,8 @@ html.is-reduce-fx .rt-roi::after {
 }
 
 .returns-page .track-ui-wismo-hint {
-  margin: 0 0 6px;
-  font-size: 10px;
+  margin: 0 0 5px;
+  font-size: 9px;
   line-height: 1.35;
   color: #64748b;
   white-space: nowrap;
@@ -6255,8 +6255,8 @@ html.is-reduce-fx .rt-roi::after {
   grid-template-columns: repeat(8, 1fr);
   gap: 3px;
   align-items: end;
-  height: 18px;
-  padding-top: 7px;
+  height: 15px;
+  padding-top: 6px;
   border-top: 1px solid rgba(15, 23, 42, 0.05);
 }
 
@@ -6279,8 +6279,8 @@ html.is-reduce-fx .rt-roi::after {
 .returns-page .track-ui-video {
   top: 72px;
   right: -8px;
-  width: 196px;
-  padding: 9px 10px 10px;
+  width: 164px;
+  padding: 7px 8px 8px;
   z-index: 5;
   transform: translate3d(var(--layer-x), var(--layer-y), 20px);
 }
@@ -6303,7 +6303,7 @@ html.is-reduce-fx .rt-roi::after {
   border-radius: 10px;
   overflow: hidden;
   aspect-ratio: 16 / 10;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   background: linear-gradient(145deg, #0f172a 0%, #1e1b4b 40%, #312e81 100%);
 }
 
@@ -6318,9 +6318,9 @@ html.is-reduce-fx .rt-roi::after {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 22px;
-  height: 22px;
-  margin: -11px 0 0 -11px;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -6340,7 +6340,7 @@ html.is-reduce-fx .rt-roi::after {
 
 .returns-page .track-ui-video strong {
   display: block;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 650;
   letter-spacing: -0.02em;
   color: #0f172a;
@@ -6354,7 +6354,7 @@ html.is-reduce-fx .rt-roi::after {
   align-items: center;
   gap: 6px;
   margin: 0;
-  font-size: 10px;
+  font-size: 9px;
   color: #94a3b8;
   white-space: nowrap;
 }
@@ -6509,12 +6509,12 @@ html.is-reduce-fx .rt-roi::after {
     height: 400px;
   }
   .returns-page .track-ui-video {
-    width: 160px;
+    width: 148px;
     right: -4px;
     top: 64px;
   }
   .returns-page .track-ui-wismo {
-    width: 160px;
+    width: 152px;
     left: -4px;
     top: 140px;
   }
@@ -6534,7 +6534,7 @@ html.is-reduce-fx .rt-roi::after {
     height: auto;
   }
   .returns-page .track-ui-video {
-    width: 156px;
+    width: 144px;
     right: 6px;
     top: 56px;
   }
@@ -6542,7 +6542,7 @@ html.is-reduce-fx .rt-roi::after {
     left: 8px;
     top: 132px;
     bottom: auto;
-    width: 156px;
+    width: 148px;
   }
 }
 
@@ -6561,12 +6561,12 @@ html.is-reduce-fx .rt-roi::after {
     height: auto;
   }
   .returns-page .track-ui-video {
-    width: 148px;
+    width: 136px;
     right: 6px;
     top: 48px;
   }
   .returns-page .track-ui-wismo {
-    width: 156px;
+    width: 144px;
     left: 6px;
     top: 120px;
     bottom: auto;

@@ -19,7 +19,7 @@
 
 Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows → Plans → Faq → ExploreMore → BrandsSay → Credentials → BottomCta → Footer + ProductDock
 
-ExploreMore Tracking 卡：17TRACK 蓝 `#003a9b`，hover 指针高光；右侧是 tracking page **悬浮拼贴**（底层运单时间线 + 浮卡 WISMO / Brand video），不是 grid 挤在一起，也不是 Returns 退货 UI。
+ExploreMore Tracking 卡：17TRACK 蓝；右侧悬浮拼贴 = 无衬线轨迹卡 + 实心白浮卡（WISMO / video）。浮卡与轨迹卡 hover 反向。无底下空白白板。
 
 RoiCalculator 背景：CSS 青绿光晕 + Point Waves 复刻（`roi-point-waves.js`，WebGL2-only，滚动到区块才挂载）。
 

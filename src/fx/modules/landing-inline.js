@@ -226,9 +226,10 @@ export function mount() {
           setLayer(card.querySelector(".returns-method"), ox, oy, 14, 11);
         } else if (card.classList.contains("explore-card-tracking")) {
           setLayer(card.querySelector(".track-ui"), ox, oy, 12, 10);
-          setLayer(card.querySelector(".track-ui-board"), px, py, 8, 6);
+          /* 轨迹卡 vs 上面两张浮卡反向 */
+          setLayer(card.querySelector(".track-ui-board"), px, py, 11, 9);
           setLayer(card.querySelector(".track-ui-wismo"), ox, oy, 16, 12);
-          setLayer(card.querySelector(".track-ui-video"), px, py, 12, 10);
+          setLayer(card.querySelector(".track-ui-video"), ox, oy, 16, 12);
         }
       }
 

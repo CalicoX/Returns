@@ -66,17 +66,6 @@ export default function ExploreMore() {
                   <span>Out</span>
                   <span>Delivered</span>
                 </div>
-                <p className="track-ui-tn">9400 1000 0000 2849 1</p>
-                <ul className="track-ui-events">
-                  <li>
-                    <strong>Out for delivery</strong>
-                    <span>Today · 8:02 AM · Los Angeles, CA</span>
-                  </li>
-                  <li>
-                    <strong>Arrived at hub</strong>
-                    <span>Yesterday · 6:41 PM</span>
-                  </li>
-                </ul>
               </div>
               <div className="track-ui-wismo">
                 <div className="track-ui-wismo-top">

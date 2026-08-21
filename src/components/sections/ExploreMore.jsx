@@ -118,11 +118,11 @@ export default function ExploreMore() {
                     </svg>
                   </span>
                 </div>
-                <strong>Studio unbox film</strong>
+                <strong>Studio edit · unbox film</strong>
                 <p>
                   0:42
                   <i></i>
-                  Story
+                  Post-purchase story
                 </p>
               </div>
             </div>

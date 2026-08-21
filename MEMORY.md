@@ -146,7 +146,7 @@ Park：最大兼容，但效果与动画保持、不卡。不要用「更多设�
 
 - Returns 落地页的 Explore 左卡是 **17 Order Tracking**，底色必须是 **17TRACK 蓝** `#003a9b` 家族（`#1a5cd4 → #003a9b → #002a75`），**不要**用 Returns 青绿 `#20B195`。
 - Hover 高光：指针跟随的白/冰蓝径向 spotlight（`::before`，`mix-blend-mode: normal`）。深蓝底必须用亮白/sky，中蓝会隐身。3D tilt 仍走 `.explore-card` 公共逻辑。
-- 右侧面板是 tracking 落地页 Hero 的模块拼贴：运单时间线（Processed→Delivered）+ WISMO 35% + Brand video。禁止再塞 URBAN STANDARDS / Shipment status 单选那种 Returns UI。
+- 右侧面板是 tracking Hero 的**悬浮拼贴**（对齐 Returns 卡的 product + method 叠压）：运单时间线是底层页，WISMO / Brand video 是绝对定位浮卡，带投影、略探出舞台。**禁止 CSS grid 把三块排成一排**——会挤、也不像浮卡。
 - 类名 `explore-card-tracking` / `.track-ui-*`，样式只写 `returns-page.css`。不要改 `landing.css` 里的 `.explore-card-returns`（那是 tracking 站的 Returns 卡）。
 
 ## 工程教训

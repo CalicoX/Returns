@@ -35,6 +35,12 @@ export default function ExploreMore() {
                 <div className="track-ui-progress">
                   <i>
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                      <path d="M7 8h10l-1 12H8L7 8z" />
+                      <path d="M9.5 8V7a2.5 2.5 0 015 0v1" />
+                    </svg>
+                  </i>
+                  <i>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                       <rect x="4" y="5" width="16" height="14" rx="1.5" />
                       <path d="M8 9h8M8 13h5" />
                     </svg>
@@ -61,6 +67,7 @@ export default function ExploreMore() {
                   </i>
                 </div>
                 <div className="track-ui-labels">
+                  <span>Ordered</span>
                   <span>Processed</span>
                   <span>Shipped</span>
                   <span>Out</span>

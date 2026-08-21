@@ -6100,31 +6100,32 @@ html.is-reduce-fx .rt-roi::after {
 }
 
 .returns-page .track-ui-status {
-  margin: 0 0 12px;
-  max-width: 11em;
+  margin: 0 0 14px;
+  max-width: none;
   font-family: Inter, system-ui, sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 650;
   letter-spacing: -0.02em;
   line-height: 1.3;
   color: #12151c;
   -webkit-text-fill-color: #12151c;
+  white-space: nowrap;
 }
 
 .returns-page .track-ui-progress {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   align-items: center;
   position: relative;
-  margin: 0 4px;
-  padding-right: 156px;
+  margin: 0 2px;
+  padding-right: 0;
 }
 
 .returns-page .track-ui-progress::before {
   content: "";
   position: absolute;
-  left: 12%;
-  right: 12%;
+  left: 10%;
+  right: 10%;
   top: 50%;
   height: 2px;
   background: linear-gradient(90deg, #38bdf8 0%, #2563eb 55%, #8b5cf6 100%);
@@ -6134,8 +6135,8 @@ html.is-reduce-fx .rt-roi::after {
 .returns-page .track-ui-progress i {
   position: relative;
   z-index: 1;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   margin: 0 auto;
   border-radius: 50%;
   display: grid;
@@ -6145,27 +6146,27 @@ html.is-reduce-fx .rt-roi::after {
 }
 
 .returns-page .track-ui-progress i.is-now {
-  background: linear-gradient(135deg, #4f46e5 0%, #8b5cf6 100%);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.16);
+  background: linear-gradient(135deg, #7c5cfc 0%, #8b5cf6 100%);
+  box-shadow: 0 0 0 5px rgba(139, 92, 246, 0.18);
 }
 
 .returns-page .track-ui-progress i svg {
-  width: 10px;
-  height: 10px;
+  width: 11px;
+  height: 11px;
   display: block;
 }
 
 .returns-page .track-ui-labels {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  margin: 5px 0 0;
-  padding-right: 156px;
+  grid-template-columns: repeat(5, 1fr);
+  margin: 7px 2px 0;
+  padding-right: 0;
   flex-shrink: 0;
-  font-size: 7.5px;
-  letter-spacing: 0.03em;
+  font-size: 8px;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #6b7380;
-  -webkit-text-fill-color: #6b7380;
+  color: #94a3b8;
+  -webkit-text-fill-color: #94a3b8;
   text-align: center;
 }
 

@@ -106,7 +106,6 @@ export default function ExploreMore() {
               <div className="track-ui-wismo">
                 <div className="track-ui-wismo-top">
                   <span>WISMO inquiries</span>
-                  <em>−12%</em>
                 </div>
                 <p className="track-ui-wismo-num">
                   <b>↓</b>
@@ -127,7 +126,6 @@ export default function ExploreMore() {
               <div className="track-ui-video">
                 <div className="track-ui-video-top">
                   <span>Brand video</span>
-                  <em>Embed</em>
                 </div>
                 <div className="track-ui-thumb">
                   <img

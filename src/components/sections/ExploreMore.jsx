@@ -13,9 +13,9 @@ export default function ExploreMore() {
           <p className="lead">{EXPLORE.lead}</p>
         </div>
         <div className="explore-grid">
-          <a className="explore-card explore-card-returns" href="#">
+          <a className="explore-card explore-card-tracking" href="#">
             <div className="explore-card-copy">
-              <span className="explore-title-ico explore-title-ico-returns" aria-hidden="true">
+              <span className="explore-title-ico explore-title-ico-tracking" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="9" />
                   <path d="M12 7v5l3 2" />
@@ -28,68 +28,102 @@ export default function ExploreMore() {
                 <span className="explore-link-arrow" aria-hidden="true">→</span>
               </span>
             </div>
-            <div className="returns-ui" aria-hidden="true">
-              <div className="returns-ui-blobs" aria-hidden="true">
-                <span></span><span></span><span></span>
+            <div className="track-ui" aria-hidden="true">
+              <div className="track-ui-board">
+                <p className="track-ui-status">Your order has been delivered.</p>
+                <div className="track-ui-progress">
+                  <i>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                      <rect x="4" y="5" width="16" height="14" rx="1.5" />
+                      <path d="M8 9h8M8 13h5" />
+                    </svg>
+                  </i>
+                  <i>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                      <path d="M3 16V8h11v8H3z" />
+                      <path d="M14 11h4l3 3v2h-7v-5z" />
+                      <circle cx="7" cy="17.5" r="1.6" />
+                      <circle cx="17" cy="17.5" r="1.6" />
+                    </svg>
+                  </i>
+                  <i>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                      <path d="M4 17V9l7-4 7 4v8" />
+                      <path d="M9 17v-5h6v5" />
+                    </svg>
+                  </i>
+                  <i className="is-now">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                      <path d="M4 20V10l8-6 8 6v10" />
+                      <path d="M10 20v-6h4v6" />
+                    </svg>
+                  </i>
+                </div>
+                <div className="track-ui-labels">
+                  <span>Processed</span>
+                  <span>Shipped</span>
+                  <span>Out</span>
+                  <span>Delivered</span>
+                </div>
+                <p className="track-ui-tn">9400 1000 0000 2849 1</p>
+                <ul className="track-ui-events">
+                  <li>
+                    <strong>Out for delivery</strong>
+                    <span>Today · 8:02 AM · Los Angeles, CA</span>
+                  </li>
+                  <li>
+                    <strong>Arrived at hub</strong>
+                    <span>Yesterday · 6:41 PM</span>
+                  </li>
+                </ul>
               </div>
-              <div className="returns-ui-stack">
-                <div className="returns-ui-card">
-                  <p className="returns-ui-brand">URBAN STANDARDS</p>
-                  <div className="returns-ui-head">
-                    <strong>Track your order</strong>
-                    <span>Out for delivery · today by 8 PM</span>
-                  </div>
-                  <div className="returns-ui-list">
-                    <div className="returns-ui-item is-active">
-                      <div className="returns-ui-thumb">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M3 15.5c1.5-3.5 5-5.5 9-5.5 2.2 0 4 .7 5.5 1.8L21 14" />
-                          <path d="M3 15.5h15.5a2.5 2.5 0 010 5H6.2c-1.8 0-3.2-1.4-3.2-3.2 0-.6.2-1.2.5-1.8z" />
-                        </svg>
-                      </div>
-                      <div className="returns-ui-meta">
-                        <span className="name">Sneakers</span>
-                        <span className="sub"><em>#US-28491</em><i>·</i><b>UPS</b></span>
-                      </div>
-                      <span className="returns-ui-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8h9M8.5 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                      </span>
-                    </div>
-                    <div className="returns-ui-item">
-                      <div className="returns-ui-thumb">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.65" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M10 3h4v3h-4z" />
-                          <path d="M8 9h8l-1 11a2 2 0 01-2 2h-2a2 2 0 01-2-2L8 9z" />
-                        </svg>
-                      </div>
-                      <div className="returns-ui-meta">
-                        <span className="name">Perfume</span>
-                        <span className="sub"><em>#US-28492</em><i>·</i><b>DHL</b></span>
-                      </div>
-                      <span className="returns-ui-arrow" aria-hidden="true">
-                        <svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8h9M8.5 4l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                      </span>
-                    </div>
-                  </div>
+              <div className="track-ui-wismo">
+                <div className="track-ui-wismo-top">
+                  <span>WISMO inquiries</span>
+                  <em>−12%</em>
                 </div>
-                <div className="returns-method">
-                  <p className="returns-method-title">Shipment status</p>
-                  <div className="returns-method-list">
-                    <div className="returns-method-opt">
-                      <span className="rm-dot"></span>
-                      <span className="rm-label">In transit</span>
-                    </div>
-                    <div className="returns-method-opt is-selected">
-                      <span className="rm-dot"></span>
-                      <span className="rm-label">Out for delivery</span>
-                      <span className="rm-tag">LIVE</span>
-                    </div>
-                    <div className="returns-method-opt">
-                      <span className="rm-dot"></span>
-                      <span className="rm-label">Delivered</span>
-                    </div>
-                  </div>
+                <p className="track-ui-wismo-num">
+                  <b>↓</b>
+                  35%
+                </p>
+                <p className="track-ui-wismo-hint">More shoppers self-serve after purchase</p>
+                <div className="track-ui-bars">
+                  <span style={{ height: "88%" }}></span>
+                  <span style={{ height: "76%" }}></span>
+                  <span style={{ height: "64%" }}></span>
+                  <span style={{ height: "54%" }}></span>
+                  <span style={{ height: "46%" }}></span>
+                  <span style={{ height: "38%" }}></span>
+                  <span style={{ height: "32%" }}></span>
+                  <span style={{ height: "26%" }}></span>
                 </div>
+              </div>
+              <div className="track-ui-video">
+                <div className="track-ui-video-top">
+                  <span>Brand video</span>
+                  <em>Embed</em>
+                </div>
+                <div className="track-ui-thumb">
+                  <img
+                    src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=400&q=80"
+                    alt=""
+                    width="168"
+                    height="105"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span className="track-ui-play">
+                    <svg viewBox="0 0 12 12" fill="currentColor">
+                      <path d="M3.2 2.1v7.8L10 6 3.2 2.1z" />
+                    </svg>
+                  </span>
+                </div>
+                <strong>Studio unbox film</strong>
+                <p>
+                  0:42
+                  <i></i>
+                  Story
+                </p>
               </div>
             </div>
           </a>

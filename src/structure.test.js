@@ -62,7 +62,10 @@ describe("Returns landing structure", () => {
   it("ExploreMore promotes Tracking instead of Returns", () => {
     const explore = read("components/sections/ExploreMore.jsx");
     expect(explore).toMatch(/17 Order Tracking|trackingTitle/);
+    expect(explore).toMatch(/explore-card-tracking/);
+    expect(explore).toMatch(/track-ui-wismo|WISMO inquiries/);
     expect(explore).not.toMatch(/Explore 17 Returns/);
+    expect(explore).not.toMatch(/explore-card-returns/);
   });
 
   it("glass dock canvases still present for FX", () => {

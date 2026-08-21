@@ -5857,3 +5857,527 @@ html.is-reduce-fx .rt-roi::after {
     min-height: 380px;
   }
 }
+
+/* =========================================================
+   Explore — 17 Order Tracking 卡
+   17TRACK 蓝 #003a9b + 指针高光；右侧是 tracking page 模块拼贴
+   ========================================================= */
+
+.returns-page .explore-card-tracking {
+  --explore-glow: rgba(0, 58, 155, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  background: linear-gradient(
+    165deg,
+    #1a5cd4 0%,
+    #0a4bb8 32%,
+    #003a9b 68%,
+    #002a75 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(0, 32, 90, 0.35),
+    0 1px 0 rgba(255, 255, 255, 0.16) inset;
+}
+
+.returns-page .explore-card-tracking:hover,
+.returns-page .explore-card-tracking.is-tilting {
+  box-shadow:
+    0 0 0 1px rgba(0, 32, 90, 0.35),
+    0 1px 0 rgba(255, 255, 255, 0.2) inset,
+    0 12px 32px rgba(0, 58, 155, 0.22);
+}
+
+/* 指针跟随高光：白/冰蓝打在深蓝上才看得见 */
+.returns-page .explore-card-tracking::before {
+  mix-blend-mode: normal;
+  background: radial-gradient(
+    480px circle at var(--spot-x) var(--spot-y),
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(191, 219, 254, 0.34) 16%,
+    rgba(96, 165, 250, 0.16) 34%,
+    rgba(255, 255, 255, 0.04) 52%,
+    transparent 70%
+  );
+  opacity: 0;
+}
+
+.returns-page .explore-card-tracking.is-tilting::before,
+.returns-page .explore-card-tracking:hover::before {
+  opacity: 1;
+}
+
+.returns-page .explore-card-tracking .explore-title-ico {
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.22) inset,
+    0 6px 16px rgba(0, 32, 90, 0.22);
+}
+
+.returns-page .explore-card-tracking .explore-link {
+  border-color: rgba(255, 255, 255, 0.72);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.12) 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(0, 30, 90, 0.32),
+    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.12) inset,
+    0 6px 18px rgba(0, 32, 90, 0.28);
+  text-shadow: 0 1px 1px rgba(0, 20, 70, 0.28);
+}
+
+.returns-page .explore-card-tracking:hover .explore-link,
+.returns-page .explore-card-tracking.is-tilting .explore-link {
+  border-color: rgba(255, 255, 255, 0.88);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.16) 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(0, 30, 90, 0.4),
+    0 1px 0 rgba(255, 255, 255, 0.62) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.14) inset,
+    0 8px 24px rgba(0, 32, 90, 0.36);
+}
+
+.returns-page .track-ui {
+  position: relative;
+  width: 100%;
+  align-self: stretch;
+  min-height: 380px;
+  height: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.38fr) minmax(138px, 0.82fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 8px 6px;
+  padding: 14px 12px 14px 12px;
+  border-radius: var(--r-inner, 12px);
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, #eaf1fb 0%, #f4f7fc 42%, #eef3fb 100%);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 10px 28px rgba(0, 32, 90, 0.16);
+  color: #0f172a;
+  -webkit-text-fill-color: #0f172a;
+  --layer-x: 0px;
+  --layer-y: 0px;
+  transform: translate3d(var(--layer-x), var(--layer-y), 8px);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+.returns-page .explore-card-tracking.is-tilting .track-ui {
+  transition: transform 0.08s linear;
+}
+
+.returns-page .track-ui-board,
+.returns-page .track-ui-wismo,
+.returns-page .track-ui-video {
+  --layer-x: 0px;
+  --layer-y: 0px;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+.returns-page .explore-card-tracking.is-tilting .track-ui-board,
+.returns-page .explore-card-tracking.is-tilting .track-ui-wismo,
+.returns-page .explore-card-tracking.is-tilting .track-ui-video {
+  transition: transform 0.08s linear;
+}
+
+.returns-page .track-ui-board {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  padding: 14px 12px 12px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 1) inset,
+    0 16px 40px -12px rgba(15, 23, 42, 0.16);
+  transform: translate3d(var(--layer-x), var(--layer-y), 14px);
+}
+
+.returns-page .track-ui-status {
+  margin: 0 0 14px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: #12151c;
+  -webkit-text-fill-color: #12151c;
+}
+
+.returns-page .track-ui-progress {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  position: relative;
+  margin: 0 4px;
+}
+
+.returns-page .track-ui-progress::before {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  top: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, #38bdf8 0%, #2563eb 55%, #8b5cf6 100%);
+  transform: translateY(-50%);
+}
+
+.returns-page .track-ui-progress i {
+  position: relative;
+  z-index: 1;
+  width: 22px;
+  height: 22px;
+  margin: 0 auto;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #2563eb;
+  color: #f4f7fb;
+}
+
+.returns-page .track-ui-progress i.is-now {
+  background: linear-gradient(135deg, #4f46e5 0%, #8b5cf6 100%);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.16);
+}
+
+.returns-page .track-ui-progress i svg {
+  width: 11px;
+  height: 11px;
+  display: block;
+}
+
+.returns-page .track-ui-labels {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 6px 0 10px;
+  font-size: 7.5px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #6b7380;
+  -webkit-text-fill-color: #6b7380;
+  text-align: center;
+}
+
+.returns-page .track-ui-tn {
+  margin: 0 0 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  font-size: 9.5px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.03em;
+  color: #6b7380;
+  -webkit-text-fill-color: #6b7380;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.returns-page .track-ui-events {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 7px;
+}
+
+.returns-page .track-ui-events strong {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 650;
+  color: #0f172a;
+  -webkit-text-fill-color: #0f172a;
+}
+
+.returns-page .track-ui-events span {
+  display: block;
+  margin-top: 1px;
+  font-size: 10.5px;
+  color: #6b7380;
+  -webkit-text-fill-color: #6b7380;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.returns-page .track-ui-wismo,
+.returns-page .track-ui-video {
+  z-index: 3;
+  border-radius: 16px;
+  background:
+    linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(255, 255, 255, 0.82) 100%
+    );
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  box-shadow:
+    0 0 0 0.5px rgba(15, 23, 42, 0.04),
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 12px 28px -8px rgba(15, 23, 42, 0.16);
+}
+
+.returns-page .track-ui-wismo {
+  grid-column: 2;
+  grid-row: 2;
+  position: relative;
+  left: auto;
+  bottom: auto;
+  width: auto;
+  min-width: 0;
+  margin-left: 0;
+  padding: 11px 12px 10px;
+  z-index: 4;
+  transform: translate3d(var(--layer-x), var(--layer-y), 22px);
+}
+
+.returns-page .track-ui-wismo-top,
+.returns-page .track-ui-video-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.returns-page .track-ui-wismo-top span,
+.returns-page .track-ui-video-top span {
+  font-size: 8.5px;
+  font-weight: 650;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.returns-page .track-ui-wismo-top em {
+  font-style: normal;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #15803d;
+  background: rgba(240, 253, 244, 0.95);
+  border: 1px solid rgba(34, 197, 94, 0.16);
+  padding: 2px 6px;
+  border-radius: 999px;
+}
+
+.returns-page .track-ui-wismo-num {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  margin: 0 0 5px;
+  font-size: 28px;
+  font-weight: 750;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  color: #0b1f5c;
+}
+
+.returns-page .track-ui-wismo-num b {
+  font-size: 15px;
+  font-weight: 600;
+  color: #16a34a;
+}
+
+.returns-page .track-ui-wismo-hint {
+  margin: 0 0 8px;
+  font-size: 10.5px;
+  line-height: 1.4;
+  color: #64748b;
+}
+
+.returns-page .track-ui-bars {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 3px;
+  align-items: end;
+  height: 28px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(15, 23, 42, 0.05);
+}
+
+.returns-page .track-ui-bars span {
+  display: block;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #7ba4f0 0%, #1e4db7 100%);
+  opacity: 0.88;
+  min-height: 4px;
+}
+
+.returns-page .track-ui-bars span:nth-child(odd) {
+  opacity: 0.68;
+}
+
+.returns-page .track-ui-bars span:last-child {
+  opacity: 0.48;
+}
+
+.returns-page .track-ui-video {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  top: auto;
+  right: auto;
+  width: auto;
+  min-width: 0;
+  margin-left: 0;
+  align-self: start;
+  padding: 10px;
+  z-index: 5;
+  transform: translate3d(var(--layer-x), var(--layer-y), 20px);
+}
+
+.returns-page .track-ui-video-top em {
+  font-style: normal;
+  font-size: 9px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6d28d9;
+  background: rgba(245, 243, 255, 0.95);
+  border: 1px solid rgba(124, 58, 237, 0.14);
+  padding: 2px 6px;
+  border-radius: 999px;
+}
+
+.returns-page .track-ui-thumb {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  margin-bottom: 8px;
+  background: linear-gradient(145deg, #0f172a 0%, #1e1b4b 40%, #312e81 100%);
+}
+
+.returns-page .track-ui-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.returns-page .track-ui-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow:
+    0 0 0 5px rgba(255, 255, 255, 0.16),
+    0 6px 16px rgba(15, 23, 42, 0.28);
+  color: #0f172a;
+}
+
+.returns-page .track-ui-play svg {
+  width: 10px;
+  height: 10px;
+  margin-left: 1px;
+  display: block;
+}
+
+.returns-page .track-ui-video strong {
+  display: block;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+  line-height: 1.3;
+  margin: 0 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.returns-page .track-ui-video > p {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-size: 10px;
+  color: #94a3b8;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.returns-page .track-ui-video > p i {
+  width: 2.5px;
+  height: 2.5px;
+  border-radius: 50%;
+  background: #cbd5e1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .returns-page .track-ui,
+  .returns-page .track-ui-board,
+  .returns-page .track-ui-wismo,
+  .returns-page .track-ui-video,
+  .returns-page .explore-card-tracking .explore-card-copy {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .returns-page .track-ui {
+    min-height: 340px;
+  }
+  .returns-page .track-ui-status {
+    font-size: 13.5px;
+  }
+}
+
+@media (max-width: 680px) {
+  .returns-page .track-ui {
+    min-height: 300px;
+    grid-template-columns: minmax(0, 1.4fr) minmax(160px, 0.8fr);
+  }
+  .returns-page .track-ui-board {
+    padding: 12px 12px 10px;
+  }
+  .returns-page .track-ui-events li:last-child {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .returns-page .track-ui {
+    min-height: 250px;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+  .returns-page .track-ui-video {
+    display: none;
+  }
+  .returns-page .track-ui-board {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .returns-page .track-ui-wismo {
+    grid-column: 1;
+    grid-row: 2;
+    margin-left: 0;
+    width: min(220px, 100%);
+  }
+}

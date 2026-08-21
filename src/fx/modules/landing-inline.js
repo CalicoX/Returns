@@ -224,6 +224,11 @@ export function mount() {
           setLayer(card.querySelector(".returns-ui"), ox, oy, 12, 10);
           setLayer(card.querySelector(".returns-ui-card"), px, py, 10, 8);
           setLayer(card.querySelector(".returns-method"), ox, oy, 14, 11);
+        } else if (card.classList.contains("explore-card-tracking")) {
+          setLayer(card.querySelector(".track-ui"), ox, oy, 12, 10);
+          setLayer(card.querySelector(".track-ui-board"), px, py, 8, 6);
+          setLayer(card.querySelector(".track-ui-wismo"), ox, oy, 16, 12);
+          setLayer(card.querySelector(".track-ui-video"), px, py, 12, 10);
         }
       }
 

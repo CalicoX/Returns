@@ -149,7 +149,8 @@ Park：最大兼容，但效果与动画保持、不卡。不要用「更多设�
 - 右侧面板是 tracking Hero 的**悬浮拼贴**：轨迹卡（时间线）+ 两张实心白浮卡（WISMO / Brand video）。浮卡禁止半透明。轨迹卡只留标题+进度，**不要**底下那截空白事件板。无衬线。整体比首版略缩小。
 - Hover：两张浮卡同向，轨迹卡反向（`landing-inline.js` 里 board `px,py` vs wismo/video `ox,oy`）。禁止再把 video 和 board 设成同向。
 - 类名 `explore-card-tracking` / `.track-ui-*`，样式只写 `returns-page.css`。不要改 `landing.css` 里的 `.explore-card-returns`（那是 tracking 站的 Returns 卡）。
-- 时钟 icon hover 必须有 play（rim 描边 + 时针微转 + 分针扫过），对齐 Returns/API 的 `explore-title-ico` 循环；减动效关掉。别只剩圆底 scale。
+- Tracking 卡 icon 是**包裹**（盒身/盖/中缝），不是时钟。hover 描边 play，对齐 Returns/API。
+- Explore 动效必须盯 `.explore-grid` 挂 `landing-inline`（ASCII 底纹 + 3D tilt）。不要只观察 `#key-features`：Returns 的 FeatureRows 对不上旧 features DOM，脚本会永不挂载。
 
 ## 工程教训
 

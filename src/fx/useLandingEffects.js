@@ -145,23 +145,23 @@ export function useLandingEffects() {
       );
     }
 
-    // —— Features / explore deferred (no Lenis/dock inside) ——
-    const features = document.getElementById("key-features");
+    // —— Explore tilt / ASCII 底纹（必须盯 .explore-grid）——
+    // 旧写法 features || explore：Returns 的 #key-features 是 FeatureRows，
+    // IO 对不上时 landing-inline 永不挂载 → API 无底纹、两张卡无 3D hover。
     const explore = document.querySelector(".explore-grid");
-    const featuresOrExplore = features || explore;
-    if (featuresOrExplore) {
+    if (explore) {
       let loaded = false;
+      const loadInline = () => {
+        if (loaded) return;
+        loaded = true;
+        mountNamed("landingInline");
+      };
       disposers.push(
-        observeVisibility(
-          featuresOrExplore,
-          (vis) => {
-            if (!vis || loaded) return;
-            loaded = true;
-            mountNamed("landingInline");
-          },
-          { rootMargin: "120px" }
-        )
+        observeVisibility(explore, (vis) => {
+          if (vis) loadInline();
+        }, { rootMargin: "480px" })
       );
+      disposers.push(whenIdle(loadInline, 1600));
     }
 
     // —— AI Lab deferred ——

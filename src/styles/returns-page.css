@@ -5863,6 +5863,43 @@ html.is-reduce-fx .rt-roi::after {
    17TRACK 蓝 #003a9b + 指针高光；右侧是 tracking page 模块拼贴
    ========================================================= */
 
+/* 有鼠标 hover 时强制 3D tilt（覆盖 landing.css 的 pointer:coarse 一刀切） */
+@media (hover: hover) {
+  .returns-page .explore-grid {
+    perspective: 1600px;
+    perspective-origin: 50% 45%;
+  }
+  .returns-page .explore-card,
+  .returns-page .explore-card.is-tilting,
+  .returns-page .explore-card:hover,
+  .returns-page .explore-card.is-leaving {
+    transform:
+      translate3d(0, var(--tz, 0px), 0)
+      rotateX(var(--rx, 0deg))
+      rotateY(var(--ry, 0deg)) !important;
+  }
+}
+
+/* API 底纹：压过 `.explore-card > *` 的 relative，铺满卡片 */
+.returns-page .explore-card-api > .api-ascii {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.16;
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.returns-page .explore-card-api:hover > .api-ascii,
+.returns-page .explore-card-api.is-tilting > .api-ascii {
+  opacity: 0.22;
+}
+.returns-page .explore-card-api > .api-ascii .api-ascii-layer {
+  position: absolute;
+}
+
 .returns-page .explore-card-tracking {
   --explore-glow: rgba(0, 58, 155, 0.42);
   border: 1px solid rgba(255, 255, 255, 0.38);
@@ -5914,58 +5951,53 @@ html.is-reduce-fx .rt-roi::after {
     0 6px 16px rgba(0, 32, 90, 0.22);
 }
 
-/* 时钟 icon：描边播放 + 分针扫过，对齐 Returns/API 的 hover play */
-.returns-page .explore-title-ico-tracking .ico-t-rim,
-.returns-page .explore-title-ico-tracking .ico-t-hour,
-.returns-page .explore-title-ico-tracking .ico-t-min {
-  transform-box: view-box;
-  transform-origin: 12px 12px;
-}
-.returns-page .explore-title-ico-tracking .ico-t-rim {
-  stroke-dasharray: 57;
+/* 包裹 icon：盒身 / 盖 / 中缝描边，对齐 Returns/API hover play */
+.returns-page .explore-title-ico-tracking .ico-t-box {
+  stroke-dasharray: 64;
   stroke-dashoffset: 0;
 }
-.returns-page .explore-title-ico-tracking .ico-t-hour {
-  stroke-dasharray: 6;
+.returns-page .explore-title-ico-tracking .ico-t-lid {
+  stroke-dasharray: 22;
   stroke-dashoffset: 0;
 }
-.returns-page .explore-title-ico-tracking .ico-t-min {
-  stroke-dasharray: 8;
+.returns-page .explore-title-ico-tracking .ico-t-seam {
+  stroke-dasharray: 12;
   stroke-dashoffset: 0;
 }
-.returns-page .explore-card-tracking:hover .explore-title-ico-tracking .ico-t-rim,
-.returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking .ico-t-rim {
-  animation: ico-track-rim 1.35s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+.returns-page .explore-card-tracking:hover .explore-title-ico-tracking .ico-t-box,
+.returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking .ico-t-box {
+  animation: ico-track-box 1.35s cubic-bezier(0.45, 0, 0.2, 1) infinite;
 }
-.returns-page .explore-card-tracking:hover .explore-title-ico-tracking .ico-t-hour,
-.returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking .ico-t-hour {
-  animation: ico-track-hour 1.35s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+.returns-page .explore-card-tracking:hover .explore-title-ico-tracking .ico-t-lid,
+.returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking .ico-t-lid {
+  animation: ico-track-lid 1.35s cubic-bezier(0.45, 0, 0.2, 1) infinite;
 }
-.returns-page .explore-card-tracking:hover .explore-title-ico-tracking .ico-t-min,
-.returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking .ico-t-min {
-  animation: ico-track-min 1.35s cubic-bezier(0.45, 0, 0.2, 1) infinite;
+.returns-page .explore-card-tracking:hover .explore-title-ico-tracking .ico-t-seam,
+.returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking .ico-t-seam {
+  animation: ico-track-seam 1.35s cubic-bezier(0.45, 0, 0.2, 1) infinite;
 }
-@keyframes ico-track-rim {
-  0%   { stroke-dashoffset: 57; opacity: 0.35; }
-  20%  { stroke-dashoffset: 0;  opacity: 1; }
+@keyframes ico-track-box {
+  0%   { stroke-dashoffset: 64; opacity: 0.35; }
+  22%  { stroke-dashoffset: 0;  opacity: 1; }
   72%  { stroke-dashoffset: 0;  opacity: 1; }
   90%  { stroke-dashoffset: -8; opacity: 0.55; }
-  100% { stroke-dashoffset: 57; opacity: 0.35; }
+  100% { stroke-dashoffset: 64; opacity: 0.35; }
 }
-@keyframes ico-track-hour {
-  0%   { stroke-dashoffset: 6; opacity: 0.35; transform: rotate(0deg); }
-  16%  { stroke-dashoffset: 0; opacity: 1; transform: rotate(0deg); }
-  55%  { stroke-dashoffset: 0; opacity: 1; transform: rotate(8deg); }
-  78%  { stroke-dashoffset: 0; opacity: 1; transform: rotate(14deg); }
-  100% { stroke-dashoffset: 6; opacity: 0.4; transform: rotate(0deg); }
+@keyframes ico-track-lid {
+  0%   { stroke-dashoffset: 22; opacity: 0; }
+  14%  { stroke-dashoffset: 22; opacity: 0; }
+  36%  { stroke-dashoffset: 0;  opacity: 1; }
+  72%  { stroke-dashoffset: 0;  opacity: 1; }
+  90%  { stroke-dashoffset: -4; opacity: 0.45; }
+  100% { stroke-dashoffset: 22; opacity: 0; }
 }
-@keyframes ico-track-min {
-  0%   { stroke-dashoffset: 8; opacity: 0; transform: rotate(0deg); }
-  14%  { stroke-dashoffset: 0; opacity: 1; transform: rotate(0deg); }
-  48%  { stroke-dashoffset: 0; opacity: 1; transform: rotate(70deg); }
-  72%  { stroke-dashoffset: 0; opacity: 1; transform: rotate(110deg); }
-  90%  { stroke-dashoffset: -3; opacity: 0.45; transform: rotate(130deg); }
-  100% { stroke-dashoffset: 8; opacity: 0; transform: rotate(0deg); }
+@keyframes ico-track-seam {
+  0%   { stroke-dashoffset: 12; opacity: 0; }
+  28%  { stroke-dashoffset: 12; opacity: 0; }
+  48%  { stroke-dashoffset: 0;  opacity: 1; }
+  72%  { stroke-dashoffset: 0;  opacity: 1; }
+  92%  { stroke-dashoffset: -3; opacity: 0.4; }
+  100% { stroke-dashoffset: 12; opacity: 0; }
 }
 
 .returns-page .explore-card-tracking .explore-link {

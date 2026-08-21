@@ -123,8 +123,8 @@ export function mount() {
         filled = false;
       }
 
+      ensureFilled();
       if (reduce) {
-        ensureFilled();
         return;
       }
       var layers = [a, b].filter(Boolean);
@@ -158,7 +158,6 @@ export function mount() {
                   clearInterval(twinkleTimer);
                   twinkleTimer = 0;
                 }
-                releaseAscii();
               }
             });
           },
@@ -181,8 +180,7 @@ export function mount() {
         window.__isMobileLayout ||
         (window.matchMedia &&
           (window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-            window.matchMedia("(max-width: 768px)").matches ||
-            window.matchMedia("(pointer: coarse)").matches));
+            window.matchMedia("(max-width: 768px)").matches));
 
       function setTilt(card, rx, ry, tz) {
         card.style.setProperty("--rx", rx.toFixed(2) + "deg");

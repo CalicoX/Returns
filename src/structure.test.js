@@ -63,6 +63,7 @@ describe("Returns landing structure", () => {
     const explore = read("components/sections/ExploreMore.jsx");
     expect(explore).toMatch(/17 Order Tracking|trackingTitle/);
     expect(explore).toMatch(/explore-card-tracking/);
+    expect(explore).toMatch(/ico-t-box/);
     expect(explore).toMatch(/track-ui-wismo|WISMO inquiries/);
     expect(explore).not.toMatch(/Explore 17 Returns/);
     expect(explore).not.toMatch(/explore-card-returns/);

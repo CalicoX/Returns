@@ -66,6 +66,42 @@ export default function ExploreMore() {
                   <span>Out</span>
                   <span>Delivered</span>
                 </div>
+                <div className="track-ui-events">
+                  <div className="track-ui-ev-head">
+                    <strong>Shipping Events</strong>
+                    <span>USPS · United States</span>
+                  </div>
+                  <ol className="track-ui-ev-list">
+                    <li className="track-ui-ev is-now">
+                      <i></i>
+                      <div>
+                        <b>Aug 18, 10:22</b>
+                        <span>Shingle Springs, CA · Delivered</span>
+                      </div>
+                    </li>
+                    <li className="track-ui-ev">
+                      <i></i>
+                      <div>
+                        <b>Aug 18, 08:14</b>
+                        <span>Out for Delivery, USPS</span>
+                      </div>
+                    </li>
+                    <li className="track-ui-ev">
+                      <i></i>
+                      <div>
+                        <b>Aug 17, 21:06</b>
+                        <span>Arrived at Post Office</span>
+                      </div>
+                    </li>
+                    <li className="track-ui-ev">
+                      <i></i>
+                      <div>
+                        <b>Aug 16, 14:40</b>
+                        <span>Picked Up by Shipping Partner</span>
+                      </div>
+                    </li>
+                  </ol>
+                </div>
               </div>
               <div className="track-ui-wismo">
                 <div className="track-ui-wismo-top">
@@ -114,42 +150,6 @@ export default function ExploreMore() {
                   <i></i>
                   Post-purchase story
                 </p>
-              </div>
-              <div className="track-ui-events">
-                <div className="track-ui-ev-head">
-                  <strong>Shipping Events</strong>
-                  <span>USPS · United States</span>
-                </div>
-                <ol className="track-ui-ev-list">
-                  <li className="track-ui-ev is-now">
-                    <i></i>
-                    <div>
-                      <b>Aug 18, 10:22</b>
-                      <span>Shingle Springs, CA · Delivered</span>
-                    </div>
-                  </li>
-                  <li className="track-ui-ev">
-                    <i></i>
-                    <div>
-                      <b>Aug 18, 08:14</b>
-                      <span>Out for Delivery, USPS</span>
-                    </div>
-                  </li>
-                  <li className="track-ui-ev">
-                    <i></i>
-                    <div>
-                      <b>Aug 17, 21:06</b>
-                      <span>Arrived at Post Office</span>
-                    </div>
-                  </li>
-                  <li className="track-ui-ev">
-                    <i></i>
-                    <div>
-                      <b>Aug 16, 14:40</b>
-                      <span>Picked Up by Shipping Partner</span>
-                    </div>
-                  </li>
-                </ol>
               </div>
             </div>
           </a>

@@ -6063,8 +6063,7 @@ html.is-reduce-fx .rt-roi::after {
 
 .returns-page .track-ui-board,
 .returns-page .track-ui-wismo,
-.returns-page .track-ui-video,
-.returns-page .track-ui-events {
+.returns-page .track-ui-video {
   --layer-x: 0px;
   --layer-y: 0px;
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
@@ -6074,19 +6073,24 @@ html.is-reduce-fx .rt-roi::after {
 
 .returns-page .explore-card-tracking.is-tilting .track-ui-board,
 .returns-page .explore-card-tracking.is-tilting .track-ui-wismo,
-.returns-page .explore-card-tracking.is-tilting .track-ui-video,
-.returns-page .explore-card-tracking.is-tilting .track-ui-events {
+.returns-page .explore-card-tracking.is-tilting .track-ui-video {
   transition: transform 0.08s linear;
 }
 
 .returns-page .track-ui-board {
   position: absolute;
-  top: 20px;
-  left: 8px;
-  width: 62%;
+  top: 14px;
+  left: 6px;
+  right: 8px;
+  bottom: auto;
+  width: auto;
+  height: auto;
   z-index: 1;
-  padding: 11px 10px 10px;
-  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 12px 12px 10px;
+  border-radius: 16px;
   background: #fff;
   border: 1px solid rgba(255, 255, 255, 0.95);
   box-shadow:
@@ -6113,6 +6117,7 @@ html.is-reduce-fx .rt-roi::after {
   align-items: center;
   position: relative;
   margin: 0 4px;
+  padding-right: 104px;
 }
 
 .returns-page .track-ui-progress::before {
@@ -6154,6 +6159,8 @@ html.is-reduce-fx .rt-roi::after {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   margin: 5px 0 0;
+  padding-right: 104px;
+  flex-shrink: 0;
   font-size: 7.5px;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -6349,21 +6356,23 @@ html.is-reduce-fx .rt-roi::after {
 }
 
 .returns-page .track-ui-events {
-  position: absolute;
-  left: 8px;
-  right: 10px;
-  bottom: 6px;
-  z-index: 2;
-  padding: 9px 10px 8px;
-  border-radius: 14px;
-  background: #fff;
+  position: relative;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  z-index: 1;
+  margin-top: 10px;
+  padding: 10px 0 0;
+  border-radius: 0;
+  background: transparent;
   color: #0f172a;
   -webkit-text-fill-color: #0f172a;
-  border: 1px solid rgba(15, 23, 42, 0.06);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 1) inset,
-    0 10px 24px -8px rgba(15, 23, 42, 0.16);
-  transform: translate3d(var(--layer-x), var(--layer-y), 12px);
+  border: none;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: none;
+  transform: none;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .returns-page .track-ui-ev-head {
@@ -6467,7 +6476,6 @@ html.is-reduce-fx .rt-roi::after {
   .returns-page .track-ui-board,
   .returns-page .track-ui-wismo,
   .returns-page .track-ui-video,
-  .returns-page .track-ui-events,
   .returns-page .explore-card-tracking .explore-card-copy {
     transform: none !important;
     transition: none !important;
@@ -6506,9 +6514,11 @@ html.is-reduce-fx .rt-roi::after {
     height: 320px;
   }
   .returns-page .track-ui-board {
-    width: 64%;
-    top: 16px;
-    left: 10px;
+    width: auto;
+    top: 12px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
   }
   .returns-page .track-ui-video {
     width: 108px;
@@ -6530,9 +6540,11 @@ html.is-reduce-fx .rt-roi::after {
     overflow: hidden;
   }
   .returns-page .track-ui-board {
-    width: 70%;
-    left: 8px;
-    top: 12px;
+    width: auto;
+    left: 6px;
+    right: 6px;
+    top: 10px;
+    bottom: 8px;
   }
   .returns-page .track-ui-video {
     width: 100px;

@@ -5617,6 +5617,22 @@ html.is-reduce-fx .rt-roi::after {
     --page-pad-x: 20px;
   }
 
+  /* 对齐 tracking：768 卡内仍左右双列。landing.css 在 768 写了 1fr !important。 */
+  .returns-page .explore-card {
+    grid-template-columns: minmax(0, 0.88fr) minmax(200px, 1.2fr) !important;
+  }
+
+  /* landing.css 768 把 .api-ascii display:none 并停掉滚动，这里加回来。 */
+  .returns-page .explore-card-api > .api-ascii {
+    display: block !important;
+  }
+  .returns-page .explore-card-api > .api-ascii .api-ascii-a {
+    animation: api-ascii-drift 36s linear infinite !important;
+  }
+  .returns-page .explore-card-api > .api-ascii .api-ascii-b {
+    animation: api-ascii-drift-rev 52s linear infinite !important;
+  }
+
   .returns-page .product-dock {
     --dock-bottom: max(10px, env(safe-area-inset-bottom, 0px));
     max-width: calc(100% - 20px);
@@ -6527,6 +6543,15 @@ html.is-reduce-fx .rt-roi::after {
 }
 
 @media (max-width: 480px) {
+  .returns-page .explore-card {
+    grid-template-columns: 1fr !important;
+    gap: 18px;
+  }
+  /* 单列时 margin-top:auto 会变成 0，正文贴着按钮。 */
+  .returns-page .explore-card .explore-link {
+    margin-top: 20px;
+  }
+
   .returns-page .track-ui {
     min-height: 360px;
     height: 360px;

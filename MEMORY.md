@@ -152,6 +152,7 @@ Park：最大兼容，但效果与动画保持、不卡。不要用「更多设�
 - 类名 `explore-card-tracking` / `.track-ui-*`，样式只写 `returns-page.css`。不要改 `landing.css` 里的 `.explore-card-returns`（那是 tracking 站的 Returns 卡）。
 - Tracking 卡 icon 是**包裹**（盒身/盖/中缝），不是时钟。hover 描边 play，对齐 Returns/API。
 - Explore 动效必须盯 `.explore-grid` 挂 `landing-inline`（ASCII 底纹 + 3D tilt）。不要只观察 `#key-features`：Returns 的 FeatureRows 对不上旧 features DOM，脚本会永不挂载。
+- ≤768 保留 API ASCII 底纹滚动（`returns-page.css` 盖掉 landing.css 的 `display:none` / `animation:none`）。768 卡内仍左右双列；≤480 改上下布局，CTA 与正文 **20px**（不要靠 `margin-top:auto`，单列会塌成 0）。
 
 ## 工程教训
 

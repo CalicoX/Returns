@@ -70,6 +70,17 @@ describe("Returns landing structure", () => {
     expect(explore).not.toMatch(/explore-card-returns/);
   });
 
+  it("768 keeps API ascii; 480 keeps CTA gap after stacked copy", () => {
+    const css = read("styles/returns-page.css");
+    expect(css).toMatch(
+      /explore-card-api > \.api-ascii \{\s*display:\s*block\s*!important/
+    );
+    expect(css).toMatch(/api-ascii-drift 36s/);
+    expect(css).toMatch(
+      /\.returns-page \.explore-card \.explore-link \{\s*margin-top:\s*20px/
+    );
+  });
+
   it("glass dock canvases still present for FX", () => {
     const land = read("components/LandingPage.jsx");
     expect(land).toMatch(/id="glass-source"/);

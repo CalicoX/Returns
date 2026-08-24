@@ -39,7 +39,7 @@ FeatureRows：sticky 叠屏；2/4 块翻转（图左文右）；每块略矮于�
 
 ### Feature 01 插图
 
-登山照铺满。鼠标拖选框后出现 Return center；同一只鼠标滑到取色器，先色相再选色，Search 跟随。邮件毛玻璃。
+登山照是台面。取色器 / Return center / 邮件 / 3.5x 叠成一团（Cursor 那种 nested windows），不要四散留空。鼠标拖选框后出现 Return center；同一只鼠标滑到取色器，先色相再选色，Search 跟随。邮件实心白窗，不要毛玻璃。
 
 ### Feature 02 插图
 

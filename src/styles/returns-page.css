@@ -801,7 +801,7 @@
   opacity: 1;
 }
 
-/* 01 门户：对照参考稿 — 照片铺满，无外框，浮件按四角落位 */
+/* 01 门户：照片是台面，浮窗叠成一团（Cursor 首页那种 nested windows），不要四散 */
 .rt-portal-wrap.feature-visual {
   padding: 0 !important;
   border: 0 !important;
@@ -825,8 +825,13 @@
 }
 
 .rt-portal-scene {
-  --portal-inset-x: 10%;
-  --portal-inset-y: 7%;
+  --portal-inset-x: 6%;
+  --portal-inset-y: 6%;
+  --rt-win-radius: 14px;
+  --rt-win-border: 1px solid rgba(15, 23, 42, 0.08);
+  --rt-win-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.78) inset,
+    0 18px 44px -22px rgba(15, 23, 42, 0.4);
   position: relative;
   height: 100%;
   min-height: 100%;
@@ -852,10 +857,10 @@
 
 .rt-portal-search-wrap {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 47%;
+  left: 52%;
   z-index: 5;
-  width: min(248px, 46%);
+  width: min(228px, 42%);
   transform: translate(-50%, -50%);
 }
 
@@ -900,9 +905,10 @@
 .rt-portal-search {
   position: relative;
   padding: 14px 14px 12px;
-  border-radius: 16px;
+  border-radius: var(--rt-win-radius);
   background: #fff;
-  box-shadow: 0 16px 36px -18px rgba(15, 23, 42, 0.32);
+  border: var(--rt-win-border);
+  box-shadow: var(--rt-win-shadow);
   opacity: 0;
   transform: translateY(8px);
   pointer-events: none;
@@ -980,19 +986,20 @@
 
 .rt-portal-pick-wrap {
   position: absolute;
-  left: -4%;
-  top: 16%;
-  z-index: 4;
-  width: min(196px, 36%);
+  left: 11%;
+  top: 14%;
+  z-index: 6;
+  width: min(188px, 34%);
 }
 
 .rt-portal-picker {
   position: relative;
   z-index: 1;
   padding: 10px 10px 12px;
-  border-radius: 14px;
+  border-radius: var(--rt-win-radius);
   background: #fff;
-  box-shadow: 0 16px 36px -18px rgba(15, 23, 42, 0.3);
+  border: var(--rt-win-border);
+  box-shadow: var(--rt-win-shadow);
 }
 
 .rt-portal-picker header {
@@ -1216,20 +1223,16 @@
 
 .rt-portal-mail {
   position: absolute;
-  right: -48px;
-  bottom: 18px;
-  z-index: 3;
-  width: min(200px, 42%);
+  right: 10%;
+  bottom: 16%;
+  z-index: 6;
+  width: min(188px, 40%);
   padding: 14px 14px 12px;
-  border-radius: 16px;
+  border-radius: var(--rt-win-radius);
   color: #111827;
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.82);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.6) inset,
-    0 16px 36px -18px rgba(15, 23, 42, 0.22);
-  -webkit-backdrop-filter: blur(20px) saturate(1.75);
-  backdrop-filter: blur(20px) saturate(1.75);
+  background: #fff;
+  border: var(--rt-win-border);
+  box-shadow: var(--rt-win-shadow);
 }
 
 .rt-portal-mail-badge {
@@ -1322,17 +1325,17 @@
 
 .rt-portal-ltv {
   position: absolute;
-  left: calc(var(--portal-inset-x) + 14px);
-  bottom: calc(var(--portal-inset-y) + 14px);
+  left: 20%;
+  bottom: 20%;
   z-index: 4;
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-width: 92px;
   padding: 12px 14px 10px;
-  border-radius: 16px;
+  border-radius: var(--rt-win-radius);
   background: #2dd4bf;
-  box-shadow: 0 14px 28px -16px rgba(13, 148, 136, 0.55);
+  box-shadow: var(--rt-win-shadow);
 }
 
 .rt-portal-ltv strong {
@@ -1352,18 +1355,18 @@
 
 @media (max-width: 960px) {
   .rt-portal-scene {
-    --portal-inset-x: 6%;
-    --portal-inset-y: 6%;
+    --portal-inset-x: 5%;
+    --portal-inset-y: 5%;
   }
 
   .rt-portal-search-wrap {
-    width: min(220px, 58%);
+    width: min(210px, 50%);
   }
 
   .rt-portal-pick-wrap {
-    left: 2%;
-    top: 10%;
-    width: min(148px, 38%);
+    left: 10%;
+    top: 14%;
+    width: min(156px, 36%);
   }
 
   .rt-portal-sv {
@@ -1371,9 +1374,14 @@
   }
 
   .rt-portal-mail {
-    right: 2%;
-    bottom: 12px;
-    width: min(168px, 44%);
+    right: 8%;
+    bottom: 14%;
+    width: min(164px, 42%);
+  }
+
+  .rt-portal-ltv {
+    left: 12%;
+    bottom: 12%;
   }
 }
 
@@ -1384,13 +1392,13 @@
   }
 
   .rt-portal-search-wrap {
-    width: min(200px, 72%);
+    width: min(196px, 58%);
   }
 
   .rt-portal-pick-wrap {
-    left: 3%;
-    top: 8%;
-    width: min(132px, 42%);
+    left: 8%;
+    top: 12%;
+    width: min(132px, 40%);
   }
 
   .rt-portal-sv {
@@ -1398,12 +1406,14 @@
   }
 
   .rt-portal-mail {
-    right: 3%;
-    bottom: 10px;
-    width: min(150px, 48%);
+    right: 6%;
+    bottom: 12%;
+    width: min(148px, 46%);
   }
 
   .rt-portal-ltv {
+    left: 10%;
+    bottom: 11%;
     padding: 8px 10px 7px;
     min-width: 76px;
   }

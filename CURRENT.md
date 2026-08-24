@@ -39,19 +39,19 @@ FeatureRows：sticky 叠屏；2/4 块翻转（图左文右）；每块略矮于�
 
 ### Feature 01 插图
 
-登山照是台面。取色器 / Return center / 邮件 / 3.5x 叠成一团（Cursor 那种 nested windows），不要四散留空。鼠标拖选框后出现 Return center；同一只鼠标滑到取色器，先色相再选色，Search 跟随。邮件实心白窗，不要毛玻璃。
+登山照是台面，山体要露出来。取色器 / Return center / 邮件 / 3.5x 轻微叠窗（不要盖满照片）。鼠标拖选框后出现 Return center；同一只鼠标滑到取色器，先色相再选色，Search 跟随。邮件实心白窗。
 
 ### Feature 02 插图
 
-透明底，无深色井。面板在左。机器人纯 CSS。打字生成右侧规则卡；When/Then + 流程条 + Pending 队列。
+透明底，无深色井。面板在左。机器人纯 CSS。打字生成右侧规则卡，规则卡压住面板右沿；−80% 贴在拼贴上，不要漂在空白里。
 
 ### Feature 04 插图
 
-运单拉高铺满插图列（条码钉在纸底）；比价卡只贴右缘、不压条码；18%+ 青绿徽章贴在比价卡上方。
+运单拉高铺满插图列（条码钉在纸底）；比价卡压在运单右缘、不压条码；18%+ 贴在比价卡上方，和卡收成一团。
 
 ### Feature 03 插图
 
-透明底，无路线图 / 无深色井。真实拦截 UI：Keep your item + Instant Refund、$20 store credit、Try an exchange。拼贴居中成一团，exchange 略压 Keep，20%+ 贴换货卡上方。背景是上升增长曲线，线下半透明青绿渐变。自动演示：倒计时 → 点 Accept → 积分卡 → 换货卡 → 曲线最后出现并增长，画完留着。
+透明底。Keep / credit / exchange 叠成一团，exchange 压 Keep，20%+ 贴在右上靠近 Keep。背景上升曲线。自动演示：倒计时 → 点 Accept → 积分卡 → 换货卡 → 曲线最后出现并增长。
 
 ---
 

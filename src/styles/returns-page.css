@@ -172,10 +172,11 @@
 .rt-hero-copy h1 {
   max-width: none;
   margin: 0;
+  /* 展示级 56，允许大于 --fs-display；行高/字距走 Hero 配方 */
   font-size: clamp(36px, 4.2vw, 56px);
   font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: -0.038em;
+  line-height: 1.1;
+  letter-spacing: var(--track-title);
   color: #0b1220;
 }
 
@@ -183,17 +184,10 @@
   display: block;
 }
 
-.rt-hero-lead {
-  margin: 20px 0 0;
-  max-width: 34em;
-  font-size: clamp(16px, 1.25vw, 18px);
-  line-height: 1.6;
-  color: #64748b;
-}
+/* lead 字阶走 landing `.hero .lead`，不要在这里再写一套（specificity 也打不过） */
 
 .rt-hero-cta {
-  margin-top: 32px;
-  gap: 12px;
+  margin-top: var(--sec-cta-gap);
 }
 
 /* —— Returns 按钮主题色（覆盖 blue primary） —— */
@@ -3460,10 +3454,10 @@
 
 .rt-stats-title {
   margin: 0;
-  /* 与全局 h2 / --fs-h2 同阶（Plans / Explore 等模块） */
-  font-size: var(--fs-h2, clamp(24px, 3.2vw, 40px));
+  /* 实际 h2 配方，不要 --fs-h2（token min 24，h2 后写 min 28） */
+  font-size: clamp(28px, 3.2vw, 40px);
   font-weight: 700;
-  letter-spacing: var(--track-title, -0.03em);
+  letter-spacing: var(--track-title);
   line-height: 1.15;
   color: #0f172a;
   white-space: nowrap;
@@ -3514,17 +3508,16 @@
 }
 
 .rt-stats-lead {
-  /* 与全局 .lead 一致 */
-  margin: var(--sec-title-desc, clamp(12px, 1.4vw, 18px)) 0 0;
-  font-size: var(--fs-lead, clamp(15px, 1.35vw, 17px));
+  /* 与全局 `.lead` 后写一致：17px，不是 var(--fs-lead) */
+  margin: var(--sec-title-desc) 0 0;
+  font-size: 17px;
   line-height: 1.65;
-  color: var(--text-secondary, #64748b);
+  color: var(--text-secondary);
   font-weight: 400;
-  letter-spacing: var(--track-body, -0.015em);
+  letter-spacing: var(--track-body);
   white-space: normal;
   max-width: 40em;
   margin-inline: auto;
-  /* 禁止末行孤词；pretty 优先，不支持时 balance 兜底 */
   text-wrap: pretty;
 }
 
@@ -4349,11 +4342,12 @@ html.is-reduce-fx .rt-roi::after {
 }
 
 .rt-roi-title {
-  margin: 0 0 clamp(28px, 3.5vw, 40px);
+  margin: 0 0 var(--sec-head-gap);
   text-align: center;
-  font-size: clamp(1.6rem, 3vw, 2.25rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: var(--track-title);
   color: #fff;
   text-wrap: balance;
 }
@@ -4859,18 +4853,20 @@ html.is-reduce-fx .rt-roi::after {
 }
 
 .rt-feature-copy h2 {
-  margin: 0 0 14px;
-  font-size: clamp(1.65rem, 2.7vw, 2.3rem);
-  line-height: 1.18;
-  letter-spacing: -0.025em;
+  margin: 0 0 var(--sec-title-desc);
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: var(--track-title);
   color: #0f172a;
 }
 
 .rt-feature-summary,
 .rt-feature-body {
   margin: 0 0 12px;
-  font-size: 1rem;
+  font-size: 17px;
   line-height: 1.65;
+  letter-spacing: var(--track-body);
   color: #475569;
 }
 
@@ -4948,18 +4944,19 @@ html.is-reduce-fx .rt-roi::after {
 
 /* —— Plans：淡描边 · Subscribe 对齐 · Max 描边扫光 —— */
 .rt-plans {
-  padding: 80px 0;
+  padding: var(--sec-y) 0;
   background: #f4f6f8;
   color: #0f172a;
 }
 
 .rt-plans-title {
-  margin: 0 0 36px;
+  margin: 0 0 var(--sec-head-gap);
   text-align: center;
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  font-weight: 800;
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: var(--track-title);
   color: #0f172a;
-  letter-spacing: -0.02em;
 }
 
 .rt-plans-grid {
@@ -5090,10 +5087,11 @@ html.is-reduce-fx .rt-roi::after {
 
 .rt-plan-head h3 {
   margin: 0 0 10px;
-  font-size: 1.5rem;
-  font-weight: 800;
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: var(--track-title);
   color: #0f172a;
-  letter-spacing: -0.02em;
   padding-right: 7rem; /* 给 RECOMMENDED 留位 */
 }
 
@@ -5156,7 +5154,7 @@ html.is-reduce-fx .rt-roi::after {
   border-radius: 999px;
   border: 1.5px solid #14b8a6;
   color: #0d9488;
-  font-size: 0.975rem;
+  font-size: 14px;
   font-weight: 600;
   text-decoration: none;
   transition: background 0.15s ease, color 0.15s ease;
@@ -5245,7 +5243,7 @@ html.is-reduce-fx .rt-roi::after {
 
 /* —— FAQ：更宽更大 + 展开高度过渡 —— */
 .rt-faq {
-  padding: 96px 0 100px;
+  padding: var(--sec-y) 0;
   background: #0b1220;
   color: #e2e8f0;
 }
@@ -5257,12 +5255,13 @@ html.is-reduce-fx .rt-roi::after {
 }
 
 .rt-faq-title {
-  margin: 0 0 40px;
+  margin: 0 0 var(--sec-head-gap);
   text-align: center;
-  font-size: clamp(2.25rem, 3.2vw, 2.75rem);
-  font-weight: 800;
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: var(--track-title);
   color: #fff;
-  letter-spacing: -0.03em;
 }
 
 .rt-faq-list {
@@ -5419,10 +5418,6 @@ html.is-reduce-fx .rt-roi::after {
 }
 
 @media (max-width: 768px) {
-  .rt-faq {
-    padding: 72px 0 80px;
-  }
-
   .rt-faq-q {
     padding: 20px 18px;
     font-size: 1.05rem;
@@ -5641,10 +5636,6 @@ html.is-reduce-fx .rt-roi::after {
     font-size: clamp(32px, 6.2vw, 44px);
   }
 
-  .rt-hero-cta {
-    margin-top: 24px;
-  }
-
   .rt-glass-stage {
     min-height: 0;
     padding: 0 0 16px;
@@ -5786,10 +5777,6 @@ html.is-reduce-fx .rt-roi::after {
     font-size: clamp(28px, 8vw, 36px);
   }
 
-  .rt-hero-lead {
-    font-size: 15px;
-  }
-
   .rt-hero-cta {
     width: 100%;
   }
@@ -5830,14 +5817,6 @@ html.is-reduce-fx .rt-roi::after {
 
   .rt-feature-slide {
     padding: 36px 0;
-  }
-
-  .rt-feature-copy h2 {
-    font-size: clamp(1.35rem, 6.4vw, 1.7rem);
-  }
-
-  .rt-plans {
-    padding: 56px 0;
   }
 }
 

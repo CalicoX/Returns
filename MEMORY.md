@@ -42,6 +42,7 @@
 
 - Feature 四块：桌面每块高度 `viewport − topbar − 96`，块间距 12。文案/插图 `gap` 28，不要再拉回全屏 + 56 中缝。
 - 画布 1440 · 左右 gutter 48（`returns-page.css` 顶部变量）。
+- **字阶对齐 tracking 实际配方**（2026-08-24）：区块标题用 `clamp(28px, 3.2vw, 40px)` / 700 / 1.15 / `--track-title`，不要 `--fs-h2`（token min 24，真正 `h2` min 28）。`.lead` 后写是 **17px**，不要 `var(--fs-lead)`。Hero 标题允许展示级 56，行高/字距仍走 `.hero h1`（1.1 / `-0.03em`）；lead 不要再写 `.rt-hero-lead` 覆盖（specificity 打不过 `.hero .lead`）。gutter 48 与青绿不因字阶对齐而改。
 - Hero 栅格：文案列 `minmax(0, 500px)`，插图列吃剩余并右对齐。
 - Returns 专属覆盖写 `src/styles/returns-page.css`；共享壳/动效在 `src/styles/landing.css` 与 `src/fx/`。
 - Stats 四象限底部边距比顶部多留一截（2026-08-17 Park）：`--rt-stats-gap-bottom = gap-y + 64px`（≤960 收成 +44px），别改回上下对称。

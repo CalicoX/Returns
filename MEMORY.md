@@ -145,7 +145,7 @@ Park：最大兼容，但效果与动画保持、不卡。不要用「更多设�
 
 ## Explore Tracking 卡（2026-08-21）
 
-- Returns 落地页的 Explore 左卡是 **17 Order Tracking**，底色必须是 **17TRACK 蓝** `#003a9b` 家族（`#1a5cd4 → #003a9b → #002a75`），**不要**用 Returns 青绿 `#20B195`。
+- Returns 落地页的 Explore 左卡是 **17TRACK Order Tracking**（标题和 CTA 都写全称，CTA 不要 Explore），底色必须是 **17TRACK 蓝** `#003a9b` 家族（`#1a5cd4 → #003a9b → #002a75`），**不要**用 Returns 青绿 `#20B195`。
 - Hover 高光：指针跟随的**亮蓝**径向 spotlight（sky/blue，`mix-blend-mode: screen`）。**不要白芯**，发白是错的。3D tilt 仍走 `.explore-card` 公共逻辑。
 - 右侧面板：进度条是 **5 步铺满** Ordered → Processed → Shipped → Out → Delivered（最后一颗紫、带光圈），不要 4 步挤左边留空线。进度 + Events 同一张白卡。WISMO / video 浮在事件上；不要 −12% / Embed。
 - Hover：两张浮卡同向，轨迹卡反向（`landing-inline.js` 里 board `px,py` vs wismo/video `ox,oy`）。禁止再把 video 和 board 设成同向。

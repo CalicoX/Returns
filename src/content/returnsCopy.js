@@ -259,10 +259,10 @@ export const META = {
 export const EXPLORE = {
   title: "Need branded tracking or shipment data infrastructure?",
   lead: "Beyond returns, explore order tracking experiences and shipment data APIs — pick the product that matches your stage.",
-  trackingTitle: "17 Order Tracking",
+  trackingTitle: "17TRACK Order Tracking",
   trackingDesc:
     "Create a branded tracking page that cuts WISMO tickets and turns high-intent visits into repurchase moments.",
-  trackingCta: "Explore 17 Order Tracking",
+  trackingCta: "17TRACK Order Tracking",
   apiTitle: "Tracking API",
   apiDesc:
     "Global shipment tracking data for developers and enterprise systems — less multi-carrier integration overhead.",

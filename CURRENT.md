@@ -19,7 +19,7 @@
 
 Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows → Plans → Faq → ExploreMore → BrandsSay → Credentials → BottomCta → Footer + ProductDock
 
-ExploreMore Tracking 卡：标题/CTA 都是 **17TRACK Order Tracking**（不要 Explore）；17TRACK 蓝；正面包裹 icon；右侧一张轨迹卡（进度条 + Shipping Events）+ 小浮卡 WISMO / video。API 卡整块对齐 tracking-react（Lucide `</>`、终端毛玻璃、ASCII 底纹；768 也保留滚动）。768 卡内左右双列；≤480 上下布局，正文和 CTA 20px。卡是平面的，只要指针高光，不要 3D tilt。
+ExploreMore Tracking 卡：标题/CTA 都是 **17TRACK Order Tracking**（不要 Explore）；17TRACK 蓝；正面包裹 icon；右侧是 **5175 tracking-react Hero 模块**（`os-status` + WISMO / Brand video 浮卡），不要自制 Shipping Events 板。API 卡整块对齐 tracking-react（Lucide `</>`、终端毛玻璃、ASCII 底纹；768 也保留滚动）。768 卡内左右双列；≤480 上下布局，正文和 CTA 20px。卡是平面的，只要指针高光，不要 3D tilt。
 
 RoiCalculator 背景：CSS 青绿光晕 + Point Waves 复刻（`roi-point-waves.js`，WebGL2-only，滚动到区块才挂载）。
 

@@ -1,8 +1,9 @@
 import { EXPLORE } from "../../content/returnsCopy.js";
 
 /**
- * Explore More — Tracking card + full Tracking API card
- * (API block matches tracking-react ExploreMore: ascii, code-window anim, carriers)
+ * Explore More — Tracking card + Tracking API card
+ * Tracking visual = 5175 Hero module (os-status + float cards)
+ * API block matches tracking-react ExploreMore
  */
 export default function ExploreMore() {
   return (
@@ -30,22 +31,22 @@ export default function ExploreMore() {
               </span>
             </div>
             <div className="track-ui" aria-hidden="true">
-              <div className="track-ui-board">
-                <p className="track-ui-status">Your order has been delivered.</p>
-                <div className="track-ui-progress">
-                  <i>
+              <div className="os-status">
+                <h3>Your order has been delivered.</h3>
+                <div className="os-progress">
+                  <i className="is-on">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                      <path d="M7 8h10l-1 12H8L7 8z" />
-                      <path d="M9.5 8V7a2.5 2.5 0 015 0v1" />
+                      <path d="M4 7h16l-1.2 11H5.2L4 7z" />
+                      <path d="M9 7V5.5A3 3 0 0115 5.5V7" />
                     </svg>
                   </i>
-                  <i>
+                  <i className="is-on">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                       <rect x="4" y="5" width="16" height="14" rx="1.5" />
                       <path d="M8 9h8M8 13h5" />
                     </svg>
                   </i>
-                  <i>
+                  <i className="is-on">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                       <path d="M3 16V8h11v8H3z" />
                       <path d="M14 11h4l3 3v2h-7v-5z" />
@@ -53,73 +54,56 @@ export default function ExploreMore() {
                       <circle cx="17" cy="17.5" r="1.6" />
                     </svg>
                   </i>
-                  <i>
+                  <i className="is-on">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                       <path d="M4 17V9l7-4 7 4v8" />
                       <path d="M9 17v-5h6v5" />
                     </svg>
                   </i>
-                  <i className="is-now">
+                  <i className="is-on is-now">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                       <path d="M4 20V10l8-6 8 6v10" />
                       <path d="M10 20v-6h4v6" />
                     </svg>
                   </i>
                 </div>
-                <div className="track-ui-labels">
+                <div className="os-progress-labels">
                   <span>Ordered</span>
                   <span>Processed</span>
                   <span>Shipped</span>
                   <span>Out</span>
                   <span>Delivered</span>
                 </div>
-                <div className="track-ui-events">
-                  <div className="track-ui-ev-head">
-                    <strong>Shipping Events</strong>
-                    <span>USPS · United States</span>
-                  </div>
-                  <ol className="track-ui-ev-list">
-                    <li className="track-ui-ev is-now">
-                      <i></i>
-                      <div>
-                        <b>Aug 18, 10:22</b>
-                        <span>Shingle Springs, CA · Delivered</span>
-                      </div>
-                    </li>
-                    <li className="track-ui-ev">
-                      <i></i>
-                      <div>
-                        <b>Aug 18, 08:14</b>
-                        <span>Out for Delivery, USPS</span>
-                      </div>
-                    </li>
-                    <li className="track-ui-ev">
-                      <i></i>
-                      <div>
-                        <b>Aug 17, 21:06</b>
-                        <span>Arrived at Post Office</span>
-                      </div>
-                    </li>
-                    <li className="track-ui-ev">
-                      <i></i>
-                      <div>
-                        <b>Aug 16, 14:40</b>
-                        <span>Picked Up by Shipping Partner</span>
-                      </div>
-                    </li>
-                  </ol>
+                <div className="os-carrier">
+                  <b>USPS</b>
+                  <span>9400 1000 0000 2849 1</span>
                 </div>
+                <ul className="os-events">
+                  <li>
+                    <strong>Delivered</strong>
+                    <span>Today · 2:14 PM · Front door</span>
+                  </li>
+                  <li>
+                    <strong>Out for delivery</strong>
+                    <span>Today · 8:02 AM · Los Angeles, CA</span>
+                  </li>
+                  <li>
+                    <strong>Arrived at hub</strong>
+                    <span>Yesterday · 6:41 PM</span>
+                  </li>
+                </ul>
               </div>
-              <div className="track-ui-wismo">
-                <div className="track-ui-wismo-top">
-                  <span>WISMO inquiries</span>
+              <div className="float-card float-card-metric">
+                <div className="float-card-top">
+                  <span className="label">WISMO inquiries</span>
+                  <span className="float-card-tag">−12%</span>
                 </div>
-                <p className="track-ui-wismo-num">
-                  <b>↓</b>
+                <span className="num">
+                  <span className="num-arrow" aria-hidden="true">↓</span>
                   35%
-                </p>
-                <p className="track-ui-wismo-hint">More shoppers self-serve after purchase</p>
-                <div className="track-ui-bars">
+                </span>
+                <span className="hint">More shoppers self-serve after purchase</span>
+                <div className="mini-bars" aria-hidden="true">
                   <span style={{ height: "88%" }}></span>
                   <span style={{ height: "76%" }}></span>
                   <span style={{ height: "64%" }}></span>
@@ -130,11 +114,12 @@ export default function ExploreMore() {
                   <span style={{ height: "26%" }}></span>
                 </div>
               </div>
-              <div className="track-ui-video">
-                <div className="track-ui-video-top">
-                  <span>Brand video</span>
+              <div className="float-card float-card-video">
+                <div className="float-card-top">
+                  <span className="label">Brand video</span>
+                  <span className="float-card-tag video">Embed</span>
                 </div>
-                <div className="track-ui-thumb">
+                <div className="video-thumb">
                   <img
                     src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=400&q=80"
                     alt=""
@@ -143,18 +128,18 @@ export default function ExploreMore() {
                     loading="lazy"
                     decoding="async"
                   />
-                  <span className="track-ui-play">
+                  <span className="video-play">
                     <svg viewBox="0 0 12 12" fill="currentColor">
                       <path d="M3.2 2.1v7.8L10 6 3.2 2.1z" />
                     </svg>
                   </span>
                 </div>
-                <strong>Studio edit · unbox film</strong>
-                <p>
-                  0:42
+                <strong className="video-title">Studio edit · unbox film</strong>
+                <div className="video-meta">
+                  <span>0:42</span>
                   <i></i>
-                  Post-purchase story
-                </p>
+                  <span>Post-purchase story</span>
+                </div>
               </div>
             </div>
           </a>

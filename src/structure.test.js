@@ -64,8 +64,8 @@ describe("Returns landing structure", () => {
     expect(explore).toMatch(/17 Order Tracking|trackingTitle/);
     expect(explore).toMatch(/explore-card-tracking/);
     expect(explore).toMatch(/ico-t-box/);
-    expect(explore).toMatch(/track-ui-wismo|WISMO inquiries/);
-    expect(explore).toMatch(/Shipping Events/);
+    expect(explore).toMatch(/os-status|WISMO inquiries/);
+    expect(explore).toMatch(/Your order has been delivered/);
     expect(explore).not.toMatch(/Explore 17 Returns/);
     expect(explore).not.toMatch(/explore-card-returns/);
   });

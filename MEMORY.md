@@ -154,9 +154,9 @@ Park：最大兼容，但效果与动画保持、不卡。不要用「更多设�
 
 - Returns 落地页的 Explore 左卡是 **17TRACK Order Tracking**（标题和 CTA 都写全称，CTA 不要 Explore），底色必须是 **17TRACK 蓝** `#003a9b` 家族（`#1a5cd4 → #003a9b → #002a75`），**不要**用 Returns 青绿 `#20B195`。
 - Hover 高光：指针跟随的**亮蓝**径向 spotlight（sky/blue，`mix-blend-mode: screen`）。**不要白芯**，发白是错的。**不要 3D tilt**（Park 2026-08-25：去掉倾斜和内层视差，卡保持平面）。
-- 右侧面板：进度条是 **5 步铺满** Ordered → Processed → Shipped → Out → Delivered（最后一颗紫、带光圈），不要 4 步挤左边留空线。进度 + Events 同一张白卡。WISMO / video 浮在事件上；不要 −12% / Embed。
-- 浮卡不再跟指针做反向视差（和 3D tilt 一起关掉了）。landing-inline 里那套 board `px,py` vs wismo/video `ox,oy` 只留给非 Returns 页。
-- 类名 `explore-card-tracking` / `.track-ui-*`，样式只写 `returns-page.css`。不要改 `landing.css` 里的 `.explore-card-returns`（那是 tracking 站的 Returns 卡）。
+- 右侧视觉对齐 **5175**（`tracking-react` Hero）：`os-status`（Delivered + 5 步 + USPS + 三条事件）+ 毛玻璃浮卡 WISMO（−12%）/ Brand video（Embed）。不要自制 Shipping Events 板。样式只写 `returns-page.css` 的 `.track-ui`，不要改 `landing.css`。
+- 浮卡不再跟指针做反向视差（和 3D tilt 一起关掉了）。landing-inline 里 `os-status` vs float-card 的 layer 只留给非 Returns 页。
+- 类名 `explore-card-tracking` / `.track-ui`，不要改 `landing.css` 里的 `.explore-card-returns`（那是 tracking 站的 Returns 卡）。
 - Tracking 卡 icon 是**包裹**（圆角盒盖压盒身 + 中缝），不是时钟。不要斜线尖盖（小尺寸发糊、读成箭头），不要等距 3D 盒（读成纸飞机）。线 1.5、圆底轻玻璃、不要重阴影。hover 描边画一次就停。API `</>` 同样播一次，不要左右平移。
 - API 卡整块对齐 tracking-react：Lucide `</>`（斜杠比括号高，静止实线）、终端毛玻璃。`.explore-api-visual` 必须 `z-index: auto`，否则玻璃糊不到 ASCII。`filter: drop-shadow` 和常驻 `transform` 会让玻璃失效，不要加回去。
 - Explore 动效必须盯 `.explore-grid` 挂 `landing-inline`（ASCII 底纹 + 指针高光）。不要只观察 `#key-features`：Returns 的 FeatureRows 对不上旧 features DOM，脚本会永不挂载。

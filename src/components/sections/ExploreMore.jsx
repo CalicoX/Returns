@@ -16,10 +16,10 @@ export default function ExploreMore() {
           <a className="explore-card explore-card-tracking" href="#">
             <div className="explore-card-copy">
               <span className="explore-title-ico explore-title-ico-tracking" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
-                  <rect className="ico-t-box" x="4" y="8" width="16" height="12.5" rx="1.4" />
-                  <path className="ico-t-lid" d="M4 8l8-4.2L20 8" />
-                  <path className="ico-t-seam" d="M12 3.8v16.7M4 12h16" />
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <rect className="ico-t-lid" x="6" y="5.5" width="12" height="3" rx="1.15" />
+                  <rect className="ico-t-box" x="6" y="8.5" width="12" height="10.5" rx="1.75" />
+                  <path className="ico-t-seam" d="M12 8.5v10.5" />
                 </svg>
               </span>
               <h3>{EXPLORE.trackingTitle}</h3>

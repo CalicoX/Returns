@@ -5995,25 +5995,32 @@ html.is-reduce-fx .rt-roi::after {
 }
 
 .returns-page .explore-card-tracking .explore-title-ico {
-  background: rgba(255, 255, 255, 0.16);
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.22);
   color: #fff;
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.22) inset,
-    0 6px 16px rgba(0, 32, 90, 0.22);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.returns-page .explore-title-ico-tracking svg {
+  overflow: visible;
+}
+.returns-page .explore-title-ico-tracking svg path,
+.returns-page .explore-title-ico-tracking svg rect {
+  vector-effect: none;
 }
 
-/* 包裹 icon：正面纸箱（盒身 / 盖 / 胶带），hover 描边画一次就停 */
+/* 包裹 icon：盒盖压盒身 + 中缝，只走直角描边 */
 .returns-page .explore-title-ico-tracking .ico-t-box {
-  stroke-dasharray: 58;
+  stroke-dasharray: 46;
   stroke-dashoffset: 0;
 }
 .returns-page .explore-title-ico-tracking .ico-t-lid {
-  stroke-dasharray: 22;
+  stroke-dasharray: 30;
   stroke-dashoffset: 0;
 }
 .returns-page .explore-title-ico-tracking .ico-t-seam {
-  stroke-dasharray: 38;
+  stroke-dasharray: 11;
   stroke-dashoffset: 0;
 }
 .returns-page .explore-card-tracking:hover .explore-title-ico-tracking .ico-t-box,
@@ -6029,19 +6036,19 @@ html.is-reduce-fx .rt-roi::after {
   animation: ico-track-seam 1.15s cubic-bezier(0.45, 0, 0.2, 1) 1 forwards;
 }
 @keyframes ico-track-box {
-  0%   { stroke-dashoffset: 58; opacity: 0.35; }
+  0%   { stroke-dashoffset: 46; opacity: 0.35; }
   32%  { stroke-dashoffset: 0;  opacity: 1; }
   100% { stroke-dashoffset: 0;  opacity: 1; }
 }
 @keyframes ico-track-lid {
-  0%   { stroke-dashoffset: 22; opacity: 0; }
-  14%  { stroke-dashoffset: 22; opacity: 0; }
+  0%   { stroke-dashoffset: 30; opacity: 0; }
+  14%  { stroke-dashoffset: 30; opacity: 0; }
   42%  { stroke-dashoffset: 0;  opacity: 1; }
   100% { stroke-dashoffset: 0;  opacity: 1; }
 }
 @keyframes ico-track-seam {
-  0%   { stroke-dashoffset: 38; opacity: 0; }
-  28%  { stroke-dashoffset: 38; opacity: 0; }
+  0%   { stroke-dashoffset: 11; opacity: 0; }
+  28%  { stroke-dashoffset: 11; opacity: 0; }
   58%  { stroke-dashoffset: 0;  opacity: 1; }
   100% { stroke-dashoffset: 0;  opacity: 1; }
 }

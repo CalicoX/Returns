@@ -33,7 +33,7 @@
 - **阴影只向下投**：`.returns-page .btn-switch` 的外阴影要满足 offset ≥ blur − |spread|（现为 `0 2px 3px -1px`，hover `0 10px 18px -8px`）。原 `0 4px 14px` 的模糊晕圈会溢到胶囊顶上方，Retina 下叠着 wash 灰纹读成一条「黑边」（Park 截图反馈过）。
 - **Border beam**：tracking 的 `.btn-switch` beam 由 `ai-lab.js` 的 `switchBtnFx` 挂，只在页面有 `#ai-lab` 时加载；Returns 没有 AI Lab 区块，所以单独建 `src/fx/modules/returns-cta-beam.js`。2026-08-18 起覆盖**全站** `.returns-page .btn-switch`（Hero / FeatureRows×4 / Plans / BrandsSay / BottomCta 共 8 颗；`FeaturesSection.jsx` 未被 LandingPage 引入不算），离屏实例 IntersectionObserver 加 `data-paused` 停动画（多实例已验证：任意滚动位置只有视口内的在转）。色板用 `border-beam.js` 新增的 **teal** 变体，`hueRange: 10` 锁色相，别用默认 colorful（会飘蓝紫）。常亮薄荷描边（含 hover / on-dark）统一 `rgba(204,251,241,.7)`、hover `.85`。
 - **Beam 可见性踩坑**（同日 Park「效果没看到」）：光斑颜色必须用**亮 mint/冰青**（teal-100/200、cyan-200 档）——中深 teal 打在青绿按钮上同色隐身；参数要 `borderWidth: 2` + stroke 0.95 / inner 0.75 / bloom 0.65，首版 1px + 0.5 档肉眼看不出。挂载本身当时是通的（data-beam/style 都在），别只查挂载不查对比度。
-- **端口对照**（勿混）：5173 = Tracking API · 5174 = Order Tracking · **5175 = Returns**。验证 Returns 一律打 5175，别信 vite 终端里旧的启动日志。
+- **端口对照**（勿混）：5173 = Tracking API · **5174 = Returns** · 5175 = Order Tracking。验证 Returns 一律打 5174，别信 vite 终端里旧的启动日志。
 - **弱相位兜底**：beam 遮罩一圈里有约 1/3 弧段是暗区，扫到弱相位时整颗按钮会瞬间「没效果」。按钮静态描边提亮为常亮薄荷 `rgba(204,251,241,.7)`（原 .35 mint），任意瞬间边缘都点亮，beam 高光在其上扫动（对齐 tracking 常亮 rim 观感）。
 
 ---
@@ -153,12 +153,13 @@ Park：最大兼容，但效果与动画保持、不卡。不要用「更多设�
 ## Explore Tracking 卡（2026-08-21）
 
 - Returns 落地页的 Explore 左卡是 **17TRACK Order Tracking**（标题和 CTA 都写全称，CTA 不要 Explore），底色必须是 **17TRACK 蓝** `#003a9b` 家族（`#1a5cd4 → #003a9b → #002a75`），**不要**用 Returns 青绿 `#20B195`。
-- Hover 高光：指针跟随的**亮蓝**径向 spotlight（sky/blue，`mix-blend-mode: screen`）。**不要白芯**，发白是错的。3D tilt 仍走 `.explore-card` 公共逻辑。
+- Hover 高光：指针跟随的**亮蓝**径向 spotlight（sky/blue，`mix-blend-mode: screen`）。**不要白芯**，发白是错的。**不要 3D tilt**（Park 2026-08-25：去掉倾斜和内层视差，卡保持平面）。
 - 右侧面板：进度条是 **5 步铺满** Ordered → Processed → Shipped → Out → Delivered（最后一颗紫、带光圈），不要 4 步挤左边留空线。进度 + Events 同一张白卡。WISMO / video 浮在事件上；不要 −12% / Embed。
-- Hover：两张浮卡同向，轨迹卡反向（`landing-inline.js` 里 board `px,py` vs wismo/video `ox,oy`）。禁止再把 video 和 board 设成同向。
+- 浮卡不再跟指针做反向视差（和 3D tilt 一起关掉了）。landing-inline 里那套 board `px,py` vs wismo/video `ox,oy` 只留给非 Returns 页。
 - 类名 `explore-card-tracking` / `.track-ui-*`，样式只写 `returns-page.css`。不要改 `landing.css` 里的 `.explore-card-returns`（那是 tracking 站的 Returns 卡）。
-- Tracking 卡 icon 是**包裹**（盒身/盖/中缝），不是时钟。hover 描边 play，对齐 Returns/API。
-- Explore 动效必须盯 `.explore-grid` 挂 `landing-inline`（ASCII 底纹 + 3D tilt）。不要只观察 `#key-features`：Returns 的 FeatureRows 对不上旧 features DOM，脚本会永不挂载。
+- Tracking 卡 icon 是**时钟**（外圈 + 时针/分针），不是包裹。等距包裹在小圆里读成纸飞机。hover 描边画一次就停，不要无限回绕。API `</>` 同样播一次，不要左右平移。
+- API 终端是毛玻璃（半透明 + `backdrop-filter`）。`filter: drop-shadow` 和常驻 `transform` 会让玻璃失效，不要加回去。
+- Explore 动效必须盯 `.explore-grid` 挂 `landing-inline`（ASCII 底纹 + 指针高光）。不要只观察 `#key-features`：Returns 的 FeatureRows 对不上旧 features DOM，脚本会永不挂载。
 - ≤768 保留 API ASCII 底纹滚动（`returns-page.css` 盖掉 landing.css 的 `display:none` / `animation:none`）。768 卡内仍左右双列；≤480 改上下布局，CTA 与正文 **20px**（不要靠 `margin-top:auto`，单列会塌成 0）。
 
 ## 工程教训

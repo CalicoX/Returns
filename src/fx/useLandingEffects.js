@@ -145,9 +145,9 @@ export function useLandingEffects() {
       );
     }
 
-    // —— Explore tilt / ASCII 底纹（必须盯 .explore-grid）——
+    // —— Explore ASCII 底纹 + 指针高光（必须盯 .explore-grid）——
     // 旧写法 features || explore：Returns 的 #key-features 是 FeatureRows，
-    // IO 对不上时 landing-inline 永不挂载 → API 无底纹、两张卡无 3D hover。
+    // IO 对不上时 landing-inline 永不挂载 → API 无底纹、高光不跟指针。
     const explore = document.querySelector(".explore-grid");
     if (explore) {
       let loaded = false;

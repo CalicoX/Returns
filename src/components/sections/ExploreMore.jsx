@@ -17,9 +17,9 @@ export default function ExploreMore() {
             <div className="explore-card-copy">
               <span className="explore-title-ico explore-title-ico-tracking" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.85" strokeLinecap="round" strokeLinejoin="round">
-                  <path className="ico-t-box" d="M3.2 8.2L12 3.8l8.8 4.4v9.2L12 21.8 3.2 17.4V8.2z" />
-                  <path className="ico-t-lid" d="M3.2 8.2L12 12.6l8.8-4.4" />
-                  <path className="ico-t-seam" d="M12 12.6v9.2" />
+                  <circle className="ico-t-rim" cx="12" cy="12" r="9" />
+                  <path className="ico-t-hour" d="M12 7v5" />
+                  <path className="ico-t-min" d="M12 12l3 2" />
                 </svg>
               </span>
               <h3>{EXPLORE.trackingTitle}</h3>

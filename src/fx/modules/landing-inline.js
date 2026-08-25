@@ -239,7 +239,9 @@ export function mount() {
         var raf = 0;
         var latest = null;
 
-        function applyLatest() {
+        var noTilt = !!document.querySelector(".returns-page");
+
+      function applyLatest() {
           raf = 0;
           if (!latest) return;
           var e = latest;
@@ -250,7 +252,8 @@ export function mount() {
           var xPct = (x / Math.max(r.width, 1)) * 100;
           var yPct = (y / Math.max(r.height, 1)) * 100;
           setSpot(card, xPct, yPct, true);
-          if (reduce) return;
+          /* Returns：只要指针高光，不要 3D tilt / 内层反向视差 */
+          if (reduce || noTilt) return;
           var px = (x / Math.max(r.width, 1)) * 2 - 1;
           var py = (y / Math.max(r.height, 1)) * 2 - 1;
           px = Math.max(-1, Math.min(1, px));

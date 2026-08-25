@@ -6003,51 +6003,47 @@ html.is-reduce-fx .rt-roi::after {
     0 6px 16px rgba(0, 32, 90, 0.22);
 }
 
-/* 时钟 icon：描边画一圈 + 指针走一格，hover 播一次不回绕 */
-.returns-page .explore-title-ico-tracking .ico-t-rim,
-.returns-page .explore-title-ico-tracking .ico-t-hour,
-.returns-page .explore-title-ico-tracking .ico-t-min {
-  transform-box: view-box;
-  transform-origin: 12px 12px;
-}
-.returns-page .explore-title-ico-tracking .ico-t-rim {
-  stroke-dasharray: 57;
+/* 包裹 icon：正面纸箱（盒身 / 盖 / 胶带），hover 描边画一次就停 */
+.returns-page .explore-title-ico-tracking .ico-t-box {
+  stroke-dasharray: 58;
   stroke-dashoffset: 0;
 }
-.returns-page .explore-title-ico-tracking .ico-t-hour {
-  stroke-dasharray: 6;
+.returns-page .explore-title-ico-tracking .ico-t-lid {
+  stroke-dasharray: 22;
   stroke-dashoffset: 0;
 }
-.returns-page .explore-title-ico-tracking .ico-t-min {
-  stroke-dasharray: 8;
+.returns-page .explore-title-ico-tracking .ico-t-seam {
+  stroke-dasharray: 38;
   stroke-dashoffset: 0;
 }
-.returns-page .explore-card-tracking:hover .explore-title-ico-tracking .ico-t-rim,
-.returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking .ico-t-rim {
-  animation: ico-track-rim 1.15s cubic-bezier(0.45, 0, 0.2, 1) 1 forwards;
+.returns-page .explore-card-tracking:hover .explore-title-ico-tracking .ico-t-box,
+.returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking .ico-t-box {
+  animation: ico-track-box 1.15s cubic-bezier(0.45, 0, 0.2, 1) 1 forwards;
 }
-.returns-page .explore-card-tracking:hover .explore-title-ico-tracking .ico-t-hour,
-.returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking .ico-t-hour {
-  animation: ico-track-hour 1.15s cubic-bezier(0.45, 0, 0.2, 1) 1 forwards;
+.returns-page .explore-card-tracking:hover .explore-title-ico-tracking .ico-t-lid,
+.returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking .ico-t-lid {
+  animation: ico-track-lid 1.15s cubic-bezier(0.45, 0, 0.2, 1) 1 forwards;
 }
-.returns-page .explore-card-tracking:hover .explore-title-ico-tracking .ico-t-min,
-.returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking .ico-t-min {
-  animation: ico-track-min 1.15s cubic-bezier(0.45, 0, 0.2, 1) 1 forwards;
+.returns-page .explore-card-tracking:hover .explore-title-ico-tracking .ico-t-seam,
+.returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking .ico-t-seam {
+  animation: ico-track-seam 1.15s cubic-bezier(0.45, 0, 0.2, 1) 1 forwards;
 }
-@keyframes ico-track-rim {
-  0%   { stroke-dashoffset: 57; opacity: 0.35; }
-  28%  { stroke-dashoffset: 0;  opacity: 1; }
+@keyframes ico-track-box {
+  0%   { stroke-dashoffset: 58; opacity: 0.35; }
+  32%  { stroke-dashoffset: 0;  opacity: 1; }
   100% { stroke-dashoffset: 0;  opacity: 1; }
 }
-@keyframes ico-track-hour {
-  0%   { stroke-dashoffset: 6; opacity: 0.35; transform: rotate(0deg); }
-  22%  { stroke-dashoffset: 0; opacity: 1; transform: rotate(0deg); }
-  100% { stroke-dashoffset: 0; opacity: 1; transform: rotate(14deg); }
+@keyframes ico-track-lid {
+  0%   { stroke-dashoffset: 22; opacity: 0; }
+  14%  { stroke-dashoffset: 22; opacity: 0; }
+  42%  { stroke-dashoffset: 0;  opacity: 1; }
+  100% { stroke-dashoffset: 0;  opacity: 1; }
 }
-@keyframes ico-track-min {
-  0%   { stroke-dashoffset: 8; opacity: 0; transform: rotate(0deg); }
-  18%  { stroke-dashoffset: 0; opacity: 1; transform: rotate(0deg); }
-  100% { stroke-dashoffset: 0; opacity: 1; transform: rotate(110deg); }
+@keyframes ico-track-seam {
+  0%   { stroke-dashoffset: 38; opacity: 0; }
+  28%  { stroke-dashoffset: 38; opacity: 0; }
+  58%  { stroke-dashoffset: 0;  opacity: 1; }
+  100% { stroke-dashoffset: 0;  opacity: 1; }
 }
 
 /* API </>：只描边，不要左右平移；hover 播一次 */
@@ -6575,8 +6571,8 @@ html.is-reduce-fx .rt-roi::after {
   }
   .returns-page .explore-card-tracking:hover .explore-title-ico-tracking path,
   .returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking path,
-  .returns-page .explore-card-tracking:hover .explore-title-ico-tracking circle,
-  .returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking circle {
+  .returns-page .explore-card-tracking:hover .explore-title-ico-tracking rect,
+  .returns-page .explore-card-tracking.is-tilting .explore-title-ico-tracking rect {
     animation: none !important;
     stroke-dashoffset: 0 !important;
     opacity: 1 !important;

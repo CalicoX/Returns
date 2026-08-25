@@ -170,23 +170,10 @@ export function mount() {
       }
     })();
 
-    /* Explore cards — board tilts with mouse; inner layers move OPPOSITE (reverse hover) */
+    /* Explore cards — pointer spotlight only (Park: no 3D transform) */
     (function () {
       var cards = document.querySelectorAll(".explore-card");
       if (!cards.length) return;
-      var max = 9; /* board tilt degrees — clear but not extreme */
-      var reduce =
-        window.__reduceFx ||
-        window.__isMobileLayout ||
-        (window.matchMedia &&
-          (window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-            window.matchMedia("(max-width: 768px)").matches));
-
-      function setTilt(card, rx, ry, tz) {
-        card.style.setProperty("--rx", rx.toFixed(2) + "deg");
-        card.style.setProperty("--ry", ry.toFixed(2) + "deg");
-        card.style.setProperty("--tz", tz.toFixed(2) + "px");
-      }
 
       function setSpot(card, xPct, yPct, on) {
         card.style.setProperty("--spot-x", xPct.toFixed(2) + "%");
@@ -194,53 +181,11 @@ export function mount() {
         card.style.setProperty("--spot-opacity", on ? "1" : "0");
       }
 
-      function setLayer(el, px, py, ampX, ampY) {
-        if (!el) return;
-        el.style.setProperty("--layer-x", (px * ampX).toFixed(2) + "px");
-        el.style.setProperty("--layer-y", (py * ampY).toFixed(2) + "px");
-      }
-
-      /*
-       * Outer board leans WITH mouse (rotateY ~ pointer X, rotateX ~ -pointer Y).
-       * Inner content translates OPPOSITE to board motion — reverse hover parallax.
-       * Returns: product vs method cards also reverse each other.
-       * API: window + carriers share opposite XY so lines stay attached.
-       */
-      function setCardLayers(card, px, py) {
-        var ox = -px;
-        var oy = -py;
-        /* copy always reverse to board */
-        setLayer(card.querySelector(".explore-card-copy"), ox, oy, 14, 11);
-
-        if (card.classList.contains("explore-card-api")) {
-          /* reverse parallax — keep amps modest so terminal is not edge-clipped */
-          setLayer(card.querySelector(".explore-api-visual"), ox, oy, 12, 10);
-          setLayer(card.querySelector(".code-window"), ox, oy, 16, 12);
-          setLayer(card.querySelector(".api-carriers"), ox, oy, 16, 12);
-        } else if (card.classList.contains("explore-card-returns")) {
-          /* same model as API: stage reverse; product vs method counter each other */
-          setLayer(card.querySelector(".returns-ui"), ox, oy, 12, 10);
-          setLayer(card.querySelector(".returns-ui-card"), px, py, 10, 8);
-          setLayer(card.querySelector(".returns-method"), ox, oy, 14, 11);
-        } else if (card.classList.contains("explore-card-tracking")) {
-          setLayer(card.querySelector(".track-ui"), ox, oy, 12, 10);
-          setLayer(card.querySelector(".os-status"), px, py, 11, 9);
-          setLayer(card.querySelector(".float-card-metric"), ox, oy, 16, 12);
-          setLayer(card.querySelector(".float-card-video"), ox, oy, 16, 12);
-        }
-      }
-
-      function resetCardLayers(card) {
-        setCardLayers(card, 0, 0);
-      }
-
       Array.prototype.forEach.call(cards, function (card) {
         var raf = 0;
         var latest = null;
 
-        var noTilt = !!document.querySelector(".returns-page");
-
-      function applyLatest() {
+        function applyLatest() {
           raf = 0;
           if (!latest) return;
           var e = latest;
@@ -251,16 +196,6 @@ export function mount() {
           var xPct = (x / Math.max(r.width, 1)) * 100;
           var yPct = (y / Math.max(r.height, 1)) * 100;
           setSpot(card, xPct, yPct, true);
-          /* Returns：只要指针高光，不要 3D tilt / 内层反向视差 */
-          if (reduce || noTilt) return;
-          var px = (x / Math.max(r.width, 1)) * 2 - 1;
-          var py = (y / Math.max(r.height, 1)) * 2 - 1;
-          px = Math.max(-1, Math.min(1, px));
-          py = Math.max(-1, Math.min(1, py));
-          /* board leans with mouse (Returns + API same) */
-          setTilt(card, -py * max, px * max, 0);
-          /* inner layers move opposite */
-          setCardLayers(card, px, py);
         }
 
         card.addEventListener("pointerenter", function () {
@@ -282,9 +217,7 @@ export function mount() {
           latest = null;
           card.classList.remove("is-tilting");
           card.classList.add("is-leaving");
-          setTilt(card, 0, 0, 0);
           setSpot(card, 50, 35, false);
-          resetCardLayers(card);
           window.setTimeout(function () {
             card.classList.remove("is-leaving");
           }, 560);

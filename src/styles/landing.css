@@ -6738,9 +6738,6 @@
       --r-outer: 24px;
       --r-inner: 12px; /* = r_outer - 12px effective nested gap */
       --r-nested: 10px; /* glass cards inside returns stage */
-      --rx: 0deg;
-      --ry: 0deg;
-      --tz: 0px;
       --spot-x: 50%;
       --spot-y: 35%;
       --spot-opacity: 0;
@@ -6755,22 +6752,17 @@
       grid-template-columns: minmax(0, 0.88fr) minmax(280px, 1.2fr);
       gap: 16px 20px;
       align-items: stretch;
-      /* glass removed — visible so 3D/parallax mock is not edge-clipped */
       overflow: visible;
       outline: none;
       text-decoration: none;
       color: #fff;
-      transform-style: preserve-3d;
-      transform:
-        translate3d(0, var(--tz), 0)
-        rotateX(var(--rx))
-        rotateY(var(--ry));
+      transform: none;
+      transform-style: flat;
       /* no default drop shadow — only soft hover */
       box-shadow: 0 1px 0 rgba(255, 255, 255, 0.18) inset;
       transition:
         box-shadow 0.4s ease,
         border-color 0.35s ease;
-      will-change: transform;
     }
     .explore-card:hover,
     .explore-card.is-tilting {
@@ -6782,9 +6774,7 @@
       transition: box-shadow 0.4s ease, border-color 0.35s ease;
     }
     .explore-card.is-leaving {
-      transition:
-        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-        box-shadow 0.45s ease;
+      transition: box-shadow 0.45s ease, border-color 0.35s ease;
     }
     /* Mouse spotlight + soft top sheen */
     .explore-card::before {
@@ -6889,16 +6879,7 @@
       flex-direction: column;
       min-height: 0;
       height: auto;
-      /* reverse parallax vs outer board tilt */
-      --layer-x: 0px;
-      --layer-y: 0px;
-      transform: translate3d(var(--layer-x), var(--layer-y), 16px);
-      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-      will-change: transform;
-      transform-style: preserve-3d;
-    }
-    .explore-card.is-tilting .explore-card-copy {
-      transition: transform 0.1s ease-out;
+      transform: none;
     }
     .explore-card h3 {
       margin: 0 0 8px;
@@ -7185,7 +7166,7 @@
       pointer-events: none;
       overflow: hidden;
       border-radius: inherit;
-      opacity: 0.1;
+      opacity: 0.16;
       transition: opacity 0.45s ease;
       -webkit-mask-image: radial-gradient(
         ellipse 95% 88% at 50% 45%,
@@ -7200,13 +7181,17 @@
     }
     .explore-card-api:hover .api-ascii,
     .explore-card-api.is-tilting .api-ascii {
-      opacity: 0.14;
+      opacity: 0.22;
     }
-    /* keep copy + terminal above the matrix */
-    .explore-card-api > .explore-card-copy,
-    .explore-card-api > .explore-api-visual {
+    /* copy above the matrix; visual stays z-index:auto so terminal glass can blur ASCII */
+    .explore-card-api > .explore-card-copy {
       position: relative;
       z-index: 1;
+    }
+    .explore-card-api > .explore-api-visual {
+      position: relative;
+      z-index: auto;
+      isolation: auto;
     }
     .api-ascii-layer {
       position: absolute;
@@ -7221,8 +7206,6 @@
       white-space: pre;
       color: rgba(226, 232, 240, 0.48);
       user-select: none;
-      will-change: transform;
-      backface-visibility: hidden;
     }
     /* doubled content → -50% is seamless loop */
     .api-ascii-a {
@@ -7236,12 +7219,12 @@
       animation: api-ascii-drift-rev 52s linear infinite;
     }
     @keyframes api-ascii-drift {
-      from { transform: translate3d(0, 0, 0); }
-      to   { transform: translate3d(0, -50%, 0); }
+      from { transform: translateY(0); }
+      to   { transform: translateY(-50%); }
     }
     @keyframes api-ascii-drift-rev {
-      from { transform: translate3d(0, -50%, 0); }
-      to   { transform: translate3d(0, 0, 0); }
+      from { transform: translateY(-50%); }
+      to   { transform: translateY(0); }
     }
     @media (prefers-reduced-motion: reduce) {
       .api-ascii-a,
@@ -7269,9 +7252,9 @@
     .explore-card-api .code-window {
       position: relative;
       z-index: 2; /* above line hub tuck under bottom edge */
-      /* terminal: darker than card, but brighter than pure black */
-      --cw-bg: #1e2430;
-      --cw-panel: #262d3c;
+      /* frosted glass — drop-shadow/transform would kill backdrop-filter */
+      --cw-bg: rgba(18, 22, 32, 0.28);
+      --cw-panel: rgba(38, 45, 60, 0.32);
       --cw-text: #f1f3f7;
       --cw-muted: #a8b0bd;
       --cw-green: #4ade80;
@@ -7281,10 +7264,13 @@
       --cw-del: rgba(248, 113, 113, 0.2);
       --cw-del-text: #fecaca;
       border-radius: var(--r-inner);
-      background: var(--cw-bg);
+      background: rgba(18, 22, 32, 0.28);
+      -webkit-backdrop-filter: blur(22px) saturate(1.45);
+      backdrop-filter: blur(22px) saturate(1.45);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       box-shadow:
-        0 16px 36px rgba(0, 0, 0, 0.35),
-        0 0 0 1px rgba(255, 255, 255, 0.1);
+        0 16px 36px rgba(0, 0, 0, 0.22),
+        0 0 0 1px rgba(255, 255, 255, 0.08);
       /* fixed shell — typing scrolls inside, never grows the card */
       width: 100%;
       max-width: 100%;
@@ -7294,13 +7280,11 @@
       min-height: 288px;
       max-height: 288px;
       overflow: hidden;
-      /* reverse to board: opposite XY of outer tilt (mild Z so edges stay inside) */
       --layer-x: 0px;
       --layer-y: 0px;
-      transform: translate3d(var(--layer-x), var(--layer-y), 18px);
-      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-      will-change: transform;
-      filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.32));
+      transform: none !important;
+      filter: none;
+      will-change: auto;
     }
     .explore-card-api .code-window-body {
       flex: 1 1 auto;
@@ -7322,30 +7306,22 @@
       /* scroll container for typewriter lines */
     }
     .explore-card-api .code-window-chrome {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      background: linear-gradient(180deg, #2a3140 0%, #222836 100%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.03) 100%
+      );
+    }
+    .explore-card-api .code-window-foot {
+      background: rgba(16, 20, 30, 0.32);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
     .explore-card-api .api-carriers {
-      --layer-x: 0px;
-      --layer-y: 0px;
-      transform: translate3d(var(--layer-x), var(--layer-y), 22px);
-      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-      will-change: transform;
-    }
-    /* snappy while tracking pointer; ease-out when leaving */
-    .explore-card-api.is-tilting .code-window,
-    .explore-card-api.is-tilting .api-carriers {
-      transition: transform 0.08s linear;
+      transform: none;
     }
     .explore-card-api .explore-api-visual {
-      --layer-x: 0px;
-      --layer-y: 0px;
-      transform: translate3d(var(--layer-x), var(--layer-y), 8px);
-      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-      will-change: transform;
-    }
-    .explore-card-api.is-tilting .explore-api-visual {
-      transition: transform 0.08s linear;
+      transform: none;
     }
     .explore-card-api .api-carrier-name {
       color: rgba(255, 255, 255, 0.72);
@@ -7367,7 +7343,8 @@
       height: auto;
       min-height: 0;
       overflow: visible;
-      transform-style: preserve-3d;
+      transform: none;
+      transform-style: flat;
     }
     .api-carriers {
       position: relative;

@@ -5894,7 +5894,8 @@ html.is-reduce-fx .rt-roi::after {
 .returns-page .track-ui .os-status,
 .returns-page .track-ui .float-card,
 .returns-page .explore-card-api .explore-api-visual,
-.returns-page .explore-card-api .api-carriers {
+.returns-page .explore-card-api .api-carriers,
+.returns-page .explore-card-api .code-window {
   transform: none !important;
   transform-style: flat;
   will-change: auto;

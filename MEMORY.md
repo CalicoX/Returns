@@ -158,7 +158,7 @@ Park：最大兼容，但效果与动画保持、不卡。不要用「更多设�
 - 浮卡不再跟指针做反向视差（和 3D tilt 一起关掉了）。landing-inline 里那套 board `px,py` vs wismo/video `ox,oy` 只留给非 Returns 页。
 - 类名 `explore-card-tracking` / `.track-ui-*`，样式只写 `returns-page.css`。不要改 `landing.css` 里的 `.explore-card-returns`（那是 tracking 站的 Returns 卡）。
 - Tracking 卡 icon 是**包裹**（圆角盒盖压盒身 + 中缝），不是时钟。不要斜线尖盖（小尺寸发糊、读成箭头），不要等距 3D 盒（读成纸飞机）。线 1.5、圆底轻玻璃、不要重阴影。hover 描边画一次就停。API `</>` 同样播一次，不要左右平移。
-- API 终端是毛玻璃（半透明 + `backdrop-filter`）。`filter: drop-shadow` 和常驻 `transform` 会让玻璃失效，不要加回去。
+- API 卡整块对齐 tracking-react：Lucide `</>`（斜杠比括号高，静止实线）、终端毛玻璃。`.explore-api-visual` 必须 `z-index: auto`，否则玻璃糊不到 ASCII。`filter: drop-shadow` 和常驻 `transform` 会让玻璃失效，不要加回去。
 - Explore 动效必须盯 `.explore-grid` 挂 `landing-inline`（ASCII 底纹 + 指针高光）。不要只观察 `#key-features`：Returns 的 FeatureRows 对不上旧 features DOM，脚本会永不挂载。
 - ≤768 保留 API ASCII 底纹滚动（`returns-page.css` 盖掉 landing.css 的 `display:none` / `animation:none`）。768 卡内仍左右双列；≤480 改上下布局，CTA 与正文 **20px**（不要靠 `margin-top:auto`，单列会塌成 0）。
 

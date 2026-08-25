@@ -5905,7 +5905,16 @@ html.is-reduce-fx .rt-roi::after {
   transform: none;
 }
 
-/* API 底纹：压过 `.explore-card > *` 的 relative，铺满卡片 */
+/* API 卡：对齐 tracking-react。visual 不能建层，否则终端毛玻璃糊不到 ASCII */
+.returns-page .explore-card-api > .explore-card-copy {
+  position: relative;
+  z-index: 1;
+}
+.returns-page .explore-card-api > .explore-api-visual {
+  position: relative;
+  z-index: auto;
+  isolation: auto;
+}
 .returns-page .explore-card-api > .api-ascii {
   position: absolute;
   inset: 0;
@@ -5923,11 +5932,17 @@ html.is-reduce-fx .rt-roi::after {
 }
 .returns-page .explore-card-api > .api-ascii .api-ascii-layer {
   position: absolute;
+  will-change: auto;
+  backface-visibility: visible;
+}
+.returns-page .explore-card-api .explore-title-ico-api svg {
+  stroke-width: 2;
 }
 
-/* 终端毛玻璃：去掉实心底 + drop-shadow（filter 会让 backdrop-filter 失效） */
+/* 终端毛玻璃：对齐 tracking-react（filter / transform 会让玻璃失效） */
 .returns-page .explore-card-api .code-window {
   --cw-bg: rgba(18, 22, 32, 0.28);
+  --cw-panel: rgba(38, 45, 60, 0.32);
   background: rgba(18, 22, 32, 0.28);
   -webkit-backdrop-filter: blur(22px) saturate(1.45);
   backdrop-filter: blur(22px) saturate(1.45);
@@ -6053,33 +6068,34 @@ html.is-reduce-fx .rt-roi::after {
   100% { stroke-dashoffset: 0;  opacity: 1; }
 }
 
-/* API </>：只描边，不要左右平移；hover 播一次 */
-.returns-page .explore-card-api:hover .explore-title-ico-api .ico-a-left,
-.returns-page .explore-card-api.is-tilting .explore-title-ico-api .ico-a-left {
-  animation: ico-api-left-flat 1.1s cubic-bezier(0.45, 0, 0.2, 1) 1 forwards;
+/* API </>：Lucide code-xml，对齐 tracking-react；静止实线，hover 画一次 */
+.returns-page .explore-title-ico-api .ico-a-left,
+.returns-page .explore-title-ico-api .ico-a-right,
+.returns-page .explore-title-ico-api .ico-a-slash {
+  stroke-dasharray: none;
+  stroke-dashoffset: 0;
+  transform: none;
 }
+.returns-page .explore-card-api:hover .explore-title-ico-api .ico-a-left,
+.returns-page .explore-card-api.is-tilting .explore-title-ico-api .ico-a-left,
 .returns-page .explore-card-api:hover .explore-title-ico-api .ico-a-right,
 .returns-page .explore-card-api.is-tilting .explore-title-ico-api .ico-a-right {
-  animation: ico-api-right-flat 1.1s cubic-bezier(0.45, 0, 0.2, 1) 1 forwards;
+  stroke-dasharray: 16;
+  animation: ico-api-chevron 1.1s cubic-bezier(0.45, 0, 0.2, 1) 1 forwards;
 }
 .returns-page .explore-card-api:hover .explore-title-ico-api .ico-a-slash,
 .returns-page .explore-card-api.is-tilting .explore-title-ico-api .ico-a-slash {
-  animation: ico-api-slash-flat 1.1s cubic-bezier(0.45, 0, 0.2, 1) 1 forwards;
+  stroke-dasharray: 22;
+  animation: ico-api-slash 1.1s cubic-bezier(0.45, 0, 0.2, 1) 1 0.06s forwards;
 }
-@keyframes ico-api-left-flat {
-  0%   { stroke-dashoffset: 18; opacity: 0.4; }
-  32%  { stroke-dashoffset: 0;  opacity: 1; }
+@keyframes ico-api-chevron {
+  0%   { stroke-dashoffset: 16; opacity: 0.4; }
+  36%  { stroke-dashoffset: 0;  opacity: 1; }
   100% { stroke-dashoffset: 0;  opacity: 1; }
 }
-@keyframes ico-api-right-flat {
-  0%   { stroke-dashoffset: 18; opacity: 0.4; }
-  32%  { stroke-dashoffset: 0;  opacity: 1; }
-  100% { stroke-dashoffset: 0;  opacity: 1; }
-}
-@keyframes ico-api-slash-flat {
-  0%   { stroke-dashoffset: 16; opacity: 0; }
-  18%  { stroke-dashoffset: 16; opacity: 0; }
-  48%  { stroke-dashoffset: 0;  opacity: 1; }
+@keyframes ico-api-slash {
+  0%   { stroke-dashoffset: 22; opacity: 0.35; }
+  40%  { stroke-dashoffset: 0;  opacity: 1; }
   100% { stroke-dashoffset: 0;  opacity: 1; }
 }
 

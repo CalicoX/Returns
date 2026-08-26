@@ -16,6 +16,16 @@ describe("Returns landing structure", () => {
     expect(app).not.toMatch(/LegacyLanding/);
   });
 
+  it("TrustBand is a static 2-row logo grid, not a marquee", () => {
+    const tb = read("components/sections/TrustBand.jsx");
+    expect(tb).toMatch(/logos-grid/);
+    expect(tb).not.toMatch(/logos-marquee|logos-track|logos-scroll/);
+    const copy = read("content/returnsCopy.js");
+    expect(copy).toMatch(/logos:\s*\[/);
+    const css = read("styles/returns-page.css");
+    expect(css).toMatch(/grid-template-columns:\s*repeat\(4/);
+  });
+
   it("LandingPage uses returns-native sections (not tracking clone)", () => {
     const lp = read("components/LandingPage.jsx");
     for (const name of [

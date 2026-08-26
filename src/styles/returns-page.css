@@ -4228,6 +4228,51 @@
   box-shadow: none;
 }
 
+/* Logo 静态两排（4×2），不要跑马灯 */
+.returns-page .logos-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 24px;
+  row-gap: 20px;
+  width: 100%;
+  align-items: center;
+}
+
+.returns-page .logos-grid .logo-tile {
+  flex: none;
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+  padding: 0;
+}
+
+.returns-page .logos-grid .logo-tile img {
+  max-width: min(112px, 100%);
+}
+
+@media (max-width: 768px) {
+  .returns-page .logos-grid {
+    column-gap: 16px;
+    row-gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .returns-page .logos-grid {
+    column-gap: 12px;
+    row-gap: 12px;
+  }
+
+  .returns-page .logos-grid .logo-tile {
+    height: 40px;
+  }
+
+  .returns-page .logos-grid .logo-tile img {
+    height: 24px;
+    max-width: min(96px, 100%);
+  }
+}
+
 /* Brands say — 偏绿深色底（非纯 slate 蓝黑） */
 .returns-page .brands-say {
   --bs-bg: #0a1f1c;

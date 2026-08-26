@@ -38,6 +38,12 @@
 
 ---
 
+## TrustBand logo（2026-08-26）
+
+老板：不要横向滚动，做成**静态 2 排**。8 个 logo 用 `4×2` grid（`logos-grid`），不要 `logos-marquee` / 复制一份做无缝循环。断点都保持 4 列，只收 gap / 字标高度。样式写在 `returns-page.css`，别改 `landing.css` 里 tracking 的跑马灯。
+
+---
+
 ## 布局约定
 
 - Feature 四块：桌面每块高度 `viewport − topbar − 96`，块间距 12。文案/插图 `gap` 28，不要再拉回全屏 + 56 中缝。

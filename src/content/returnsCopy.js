@@ -56,6 +56,16 @@ export const STATS = [
 export const BRANDS = {
   title: "Trusted by over 100,000 brands across various industries worldwide",
   subtitle: "Returns automation for DTC, cross-border, and Shopify merchants.",
+  logos: [
+    { src: "/assets/logos/aliexpress.svg", alt: "AliExpress" },
+    { src: "/assets/logos/baleaf.png", alt: "baleaf" },
+    { src: "/assets/logos/anker.svg", alt: "ANKER" },
+    { src: "/assets/logos/coofandy.png", alt: "COOFANDY" },
+    { src: "/assets/logos/eufy.png", alt: "eufy" },
+    { src: "/assets/logos/shopify.svg", alt: "Shopify" },
+    { src: "/assets/logos/shein.svg", alt: "SHEIN" },
+    { src: "/assets/logos/temu.svg", alt: "Temu" },
+  ],
 };
 
 export const ROI = {

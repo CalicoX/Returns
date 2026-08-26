@@ -4405,6 +4405,18 @@
   box-shadow: 0 12px 32px -16px rgba(15, 23, 42, 0.28);
 }
 
+.returns-page .brands-say .brand-card-logo {
+  opacity: 0.7;
+}
+
+.returns-page .brands-say .brand-card-quote {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.returns-page .brands-say .brand-card-author {
+  color: rgba(255, 255, 255, 0.82);
+}
+
 .returns-page .rt-stats,
 .returns-page .rt-stats + *,
 .returns-page .brands-say + .rt-stats {

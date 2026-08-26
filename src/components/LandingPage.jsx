@@ -32,13 +32,13 @@ export default function LandingPage() {
         <main>
           <Hero />
           <TrustBand />
+          <BrandsSay />
           <StatsRow />
           <RoiCalculator />
           <FeatureRows />
           <Plans />
           <Faq />
           <ExploreMore />
-          <BrandsSay />
           <Credentials />
           <BottomCta />
         </main>

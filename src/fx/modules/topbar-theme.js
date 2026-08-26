@@ -1,7 +1,7 @@
 /**
  * Topbar theme — ported from tracking ai-lab.js topbarOnDark + height measure.
  * Always-on (not tied to AI Lab). Toggles `.topbar-on-dark` when content under
- * the nav is a dark band (ROI / FAQ / brands-say / bottom CTA / footer, etc.).
+ * the nav is a dark band (ROI / FAQ / bottom CTA / footer, etc.).
  * @returns {() => void}
  */
 export function mount() {
@@ -35,7 +35,7 @@ export function mount() {
     const DARK_SEL =
       "#ai-lab-intro, #bottom-cta, #returns-roi, #returns-faq, " +
       ".ai-lab-intro, .ai-intro-bg, .bottom-cta, .site-footer, " +
-      ".brands-say, .rt-roi, .rt-faq";
+      ".rt-roi, .rt-faq";
 
     function isDarkUnderNav() {
       const br = bar.getBoundingClientRect();
@@ -60,7 +60,6 @@ export function mount() {
                 node.classList.contains("ai-intro-bg") ||
                 node.classList.contains("bottom-cta") ||
                 node.classList.contains("site-footer") ||
-                node.classList.contains("brands-say") ||
                 node.classList.contains("rt-roi") ||
                 node.classList.contains("rt-faq") ||
                 (node.classList.contains("case-art") &&

@@ -4363,28 +4363,50 @@
   }
 }
 
-/* Brands say — 偏绿深色底（非纯 slate 蓝黑） */
+/* Brands say — TrustBand 下白底（Park 2026-08-26） */
 .returns-page .brands-say {
-  --bs-bg: #0a1f1c;
-  --bs-card: #14352f;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(20, 184, 166, 0.14), transparent 55%),
-    radial-gradient(ellipse 60% 50% at 100% 100%, rgba(13, 148, 136, 0.1), transparent 50%),
-    linear-gradient(180deg, #0c1f1b 0%, #0a1a17 45%, #081412 100%);
+  --bs-bg: #fff;
+  --bs-card: #fff;
+  background: #fff;
+  color: #0f172a;
+  border-bottom: 0;
 }
 
-.returns-page .brands-say .brand-card {
-  background: rgba(20, 53, 47, 0.85);
-  border-color: rgba(45, 212, 191, 0.12);
+.returns-page .brands-say-head h2 {
+  color: #0f172a;
+  font-size: clamp(28px, 3.2vw, 40px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: var(--track-title);
 }
 
 .returns-page .brands-say-head .lead {
-  color: rgba(204, 251, 241, 0.72);
+  color: var(--text-secondary);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.returns-page .brands-say-cta .btn-demo {
+  border-color: rgba(13, 148, 136, 0.28);
+  color: var(--brand-primary);
+  background: transparent;
+}
+
+.returns-page .brands-say-cta .btn-demo:hover,
+.returns-page .brands-say-cta .btn-demo:focus-visible {
+  background: var(--brand-primary-soft);
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+}
+
+.returns-page .brands-say .brand-card {
+  border-color: rgba(15, 23, 42, 0.08);
+  box-shadow: 0 12px 32px -16px rgba(15, 23, 42, 0.28);
 }
 
 .returns-page .rt-stats,
 .returns-page .rt-stats + *,
-.returns-page .trust-band + .rt-stats {
+.returns-page .brands-say + .rt-stats {
   border: 0;
   box-shadow: none;
 }

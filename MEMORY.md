@@ -38,6 +38,10 @@
 
 ---
 
+## BrandsSay（2026-08-26）
+
+Park：整块挪到 TrustBand 下面，背景改白。标题/副标题走浅色区字色（`#0f172a` / `--text-secondary`），CTA 去掉 `on-dark`。卡片照片叠层和双向跑马灯不动。Topbar 不再把 `.brands-say` 当深色带。不要挪回 ExploreMore 后、不要深色青绿底。
+
 ## TrustBand logo（2026-08-26）
 
 Park 用 Tracking 模块整块替换：12 家静态两排各 6。不要 Shopify / SHEIN / Temu。不要跑马灯、不要一排 8 个。标题和副标题居中。产品原文不改。默认 18px；AliExpress/Baleaf 22；Cainiao/eufy 26；SHARGE/totwoo/Vaporesso/GOELIA 24。行距 36、列距 **72**（Park：48 还不够）。灰度 0.62；eufy 单独 opacity 0.88。禁止 brightness(0)。`.logos-row` `repeat(6)`。覆盖写在 `returns-page.css`。

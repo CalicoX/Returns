@@ -51,6 +51,7 @@ describe("Returns landing structure", () => {
       expect(lp).toContain(name);
     }
     expect(lp).not.toMatch(/ImpactBand|FeaturesSection|AiLab/);
+    expect(lp).toMatch(/<TrustBand \/>\s*<BrandsSay \/>\s*<StatsRow \/>/);
   });
 
   it("copy is English returns product page content", () => {

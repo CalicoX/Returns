@@ -4,8 +4,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const HERO_PHOTO =
-  "https://images.pexels.com/photos/5012078/pexels-photo-5012078.jpeg?auto=compress&cs=tinysrgb&w=1400";
+const HERO_PHOTO = "/assets/hero-returns.jpg";
 const HERO_ITEMS = [
   {
     id: "set",
@@ -13,7 +12,7 @@ const HERO_ITEMS = [
     meta: "Olive | xxl",
     price: "$80.00",
     qty: "x2",
-    img: `${HERO_PHOTO}&h=240`,
+    img: HERO_PHOTO,
   },
   {
     id: "jacket",

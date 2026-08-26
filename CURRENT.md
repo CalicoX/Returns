@@ -31,7 +31,7 @@ FeatureRows：sticky 叠屏；2/4 块翻转（图左文右）；每块略矮于�
 
 ### Hero 现状
 
-- 左文案 / 右插图；人物卡约 620px、靠右。
+- 左文案 / 右插图；人物卡约 620px、靠右。照片是米色高领卫衣坐姿（`/assets/hero-returns.jpg`），不要运动内衣。
 - 三张玻璃浮卡 + 假鼠标自动演示；悬停不暂停。
 - CTA：Free Trial + Book a Demo。全站 `.btn-switch`（Hero / Feature×4 / Plans / BrandsSay / BottomCta）带青绿 border beam（`returns-cta-beam.js`，teal 变体，离屏暂停）。
 - 青绿自研 WebGL wash（API 同款双通道；无橙/紫/蓝；无 FilmGrain）。

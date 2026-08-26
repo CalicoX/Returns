@@ -473,6 +473,7 @@ export function DomStagePortal() {
   const [hsv, setHsv] = useState(HSV0);
   const [phase, setPhase] = useState("idle");
   const [sel, setSel] = useState(0);
+  const [showStat, setShowStat] = useState(false);
   const [mouse, setMouse] = useState({ x: 0, y: 0, on: false, down: false });
   const [r, g, b] = hsvToRgb(hsv.h, hsv.s, hsv.v);
   const hex = toHex(r, g, b);
@@ -553,6 +554,7 @@ export function DomStagePortal() {
       if (reduce.matches) {
         setSel(100);
         setPhase("pick");
+        setShowStat(true);
         return;
       }
 
@@ -560,6 +562,7 @@ export function DomStagePortal() {
         setPhase("idle");
         setSel(0);
         setHsv(HSV0);
+        setShowStat(false);
         put({ x: 0, y: 0 }, { on: false, down: false });
         await later(320);
         if (dead()) return;
@@ -649,6 +652,7 @@ export function DomStagePortal() {
         });
         if (dead()) return;
         put(pos, { down: false });
+        setShowStat(true);
         await later(1800);
       }
     }
@@ -838,7 +842,7 @@ export function DomStagePortal() {
             </svg>
           </span>
 
-          <div className="rt-portal-ltv">
+          <div className={`rt-portal-ltv${showStat ? " is-in" : ""}`}>
             <strong>3.5x</strong>
             <span>Customer LTV</span>
           </div>
@@ -947,6 +951,7 @@ export function DomStageAi() {
   const [sending, setSending] = useState(false);
   const [ready, setReady] = useState(0);
   const [note, setNote] = useState("");
+  const [showStat, setShowStat] = useState(false);
 
   useEffect(() => {
     const id = window.setInterval(() => setCaret((on) => !on), 460);
@@ -975,6 +980,7 @@ export function DomStageAi() {
         setReady(WF_RULES.length);
         setNote(`Created · ${WF_RULES[2].title}`);
         setPill(2);
+        setShowStat(true);
         return;
       }
 
@@ -984,6 +990,7 @@ export function DomStageAi() {
         setSending(false);
         setNote("");
         setPill(-1);
+        setShowStat(false);
         await later(480);
         if (my !== gen) return;
 
@@ -1011,6 +1018,7 @@ export function DomStageAi() {
           if (my !== gen) return;
         }
 
+        setShowStat(true);
         await later(2600);
       }
     }
@@ -1136,7 +1144,7 @@ export function DomStageAi() {
             ))}
           </div>
 
-          <div className="rt-wf-stat">
+          <div className={`rt-wf-stat${showStat ? " is-in" : ""}`}>
             <strong>−80%</strong>
             <span>Support Workload</span>
           </div>

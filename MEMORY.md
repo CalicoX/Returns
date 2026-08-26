@@ -40,7 +40,7 @@
 
 ## TrustBand logo（2026-08-26）
 
-老板：不要横向滚动，做成**静态 2 排**。8 个 logo 用 `4×2` grid（`logos-grid`），不要 `logos-marquee` / 复制一份做无缝循环。断点都保持 4 列，只收 gap / 字标高度。样式写在 `returns-page.css`，别改 `landing.css` 里 tracking 的跑马灯。
+老板先否掉跑马灯、要静态 2 排；看完 4×2 撑满后又改口：**缩小、一排、居中**。8 个 logo 用 flex `justify-content: center`（`logos-grid`），不要 `logos-marquee`、不要 4×2 网格。桌面字标高 22 / max 88 / gap 40，一行居中；768 仍一行；480 装不下才换行，禁止横向裁切。样式写在 `returns-page.css`，别改 `landing.css` 里 tracking 的跑马灯。
 
 ---
 

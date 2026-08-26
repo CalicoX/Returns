@@ -1,6 +1,6 @@
 import { BRANDS } from "../../content/returnsCopy.js";
 
-/** Trust band — static 4×2 logo grid (no marquee) */
+/** Trust band — static single centered logo row (no marquee) */
 export default function TrustBand() {
   return (
     <section className="trust-band">
@@ -15,8 +15,8 @@ export default function TrustBand() {
               <img
                 src={logo.src}
                 alt={logo.alt}
-                width="112"
-                height="28"
+                width="88"
+                height="22"
                 loading="lazy"
                 decoding="async"
               />

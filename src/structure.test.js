@@ -16,14 +16,15 @@ describe("Returns landing structure", () => {
     expect(app).not.toMatch(/LegacyLanding/);
   });
 
-  it("TrustBand is a static 2-row logo grid, not a marquee", () => {
+  it("TrustBand is a static centered logo row, not a marquee", () => {
     const tb = read("components/sections/TrustBand.jsx");
     expect(tb).toMatch(/logos-grid/);
     expect(tb).not.toMatch(/logos-marquee|logos-track|logos-scroll/);
     const copy = read("content/returnsCopy.js");
     expect(copy).toMatch(/logos:\s*\[/);
     const css = read("styles/returns-page.css");
-    expect(css).toMatch(/grid-template-columns:\s*repeat\(4/);
+    expect(css).toMatch(/\.returns-page \.logos-grid \{[\s\S]*?display:\s*flex/);
+    expect(css).toMatch(/\.returns-page \.logos-grid \{[\s\S]*?justify-content:\s*center/);
   });
 
   it("LandingPage uses returns-native sections (not tracking clone)", () => {

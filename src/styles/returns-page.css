@@ -3287,6 +3287,12 @@
   animation-delay: calc(0.55s + var(--i) * 0.12s);
 }
 
+.rt-rate-stack .rt-rate-card:last-child {
+  border: 0;
+  box-shadow:
+    0 12px 28px rgba(15, 23, 42, 0.1);
+}
+
 .rt-rate-card::before {
   content: "";
   position: absolute;

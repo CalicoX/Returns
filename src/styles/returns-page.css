@@ -357,7 +357,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 18%;
+  /* 网球动作照：脸在中上偏右，不要再按旧坐姿棚拍的 18% 头顶裁 */
+  object-position: 68% 36%;
 }
 
 .rt-glass-card {

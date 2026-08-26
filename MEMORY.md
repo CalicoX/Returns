@@ -40,7 +40,7 @@
 
 ## TrustBand logo（2026-08-26）
 
-老板先否掉跑马灯、要静态 2 排；看完 4×2 撑满后又改口：**缩小、一排、居中**。标题和副标题也要 `text-align: center`（`.trust-copy`），不要只居中 logo、标题仍贴左。8 个 logo 用 flex `justify-content: center`（`logos-grid`），不要 `logos-marquee`、不要 4×2 网格。桌面字标高 22 / max 88 / gap 40，一行居中；768 仍一行；480 装不下才换行，禁止横向裁切。样式写在 `returns-page.css`，别改 `landing.css` 里 tracking 的跑马灯。
+Park 用 Tracking 模块整块替换：12 家静态两排各 6，跟 Tracking 同一套 logo（AliExpress / baleaf / Cainiao / ANKER / COOFANDY / eufy / XGIMI / SHARGE / totwoo / Vaporesso / GOELIA / PLAUD）。不要 Shopify / SHEIN / Temu。不要跑马灯、不要一排 8 个、不要 4×2 撑满。标题和副标题 `text-align: center`。产品原文不改（`returnsCopy.js` 的 title/subtitle）。logo 默认 18px，eufy/Cainiao 22，SHARGE/totwoo/Vaporesso/GOELIA 24；行距 28、列距 48；灰度 grayscale + opacity 0.62。禁止 brightness(0)。`.logos-row` `repeat(6, minmax(0, 1fr))`。`landing.css` 已去掉跑马灯，Returns 覆盖写在 `returns-page.css`。
 
 ---
 

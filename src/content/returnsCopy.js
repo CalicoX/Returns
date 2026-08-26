@@ -58,13 +58,17 @@ export const BRANDS = {
   subtitle: "Returns automation for DTC, cross-border, and Shopify merchants.",
   logos: [
     { src: "/assets/logos/aliexpress.svg", alt: "AliExpress" },
-    { src: "/assets/logos/baleaf.png", alt: "baleaf" },
-    { src: "/assets/logos/anker.svg", alt: "ANKER" },
+    { src: "/assets/logos/baleaf.png", alt: "Baleaf" },
+    { src: "/assets/logos/cainiao.png", alt: "Cainiao" },
+    { src: "/assets/logos/anker.svg", alt: "Anker" },
     { src: "/assets/logos/coofandy.png", alt: "COOFANDY" },
     { src: "/assets/logos/eufy.png", alt: "eufy" },
-    { src: "/assets/logos/shopify.svg", alt: "Shopify" },
-    { src: "/assets/logos/shein.svg", alt: "SHEIN" },
-    { src: "/assets/logos/temu.svg", alt: "Temu" },
+    { src: "/assets/logos/xgimi.svg", alt: "XGIMI" },
+    { src: "/assets/logos/sharge.png", alt: "SHARGE" },
+    { src: "/assets/logos/totwoo.png", alt: "totwoo" },
+    { src: "/assets/logos/vaporesso.svg", alt: "Vaporesso" },
+    { src: "/assets/logos/goelia.svg", alt: "GOELIA" },
+    { src: "/assets/logos/plaud.png", alt: "Plaud" },
   ],
 };
 

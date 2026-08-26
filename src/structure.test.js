@@ -16,16 +16,18 @@ describe("Returns landing structure", () => {
     expect(app).not.toMatch(/LegacyLanding/);
   });
 
-  it("TrustBand is a static centered logo row, not a marquee", () => {
+  it("TrustBand is a static two-row logo grid, not a marquee", () => {
     const tb = read("components/sections/TrustBand.jsx");
-    expect(tb).toMatch(/logos-grid/);
-    expect(tb).not.toMatch(/logos-marquee|logos-track|logos-scroll/);
+    expect(tb).toMatch(/logos-row/);
+    expect(tb).not.toMatch(/logos-scroll/);
+    expect(tb).not.toMatch(/aria-hidden/);
     const copy = read("content/returnsCopy.js");
     expect(copy).toMatch(/logos:\s*\[/);
+    expect(copy).not.toMatch(/shopify\.svg|shein\.svg|temu\.svg/i);
     const css = read("styles/returns-page.css");
     expect(css).toMatch(/\.returns-page \.trust-copy \{[\s\S]*?text-align:\s*center/);
-    expect(css).toMatch(/\.returns-page \.logos-grid \{[\s\S]*?display:\s*flex/);
-    expect(css).toMatch(/\.returns-page \.logos-grid \{[\s\S]*?justify-content:\s*center/);
+    expect(css).toMatch(/\.returns-page \.logos-row \{[\s\S]*?grid-template-columns:\s*repeat\(6/);
+    expect(css).not.toMatch(/@keyframes logos-scroll/);
   });
 
   it("LandingPage uses returns-native sections (not tracking clone)", () => {

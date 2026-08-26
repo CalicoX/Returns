@@ -4230,70 +4230,104 @@
 
 .returns-page .trust {
   align-items: center;
+  text-align: center;
 }
 
 .returns-page .trust-copy {
-  max-width: min(720px, 100%);
+  max-width: 640px;
   margin-inline: auto;
   text-align: center;
 }
 
-/* Logo 静态一排、缩小、居中（不要跑马灯、不要撑满两排） */
-.returns-page .logos-grid {
+/* Tracking 同款：静态两排各 6，缩小、拉开。不要跑马灯。 */
+.returns-page .logos-marquee {
+  overflow: visible;
+  width: 100%;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.returns-page .logos-track {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: 28px;
+  width: min(1120px, 100%);
+  margin-inline: auto;
+  overflow: visible;
+  animation: none;
+  will-change: auto;
+}
+
+.returns-page .logos-row {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: center;
+  justify-items: center;
+  gap: 20px 48px;
   width: 100%;
 }
 
-.returns-page .logos-grid .logo-tile {
+.returns-page .logo-tile {
   flex: 0 0 auto;
-  width: auto;
+  width: 100%;
   min-width: 0;
-  height: 36px;
+  height: 32px;
   padding: 0;
 }
 
-.returns-page .logos-grid .logo-tile img {
+.returns-page .logo-tile img {
+  height: 18px;
+  width: auto;
+  max-width: 100%;
+  filter: grayscale(1);
+  opacity: 0.62;
+}
+
+.returns-page .logo-tile:hover img {
+  opacity: 0.82;
+  transform: none;
+}
+
+.returns-page .logo-tile img[alt="eufy"],
+.returns-page .logo-tile img[alt="Cainiao"] {
   height: 22px;
-  max-width: 88px;
 }
 
-@media (max-width: 768px) {
-  .returns-page .logos-grid {
-    gap: 24px;
-  }
-
-  .returns-page .logos-grid .logo-tile {
-    height: 32px;
-  }
-
-  .returns-page .logos-grid .logo-tile img {
-    height: 20px;
-    max-width: 72px;
-  }
+.returns-page .logo-tile img[alt="SHARGE"],
+.returns-page .logo-tile img[alt="totwoo"],
+.returns-page .logo-tile img[alt="Vaporesso"],
+.returns-page .logo-tile img[alt="GOELIA"] {
+  height: 24px;
 }
 
-@media (max-width: 480px) {
-  .returns-page .logos-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    column-gap: 8px;
-    row-gap: 14px;
-    justify-items: center;
+@media (max-width: 680px) {
+  .returns-page .logo-tile {
+    height: 28px;
   }
 
-  .returns-page .logos-grid .logo-tile {
-    flex: none;
-    width: 100%;
-    height: 32px;
+  .returns-page .logo-tile img {
+    height: 16px;
   }
 
-  .returns-page .logos-grid .logo-tile img {
+  .returns-page .logo-tile img[alt="eufy"],
+  .returns-page .logo-tile img[alt="Cainiao"] {
     height: 18px;
-    max-width: 68px;
+  }
+
+  .returns-page .logo-tile img[alt="SHARGE"],
+  .returns-page .logo-tile img[alt="totwoo"],
+  .returns-page .logo-tile img[alt="Vaporesso"],
+  .returns-page .logo-tile img[alt="GOELIA"] {
+    height: 20px;
+  }
+
+  .returns-page .logos-track {
+    gap: 18px;
+  }
+
+  .returns-page .logos-row {
+    gap: 12px 20px;
   }
 }
 

@@ -167,3 +167,4 @@ Park：最大兼容，但效果与动画保持、不卡。不要用「更多设�
 - 本地曾不是 git 仓库；远程 `CalicoX/Returns` 从空仓推上，默认 `main`。
 - 不要提交 `node_modules` / `dist`。
 - 用户名 Park，角色设计师，改完给预览 URL，少讲实现细节。
+- **Vite 8 生产构建会吃掉 backdrop-filter**（2026-08-26）：默认 `cssMinify: 'lightningcss'` 把成对的 `backdrop-filter` / `-webkit-backdrop-filter` 收成只剩 `-webkit-`（[vite#22649](https://github.com/vitejs/vite/issues/22649)）。Chrome 不认只有前缀的写法，Vercel 上 topbar / Hero 玻璃卡 / 全站毛玻璃会变成实心半透明。`npm run dev` 不压缩所以本地正常。锁 `build.cssMinify: 'esbuild'`（需装 `esbuild`）。不要改回 lightningcss 默认，除非上游修了。

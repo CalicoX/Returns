@@ -38,8 +38,8 @@ export default function LandingPage() {
           <FeatureRows />
           <Plans />
           <Faq />
-          <ExploreMore />
           <Credentials />
+          <ExploreMore />
           <BottomCta />
         </main>
         <Footer />

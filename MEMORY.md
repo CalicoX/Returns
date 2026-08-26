@@ -41,7 +41,11 @@
 
 ## BrandsSay（2026-08-26）
 
-Park：整块挪到 TrustBand 下面，背景改白。标题/副标题走浅色区字色（`#0f172a` / `--text-secondary`），CTA 去掉 `on-dark`。卡片照片叠层和双向跑马灯不动。Topbar 不再把 `.brands-say` 当深色带。不要挪回 ExploreMore 后、不要深色青绿底。
+Park：整块挪到 TrustBand 下面，背景改白。标题/副标题走浅色区字色（`#0f172a` / `--text-secondary`），CTA 去掉 `on-dark`。卡片照片叠层和双向跑马灯不动。Topbar 不再把 `.brands-say` 当深色带。不要挪回 FAQ 后、不要深色青绿底。
+
+## ExploreMore 位置（2026-08-26）
+
+Park：整块放到 Credentials 后面。顺序是 Faq → Credentials → ExploreMore → BottomCta。不要放回 FAQ 和证书之间。
 
 卡片内（2026-08-26）：logo 压暗（opacity **0.7**，原 invert 白字 0.98 太跳）；引用 `rgba(255,255,255,.95)`、署名 `.82`。不要再把 logo 拉回纯白、不要把句子压回 slate 0.72。
 

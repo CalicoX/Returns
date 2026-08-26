@@ -40,7 +40,7 @@
 
 ## TrustBand logo（2026-08-26）
 
-Park 用 Tracking 模块整块替换：12 家静态两排各 6，跟 Tracking 同一套 logo（AliExpress / baleaf / Cainiao / ANKER / COOFANDY / eufy / XGIMI / SHARGE / totwoo / Vaporesso / GOELIA / PLAUD）。不要 Shopify / SHEIN / Temu。不要跑马灯、不要一排 8 个、不要 4×2 撑满。标题和副标题 `text-align: center`。产品原文不改（`returnsCopy.js` 的 title/subtitle）。logo 默认 18px，eufy/Cainiao 22，SHARGE/totwoo/Vaporesso/GOELIA 24；行距 28、列距 48；灰度 grayscale + opacity 0.62。禁止 brightness(0)。`.logos-row` `repeat(6, minmax(0, 1fr))`。`landing.css` 已去掉跑马灯，Returns 覆盖写在 `returns-page.css`。
+Park 用 Tracking 模块整块替换：12 家静态两排各 6。不要 Shopify / SHEIN / Temu。不要跑马灯、不要一排 8 个。标题和副标题居中。产品原文不改。默认 18px；AliExpress/Baleaf 22；Cainiao/eufy 26；SHARGE/totwoo/Vaporesso/GOELIA 24。行距 36、列距 **72**（Park：48 还不够）。灰度 0.62；eufy 单独 opacity 0.88。禁止 brightness(0)。`.logos-row` `repeat(6)`。覆盖写在 `returns-page.css`。
 
 ---
 

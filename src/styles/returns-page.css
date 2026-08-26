@@ -4228,6 +4228,16 @@
   box-shadow: none;
 }
 
+.returns-page .trust {
+  align-items: center;
+}
+
+.returns-page .trust-copy {
+  max-width: min(720px, 100%);
+  margin-inline: auto;
+  text-align: center;
+}
+
 /* Logo 静态一排、缩小、居中（不要跑马灯、不要撑满两排） */
 .returns-page .logos-grid {
   display: flex;

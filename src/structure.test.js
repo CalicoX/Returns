@@ -23,6 +23,7 @@ describe("Returns landing structure", () => {
     const copy = read("content/returnsCopy.js");
     expect(copy).toMatch(/logos:\s*\[/);
     const css = read("styles/returns-page.css");
+    expect(css).toMatch(/\.returns-page \.trust-copy \{[\s\S]*?text-align:\s*center/);
     expect(css).toMatch(/\.returns-page \.logos-grid \{[\s\S]*?display:\s*flex/);
     expect(css).toMatch(/\.returns-page \.logos-grid \{[\s\S]*?justify-content:\s*center/);
   });

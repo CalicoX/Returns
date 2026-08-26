@@ -19,7 +19,7 @@
 
 Topbar → Hero → TrustBand → StatsRow → RoiCalculator → FeatureRows → Plans → Faq → ExploreMore → BrandsSay → Credentials → BottomCta → Footer + ProductDock
 
-TrustBand logo：静态 **一排居中**（8 个品牌，略缩小），不要跑马灯、不要两排撑满。
+TrustBand：标题/副标题居中；logo 静态 **一排居中**（8 个品牌，略缩小）。不要跑马灯、不要两排撑满。
 
 ExploreMore Tracking 卡：标题/CTA 都是 **17TRACK Order Tracking**（不要 Explore）；17TRACK 蓝；正面包裹 icon；右侧是 **5175 tracking-react Hero 模块**（`os-status` + WISMO / Brand video 浮卡），不要自制 Shipping Events 板。API 卡源码对齐 5175（Lucide `</>`、终端毛玻璃、ASCII `translateY`、无 3D；768 也保留滚动）。768 卡内左右双列；≤480 上下布局，正文和 CTA 20px。卡是平面的，只要指针高光，不要 tilt。
 

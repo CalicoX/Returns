@@ -2096,6 +2096,21 @@
   overflow: visible !important;
 }
 
+@media (min-width: 961px) {
+  .rt-feature-media:has(.rt-rv-wrap) {
+    height: 100%;
+    max-height: none;
+  }
+
+  .rt-rv-scene {
+    grid-template-columns: minmax(300px, 380px) minmax(230px, 280px);
+  }
+
+  .rt-rv-col.is-right {
+    margin-left: -110px;
+  }
+}
+
 .rt-rv-wrap.feature-visual {
   padding: 0 !important;
   border: 0 !important;
@@ -2250,6 +2265,50 @@
 
 .rt-rv-keep {
   min-height: 248px;
+}
+
+@media (min-width: 961px) {
+  .rt-rv-col.is-left {
+    gap: 12px;
+  }
+
+  .rt-rv-keep {
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .rt-rv-keep-slot {
+    height: 124px;
+    flex: 1 1 auto;
+  }
+
+  .rt-rv-keep .rt-rv-actions {
+    margin-top: auto;
+  }
+
+  .rt-rv-refund {
+    top: 96px;
+    padding: 16px 16px 14px;
+  }
+
+  .rt-rv-keep,
+  .rt-rv-xchg {
+    padding: 20px 18px 16px;
+  }
+
+  .rt-rv-modal-head strong {
+    font-size: 16px;
+  }
+
+  .rt-rv-refund b,
+  .rt-rv-credit b {
+    font-size: 24px;
+  }
+
+  .rt-rv-btn {
+    height: 42px;
+  }
 }
 
 .rt-rv-modal-head {

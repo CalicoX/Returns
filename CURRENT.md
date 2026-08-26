@@ -55,7 +55,7 @@ FeatureRows：sticky 叠屏；2/4 块翻转（图左文右）；每块略矮于�
 
 ### Feature 03 插图
 
-透明底。Keep / credit / exchange 叠成一团，exchange 压 Keep，20%+ 贴在右上靠近 Keep。背景上升曲线。自动演示：倒计时 → 点 Accept → 积分卡 → 换货卡 → 曲线最后出现并增长。
+透明底。Keep / credit / exchange 叠成一团，exchange 压 Keep，20%+ 贴在右上靠近 Keep。插图列桌面铺满功能块高度（不要 560 封顶）。背景上升曲线。自动演示：倒计时 → 点 Accept → 积分卡 → 换货卡 → 曲线最后出现并增长。
 
 ---
 

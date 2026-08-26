@@ -1365,7 +1365,7 @@ export function DomStageRecovery() {
     <div className="feature-visual rt-dom-stage-wrap rt-rv-wrap" ref={wrapRef}>
       <div className="feature-stage is-active" data-theme="recover" style={{ ["--fx-c"]: 1 }}>
         <div className={`feature-stage-art rt-rv-scene is-${phase}${grown ? " is-grown" : ""}`} ref={sceneRef} aria-hidden="true">
-          <svg className="rt-rv-curve" viewBox="0 0 640 480" preserveAspectRatio="none">
+          <svg className="rt-rv-curve" viewBox="0 0 640 480" preserveAspectRatio="xMaxYMax meet">
             <defs>
               <linearGradient id="rt-rv-area" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#14b8a6" stopOpacity="0.34" />

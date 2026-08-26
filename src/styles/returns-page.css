@@ -1974,7 +1974,7 @@
 .rt-wf-stat {
   position: absolute;
   left: auto;
-  right: 6%;
+  right: 16%;
   bottom: 12%;
   z-index: 7;
   display: flex;
@@ -2145,7 +2145,7 @@
 
 .rt-rv-curve {
   position: absolute;
-  inset: 10% 2% 0 0;
+  inset: 6% 0 0 0;
   z-index: 0;
   width: auto;
   height: auto;
@@ -2548,7 +2548,7 @@
   flex: 0 0 auto;
   align-self: flex-end;
   min-width: 122px;
-  margin: 0 0 6px auto;
+  margin: -18px 0 10px auto;
   padding: 12px 14px 10px;
   border-radius: 14px;
   text-align: center;
@@ -3189,7 +3189,7 @@
   width: auto;
   min-width: 132px;
   max-width: 168px;
-  margin: -14px 0 2px;
+  margin: -28px 0 6px;
   padding: 12px 14px 10px;
   border-radius: 14px;
   background: #14b8a6;

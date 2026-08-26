@@ -187,13 +187,13 @@ export function DomHeroReturns() {
       if (my !== gen) return;
       const el = stage.querySelector(sel);
       pointAt(el);
-      await later(720);
+      await later(520);
       if (my !== gen) return;
       setMouse((m) => ({ ...m, click: true }));
-      await later(140);
+      await later(110);
       if (my !== gen) return;
       apply();
-      await later(180);
+      await later(140);
       if (my !== gen) return;
       setMouse((m) => ({ ...m, click: false }));
     }
@@ -206,10 +206,10 @@ export function DomHeroReturns() {
         setReason(null);
         setMethod(null);
         setMouse({ x: 36, y: 48, on: false, click: false });
-        await later(280);
+        await later(200);
         if (my !== gen) return;
         setStep(1);
-        await later(520);
+        await later(380);
         if (my !== gen) return;
         if (!reduce) {
           await clickTarget(
@@ -220,7 +220,7 @@ export function DomHeroReturns() {
             },
             my
           );
-          await later(480);
+          await later(360);
           if (my !== gen) return;
           await clickTarget(
             '[data-demo="reason"]',
@@ -230,7 +230,7 @@ export function DomHeroReturns() {
             },
             my
           );
-          await later(480);
+          await later(360);
           if (my !== gen) return;
           await clickTarget(
             '[data-demo="method"]',
@@ -239,21 +239,21 @@ export function DomHeroReturns() {
             },
             my
           );
-          await later(2400);
+          await later(1900);
           if (my !== gen) return;
           setMouse((m) => ({ ...m, on: false }));
-          await later(420);
+          await later(300);
         } else {
           setItem("jacket");
-          await later(700);
+          await later(520);
           if (my !== gen) return;
           setStep(2);
           setReason("Arrive too late");
-          await later(700);
+          await later(520);
           if (my !== gen) return;
           setStep(3);
           setMethod("green");
-          await later(2400);
+          await later(1900);
         }
       }
     }

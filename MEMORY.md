@@ -34,7 +34,7 @@
 - **阴影只向下投**：`.returns-page .btn-switch` 的外阴影要满足 offset ≥ blur − |spread|（现为 `0 2px 3px -1px`，hover `0 10px 18px -8px`）。原 `0 4px 14px` 的模糊晕圈会溢到胶囊顶上方，Retina 下叠着 wash 灰纹读成一条「黑边」（Park 截图反馈过）。
 - **Border beam**：tracking 的 `.btn-switch` beam 由 `ai-lab.js` 的 `switchBtnFx` 挂，只在页面有 `#ai-lab` 时加载；Returns 没有 AI Lab 区块，所以单独建 `src/fx/modules/returns-cta-beam.js`。2026-08-18 起覆盖**全站** `.returns-page .btn-switch`（Hero / FeatureRows×4 / Plans / BrandsSay / BottomCta 共 8 颗；`FeaturesSection.jsx` 未被 LandingPage 引入不算），离屏实例 IntersectionObserver 加 `data-paused` 停动画（多实例已验证：任意滚动位置只有视口内的在转）。色板用 `border-beam.js` 新增的 **teal** 变体，`hueRange: 10` 锁色相，别用默认 colorful（会飘蓝紫）。常亮薄荷描边（含 hover / on-dark）统一 `rgba(204,251,241,.7)`、hover `.85`。
 - **Beam 可见性踩坑**（同日 Park「效果没看到」）：光斑颜色必须用**亮 mint/冰青**（teal-100/200、cyan-200 档）——中深 teal 打在青绿按钮上同色隐身；参数要 `borderWidth: 2` + stroke 0.95 / inner 0.75 / bloom 0.65，首版 1px + 0.5 档肉眼看不出。挂载本身当时是通的（data-beam/style 都在），别只查挂载不查对比度。
-- **端口对照**（勿混）：5173 = Tracking API · **5174 = Returns** · 5175 = Order Tracking。验证 Returns 一律打 5174，别信 vite 终端里旧的启动日志。
+- **端口对照**（2026-08-27 实测勘误）：三站共用 Vite 默认池，**谁先启动谁占 5173**，当天观测：5173=Returns · 5174=API · 5175=Order Tracking。别信任何写死的映射，验证前先 `lsof -iTCP:5173 -sTCP:LISTEN` 看 node 进程目录。
 - **弱相位兜底**：beam 遮罩一圈里有约 1/3 弧段是暗区，扫到弱相位时整颗按钮会瞬间「没效果」。按钮静态描边提亮为常亮薄荷 `rgba(204,251,241,.7)`（原 .35 mint），任意瞬间边缘都点亮，beam 高光在其上扫动（对齐 tracking 常亮 rim 观感）。
 
 ---
@@ -54,6 +54,13 @@ Park：整块放到 Credentials 后面。顺序是 Faq → Credentials → Explo
 Park 用 Tracking 模块整块替换：12 家静态两排各 6。不要 Shopify / SHEIN / Temu。不要跑马灯、不要一排 8 个。标题和副标题居中。产品原文不改。默认 18px；AliExpress/Baleaf 22；Cainiao/eufy 26；SHARGE/totwoo/Vaporesso/GOELIA 24。行距 36、列距 **72**（Park：48 还不够）。灰度 0.62；eufy 单独 opacity 0.88。禁止 brightness(0)。`.logos-row` `repeat(6)`。覆盖写在 `returns-page.css`。
 
 ---
+
+## 流体字号（2026-08-27 Park「移动端字有点大」）
+
+- **全站页面文字随视宽连续缩小、触底 12px；API / tracking-react / returns 三站同参**。公式 `clamp(M, calc(A + B·vw), D)`：锚点 1360→桌面现值 D 不变、360→M=`max(12, min(原最深媒体覆盖@360, 0.82×D))`。
+- 根 token `--fs-display/-h2/-h3/-lead/-body` 已全部曲线化；landing.css 与 returns-page.css 里 ≤768/≤480 的字号硬切覆盖已删。`rt-hero-copy h1` 变 `clamp(29px, calc(19.28px + 2.7vw), 56px)`、`.rt-faq/.rt-plan/.rt-feature/.rt-roi-metric/.rt-bento` 全部跟着缩。
+- 「布局约定」里旧的 workaround（区块标题直写 clamp 别用 token、lead 写死 17px）已过时：token 现在就是流体曲线，两者结果一致，新代码统一用 `var(--fs-*)`。
+- **不动**：mock 插图内部小字（`.track-ui/.rt-portal/.rt-glass/.rt-rate/` 井内碎片）、相对单位 em、本来就 <12px 的小注。
 
 ## 布局约定
 

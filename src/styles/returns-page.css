@@ -4522,6 +4522,8 @@
 .returns-page .brands-say .brand-card {
   border-color: rgba(15, 23, 42, 0.08);
   box-shadow: 0 12px 32px -16px rgba(15, 23, 42, 0.28);
+  /* 单行跑马灯：比 tracking 双行版加高，撑住白底区块 */
+  height: 260px;
 }
 
 .returns-page .brands-say .brand-card-logo {

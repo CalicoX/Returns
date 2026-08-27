@@ -21,7 +21,7 @@ Topbar → Hero → TrustBand → BrandsSay → StatsRow → RoiCalculator → F
 
 TrustBand：标题/副标题居中；logo 静态 **两排各 6**（Tracking 同款 12 家，列距 72）。不要跑马灯、不要 Shopify/SHEIN/Temu。
 
-BrandsSay：紧跟 TrustBand，**白底**（标题/副标题深色）。卡片仍是照片+白字跑马灯；卡内 logo 偏暗（opacity 0.7），引用/署名更亮。不要深色底、不要放回 ExploreMore 后面。
+BrandsSay：紧跟 TrustBand，**白底**（标题/副标题深色）。**单行**照片+白字跑马灯（第二行已删，Park 2026-08-27）；卡高 **260**（比 tracking 双行版高）。卡内 logo 偏暗（opacity 0.7），引用/署名更亮。不要深色底、不要放回 ExploreMore 后面、不要加回第二行。
 
 ExploreMore：在 Credentials **后面**（Park 2026-08-26）。Tracking 卡：标题/CTA 都是 **17TRACK Order Tracking**（不要 Explore）；17TRACK 蓝；正面包裹 icon；右侧是 **5175 tracking-react Hero 模块**（`os-status` + WISMO / Brand video 浮卡），不要自制 Shipping Events 板。API 卡源码对齐 5175（Lucide `</>`、终端毛玻璃、ASCII `translateY`、无 3D；768 也保留滚动）。768 卡内左右双列；≤480 上下布局，正文和 CTA 20px。卡是平面的，只要指针高光，不要 tilt。
 

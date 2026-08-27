@@ -43,6 +43,10 @@
 
 Park：整块挪到 TrustBand 下面，背景改白。标题/副标题走浅色区字色（`#0f172a` / `--text-secondary`），CTA 去掉 `on-dark`。卡片照片叠层和双向跑马灯不动。Topbar 不再把 `.brands-say` 当深色带。不要挪回 FAQ 后、不要深色青绿底。
 
+## BrandsSay 单行（2026-08-27）
+
+Park：删掉第二行跑马灯（原 `is-right` 反向行），只留第一行正向滚动；留行卡高 220 → **260**（覆盖写在 `returns-page.css` 的 `.returns-page .brands-say .brand-card`，landing.css 的 220 不动）。≤720 窄屏仍走 landing.css 的 210。不要加回第二行。
+
 ## ExploreMore 位置（2026-08-26）
 
 Park：整块放到 Credentials 后面。顺序是 Faq → Credentials → ExploreMore → BottomCta。不要放回 FAQ 和证书之间。

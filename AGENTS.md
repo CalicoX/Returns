@@ -24,7 +24,7 @@
 
 ## 会话闭环（硬规则）
 
-Agent 默认按此顺序执行，**无需用户每次再嘱咐**。用户明确说「先别提交 / 先别推」时可跳过对应步。
+Agent 默认按此顺序执行，**无需用户每次再嘱咐**。用户明确说「先别提交」时可跳过对应步。
 
 ### 1. 开干前 — 先 pull
 
@@ -34,12 +34,12 @@ git pull --ff-only
 
 有冲突先解决再改。只读问答、未准备改仓库时可不 pull。
 
-### 2. 改完后 — 记记忆 → commit → push
+### 2. 改完后 — 记记忆 → commit（本地，**默认不 push**）
 
 凡本会话改了仓库文件（代码、样式、文案、规则、记忆），默认继续：
 
 1. 有新决策 / 踩坑 / 锁定面 → 更新 `MEMORY.md`；现状变了 → 更新 `CURRENT.md`
-2. 提交并推送：
+2. 提交到本地：
 
 ```sh
 git status && git diff && git log -5 --oneline
@@ -49,8 +49,9 @@ git commit -m "$(cat <<'EOF'
 
 EOF
 )"
-git push -u origin HEAD
 ```
+
+**push 只在 Park 明确说「push / 推上去 / 部署」时执行**（`git push -u origin HEAD`）。原因：`main` 连着 Vercel 生产，每 push 一次就部署一次；日常迭代只攒本地 commit，由 Park 控制上线节奏。某笔 commit 想推但暂不部署时，message 里带 `[skip ci]`（Vercel 会跳过该次构建）。
 
 - Commit message 写 **why**，不要只堆文件名。
 - **不要**提交密钥、`.env`、`node_modules`、`dist`、无关的 `.cursor` 缓存。
@@ -76,4 +77,4 @@ git push -u origin HEAD
 | 视觉 / 布局 | 预览里对上 Park 的描述；MEMORY 记尺寸/位置若成了约定 |
 | 交互 / 动效 | 悬停不打断 Hero 自动演示；减动效 / 窄屏有降级 |
 | 文案 | 走 `src/content/returnsCopy.js`，不要在 JSX 里散落长文案 |
-| 规则 / 记忆 | 只改 md 也要 commit + push |
+| 规则 / 记忆 | 只改 md 也要 commit（push 仍按上面节奏） |

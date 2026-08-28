@@ -6029,14 +6029,21 @@ html.is-reduce-fx .rt-roi::after {
     height: calc(572px * var(--rt-s));
   }
 
+  /* stage 右对齐；左留 56×s 给悬出的 flow 卡（56s + 620s = 容器宽） */
   .rt-glass-stage {
     width: 620px;
     min-height: 0;
-    margin: 0;
+    margin: 0 0 0 calc(56px * var(--rt-s));
     padding: 12px 0 20px;
     overflow: visible;
     transform-origin: top left;
     scale: var(--rt-s);
+  }
+
+  /* stage 的布局盒（620 未缩放）会横向溢出容器，裁掉只留缩放后的可视部分 */
+  .rt-hero-visual {
+    overflow: hidden;
+    overflow: clip;
   }
 
   .rt-glass-photo {
@@ -6152,10 +6159,7 @@ html.is-reduce-fx .rt-roi::after {
 
   .rt-hero .hero-inner.rt-hero-inner {
     padding-block: 24px 36px;
-    gap: 24px;
-  }
-
-  .rt-hero-copy h1 {
+    gap: 0;
   }
 
   .rt-hero-cta {
@@ -6167,29 +6171,7 @@ html.is-reduce-fx .rt-roi::after {
     min-height: 44px;
   }
 
-  .rt-glass-stage {
-    width: min(100%, 400px);
-  }
-
-  .rt-glass-photo {
-    height: min(380px, 100vw);
-  }
-
-  .rt-glass-flow {
-    left: 8px;
-    top: 12px;
-    width: min(78%, 246px);
-  }
-
-  .rt-glass-card {
-    padding: 12px 12px 10px;
-  }
-
-  .rt-glass-method {
-    right: 8px;
-    bottom: 10px;
-    width: min(70%, 210px);
-  }
+  /* 插图跟随 ≤768 的整组缩放方案（PC 设计稿 676 原样缩），此处不再重排版 */
 
   .rt-feature-media {
     height: min(400px, 110vw);

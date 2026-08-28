@@ -196,7 +196,8 @@ export function DomHeroReturns() {
       const er = el.getBoundingClientRect();
       // --mx/--my 是 stage 未缩放坐标系里的值；≤768 stage 被 scale(--rt-s)，
       // rect 差值是屏幕像素，必须除回缩放比，否则光标飘到插图外（Park 报过位置错）
-      const s = parseFloat(scene.style.getPropertyValue("--rt-s")) || 1;
+      const sceneEl = stage.parentElement;
+      const s = sceneEl ? parseFloat(sceneEl.style.getPropertyValue("--rt-s")) || 1 : 1;
       setMouse({
         x: (er.left - sr.left + er.width * 0.78) / s,
         y: (er.top - sr.top + er.height * 0.55) / s,
@@ -228,7 +229,7 @@ export function DomHeroReturns() {
         setReason(null);
         setMethod(null);
         setMouse({ x: 36, y: 48, on: false, click: false });
-        await later(200);
+        await later(reduce ? 120 : 200);
         if (my !== gen) return;
         setStep(1);
         await later(380);
@@ -261,7 +262,8 @@ export function DomHeroReturns() {
             },
             my
           );
-          await later(1900);
+          // 终态（三卡齐亮）多停留——这是主要画面，别一闪而过
+          await later(4200);
           if (my !== gen) return;
           setMouse((m) => ({ ...m, on: false }));
           await later(300);
@@ -279,15 +281,26 @@ export function DomHeroReturns() {
           await later(700);
           if (my !== gen) return;
           await clickTarget(
-            '[data-demo="method"]',
+            '[data-demo="reason"]',
             () => {
-              setMethod("green");
+              setReason("Arrive too late");
               setStep(3);
             },
             my,
             true
           );
-          await later(1900);
+          await later(700);
+          if (my !== gen) return;
+          await clickTarget(
+            '[data-demo="method"]',
+            () => {
+              setMethod("green");
+            },
+            my,
+            true
+          );
+          // 终态（三卡齐亮）多停留——这是主要画面，别一闪而过
+          await later(4200);
           if (my !== gen) return;
           setMouse((m) => ({ ...m, on: false }));
           await later(300);

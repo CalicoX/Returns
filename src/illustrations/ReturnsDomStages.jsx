@@ -194,19 +194,22 @@ export function DomHeroReturns() {
       if (!el) return;
       const sr = stage.getBoundingClientRect();
       const er = el.getBoundingClientRect();
+      // --mx/--my 是 stage 未缩放坐标系里的值；≤768 stage 被 scale(--rt-s)，
+      // rect 差值是屏幕像素，必须除回缩放比，否则光标飘到插图外（Park 报过位置错）
+      const s = parseFloat(scene.style.getPropertyValue("--rt-s")) || 1;
       setMouse({
-        x: er.left - sr.left + er.width * 0.78,
-        y: er.top - sr.top + er.height * 0.55,
+        x: (er.left - sr.left + er.width * 0.78) / s,
+        y: (er.top - sr.top + er.height * 0.55) / s,
         on: true,
         click: false,
       });
     }
 
-    async function clickTarget(sel, apply, my) {
+    async function clickTarget(sel, apply, my, slow = false) {
       if (my !== gen) return;
       const el = stage.querySelector(sel);
       pointAt(el);
-      await later(520);
+      await later(slow ? 900 : 520);
       if (my !== gen) return;
       setMouse((m) => ({ ...m, click: true }));
       await later(110);
@@ -263,16 +266,31 @@ export function DomHeroReturns() {
           setMouse((m) => ({ ...m, on: false }));
           await later(300);
         } else {
-          setItem("jacket");
-          await later(520);
+          // reduce / ≤768：不省光标——照常移动+点击演示，只是节奏放慢、少悬停停顿
+          await clickTarget(
+            '[data-demo="item"]',
+            () => {
+              setItem("jacket");
+              setStep(2);
+            },
+            my,
+            true
+          );
+          await later(700);
           if (my !== gen) return;
-          setStep(2);
-          setReason("Arrive too late");
-          await later(520);
-          if (my !== gen) return;
-          setStep(3);
-          setMethod("green");
+          await clickTarget(
+            '[data-demo="method"]',
+            () => {
+              setMethod("green");
+              setStep(3);
+            },
+            my,
+            true
+          );
           await later(1900);
+          if (my !== gen) return;
+          setMouse((m) => ({ ...m, on: false }));
+          await later(300);
         }
       }
     }

@@ -729,8 +729,9 @@
     transform: none !important;
   }
 
+  /* 演示光标保留（Park：移动端也要看到鼠标）；它不是动效装饰，是流程演示的一部分 */
   .rt-glass-mouse {
-    display: none;
+    display: block;
   }
 }
 

@@ -157,24 +157,14 @@ export function DomHeroReturns() {
     const scene = sceneRef.current;
     if (!scene) return undefined;
 
-    // ≤768：插图按手机宽度重排版后整组等比缩（基准 360 = 容器宽 100vw-16）
+    // ≤768：PC 设计稿（620 stage + flow 左悬出 56 = 676）原样整组等比缩到容器宽（100vw-16）
     function fit() {
       const host = scene.parentElement;
-      const stage = stageRef.current;
       const w = host ? host.clientWidth : 0;
       const mobile = window.matchMedia("(max-width: 768px)").matches;
-      const s = mobile && w > 0 ? Math.min(1, w / 360) : 1;
+      const s = mobile && w > 0 ? Math.min(1, w / 676) : 1;
       scene.style.setProperty("--rt-s", s.toFixed(4));
-      if (!stage) return;
-      const reason = stage.querySelector(".rt-glass-reason");
-      if (reason) reason.style.display = mobile ? "none" : "";
-      if (!mobile) return;
-      const items = stage.querySelector(".rt-glass-items");
-      const method = stage.querySelector(".rt-glass-method");
-      if (!items || !method) return;
-      // 场景高 = items 卡 + method 卡 + 24 间隙 + 底部 12（入场位移不收高）
-      const sceneH = items.offsetHeight + 24 + method.offsetHeight + 12;
-      scene.style.height = `${(sceneH * s).toFixed(1)}px`;
+      scene.style.height = "";
     }
 
     fit();

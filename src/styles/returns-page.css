@@ -4474,12 +4474,16 @@
     height: 20px;
   }
 
+  /* mobile: flatten to one 4-col grid → 3 rows of 4（与 landing.css ≤680 同步；此壳特异性更高，必须在这里再写一遍） */
   .returns-page .logos-track {
-    gap: 22px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px 24px;
+    width: 100%;
   }
 
   .returns-page .logos-row {
-    gap: 12px 24px;
+    display: contents;
   }
 }
 

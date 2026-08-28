@@ -5974,41 +5974,69 @@ html.is-reduce-fx .rt-roi::after {
   .rt-hero .hero-inner.rt-hero-inner {
     grid-template-columns: 1fr;
     padding-block: 32px 40px;
-    gap: 28px;
+    /* 间距由各 item 自己的 margin 控制（copy 用 display:contents 拆开） */
+    gap: 0;
   }
 
+  /* Park：标题/lead 居中；CTA 并排放到插图下面（DOM 不动，copy 拆开排 order） */
   .rt-hero-copy {
-    max-width: none;
+    display: contents;
   }
 
   .rt-hero-copy h1 {
+    order: 1;
+    text-align: center;
+  }
+
+  .rt-hero-copy .lead {
+    order: 2;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .rt-hero-copy .rt-hero-cta {
+    order: 4;
+    margin-top: 24px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  .rt-hero-visual {
+    order: 3;
+    margin-top: 28px;
+  }
+
+  .returns-page .hero .cta-row > * {
+    width: auto;
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 220px;
+    justify-content: center;
+    white-space: nowrap;
+  }
+
+  /* —— 插图：PC 设计稿（620+左悬出56=676）原样整体缩放，宽 = 100vw-16（每边 8px）—— */
+  .rt-hero-visual {
+    container-type: inline-size;
+    margin-inline: calc(8px - var(--rt-gutter));
+  }
+
+  .rt-hero-scene {
+    /* --rt-s 由 DomHeroReturns 的 fit() 写入：容器宽 / 676 */
+    --rt-s: 1;
+    height: calc(572px * var(--rt-s));
   }
 
   .rt-glass-stage {
+    width: 620px;
     min-height: 0;
-    padding: 0 0 16px;
-    max-width: none;
-    width: min(100%, 520px);
-    margin-inline: auto;
-    overflow: hidden;
-  }
-
-  .rt-glass-photo {
-    width: 100%;
-    height: min(460px, 86vw);
-    margin: 0 auto;
-  }
-
-  .rt-glass-flow {
-    left: 10px;
-    top: 14px;
-    width: min(72%, 268px);
-  }
-
-  .rt-glass-method {
-    right: 10px;
-    bottom: 12px;
-    width: min(64%, 220px);
+    margin: 0 0 0 calc(56px * var(--rt-s));
+    padding: 12px 0 20px;
+    overflow: visible;
+    transform-origin: top left;
+    scale: var(--rt-s);
   }
 
   .rt-carrier-pair {

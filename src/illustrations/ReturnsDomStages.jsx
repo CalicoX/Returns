@@ -154,6 +154,24 @@ export function DomHeroReturns() {
   }, []);
 
   useEffect(() => {
+    const scene = sceneRef.current;
+    if (!scene) return undefined;
+
+    // ≤768 把 PC 设计稿（620 + flow 左悬出 56 = 676）原样等比缩到容器宽（100vw-16）
+    function fit() {
+      const host = scene.parentElement;
+      const w = host ? host.clientWidth : 0;
+      const mobile = window.matchMedia("(max-width: 768px)").matches;
+      const s = mobile && w > 0 ? Math.min(1, w / 676) : 1;
+      scene.style.setProperty("--rt-s", s.toFixed(4));
+    }
+
+    fit();
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, []);
+
+  useEffect(() => {
     const stage = stageRef.current;
     if (!stage) return undefined;
 

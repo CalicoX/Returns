@@ -4542,6 +4542,25 @@
   color: rgba(255, 255, 255, 0.82);
 }
 
+/* 移动端卡片两端撑满（2026-08-28，与 tracking/API 同步）；壳特异性高，需在此重写 */
+@media (max-width: 720px) {
+  .returns-page .brands-say-rows {
+    margin: 0 calc(-1 * var(--page-pad-x));
+    width: auto;
+    max-width: none;
+  }
+
+  .returns-page .brands-marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .returns-page .brands-say .brand-card {
+    width: 100cqw;
+    height: 240px;
+  }
+}
+
 .returns-page .rt-stats,
 .returns-page .rt-stats + *,
 .returns-page .brands-say + .rt-stats {

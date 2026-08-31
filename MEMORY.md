@@ -51,6 +51,10 @@ Park：删掉第二行跑马灯（原 `is-right` 反向行），只留第一行�
 
 Park 反馈「push+commit 太频繁」——真实痛点是 `main` 连着 **Vercel 生产**，每 push 一次就触发一次部署。AGENTS.md 已改：日常迭代只攒**本地 commit**，Park 说「push / 推上去 / 部署」时才推。不要恢复「改完自动 push」的旧行为。
 
+## git 节奏：pull / fetch 已下线（2026-08-31）
+
+Park：「fetch 下线」。会话开始不再 `git pull` / `git fetch`，直接按本地状态干活；只有 Park 明确说「pull / 拉一下」才拉远程。AGENTS.md 会话闭环第 1 步已同步改掉。不要恢复「开干前先 pull」的旧流程。
+
 省部署的两个手段（按需用）：
 - 某笔 commit 想进远程但**暂不部署**：message 带 `[skip ci]` / `[ci skip]`，Vercel 跳过构建。
 - 想让 md / 文档改动**永不**触发构建：Vercel 后台 Project Settings → Git → **Ignored Build Step** 填 `git diff --quiet HEAD^ HEAD -- src/ public/ index.html package.json vite.config.* || exit 1`（需要 Park 自己进 dashboard 设，agent 无法代设）。

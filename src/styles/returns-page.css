@@ -1363,79 +1363,8 @@
   color: #115e59;
 }
 
-@media (max-width: 768px) {
-  .rt-portal-scene {
-    --portal-inset-x: 5%;
-    --portal-inset-y: 5%;
-  }
-
-  .rt-portal-search-wrap {
-    width: min(196px, 46%);
-    left: 58%;
-    top: 40%;
-  }
-
-  .rt-portal-pick-wrap {
-    left: 6%;
-    top: 8%;
-    width: min(148px, 34%);
-  }
-
-  .rt-portal-sv {
-    height: 68px;
-  }
-
-  .rt-portal-mail {
-    right: 3%;
-    bottom: 9%;
-    width: min(152px, 38%);
-  }
-
-  .rt-portal-ltv {
-    left: 7%;
-    bottom: 8%;
-  }
-}
-
-@media (max-width: 640px) {
-  .rt-portal-scene {
-    --portal-inset-x: 4%;
-    --portal-inset-y: 5%;
-  }
-
-  .rt-portal-search-wrap {
-    width: min(180px, 54%);
-    left: 56%;
-    top: 38%;
-  }
-
-  .rt-portal-pick-wrap {
-    left: 5%;
-    top: 7%;
-    width: min(128px, 36%);
-  }
-
-  .rt-portal-sv {
-    height: 56px;
-  }
-
-  .rt-portal-mail {
-    right: 3%;
-    bottom: 8%;
-    width: min(136px, 42%);
-  }
-
-  .rt-portal-ltv {
-    left: 6%;
-    bottom: 7%;
-    padding: 8px 10px 7px;
-    min-width: 76px;
-  }
-
-  .rt-portal-ltv strong {
-    font-size: 22px;
-  }
-}
+/* （2026-09-01）Portal 768/640 紧凑重排版已删：窄屏走 PC 设计稿整组 scale(--fts)，
+   浮窗位置/尺寸由 PC 布局等比缩得，不再单独改 */
 
 @media (prefers-reduced-motion: reduce) {
   .rt-ai-select i,
@@ -2013,80 +1942,7 @@
   color: rgba(255, 255, 255, 0.82);
 }
 
-@media (max-width: 768px) {
-  .rt-wf-panel-wrap {
-    top: 3%;
-    bottom: 5%;
-    width: min(228px, 58%);
-  }
-
-  .rt-wf-scene.is-split .rt-wf-panel-wrap {
-    left: 3%;
-  }
-
-  .rt-wf-bot {
-    width: 78px;
-    height: 78px;
-    margin: 12px auto 10px;
-  }
-
-  .rt-wf-pills button {
-    height: 24px;
-    font-size: 9.5px;
-  }
-
-  .rt-wf-pills button:nth-child(n + 3) {
-    display: none;
-  }
-
-  .rt-wf-rules {
-    left: calc(3% + min(228px, 58%) - 12px);
-    right: auto;
-    top: 10%;
-    width: min(240px, 58%);
-    gap: 12px;
-  }
-
-  .rt-wf-rule strong {
-    font-size: 11px;
-  }
-
-  .rt-wf-rule div span,
-  .rt-wf-rule div em {
-    display: none;
-  }
-
-  .rt-wf-stat {
-    min-width: 88px;
-    padding: 10px 12px 8px;
-  }
-
-  .rt-wf-stat strong {
-    font-size: 22px;
-  }
-}
-
-@media (max-width: 640px) {
-  .rt-wf-scene.is-split .rt-wf-panel-wrap {
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(280px, 92%);
-    top: 2%;
-    bottom: 14%;
-  }
-
-  .rt-wf-rules {
-    display: none;
-  }
-
-  .rt-wf-stat {
-    left: auto;
-    right: 6%;
-    bottom: 6px;
-    min-width: 0;
-    padding: 8px 10px 6px;
-  }
-}
+/* （2026-09-01）AI 面板 768/640 紧凑重排版已删：窄屏走 PC 设计稿整组 scale(--fts) */
 
 /* 03 Recovery — keep / credit / exchange collage, no dark well */
 .rt-feature-media:has(.rt-rv-wrap),
@@ -2650,84 +2506,7 @@
   height: 22px;
 }
 
-@media (max-width: 768px) {
-  .rt-rv-scene {
-    grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 0;
-  }
-
-  .rt-rv-col.is-left {
-    padding-top: 0;
-    gap: 8px;
-  }
-
-  .rt-rv-credit,
-  .rt-rv-xchg {
-    display: none;
-  }
-
-  .rt-rv-col.is-right {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 4;
-    display: block;
-    width: auto;
-    padding: 0;
-  }
-
-  .rt-rv-keep {
-    min-height: 0;
-    padding: 12px;
-  }
-
-  .rt-rv-keep-slot {
-    height: 78px;
-    margin: 8px 0 10px;
-  }
-
-  .rt-rv-refund {
-    top: 52px;
-    padding: 10px 12px;
-  }
-
-  .rt-rv-refund-top {
-    flex-wrap: wrap;
-  }
-
-  .rt-rv-refund b,
-  .rt-rv-credit b {
-    font-size: 18px;
-  }
-
-  .rt-rv-modal-head p {
-    display: none;
-  }
-
-  .rt-rv-stat {
-    align-self: flex-start;
-    min-width: 96px;
-    padding: 10px 12px 8px;
-  }
-
-  .rt-rv-stat strong {
-    font-size: 22px;
-  }
-
-  .rt-rv-btn {
-    height: 34px;
-    font-size: 11px;
-  }
-
-  .rt-rv-mouse {
-    display: none;
-  }
-
-  .rt-rv-curve {
-    inset: 18% 0 0 0;
-  }
-}
+/* （2026-09-01）Recovery 768 紧凑重排版已删：窄屏走 PC 设计稿整组 scale(--fts) */
 
 @media (prefers-reduced-motion: reduce) {
   .rt-rv-refund,
@@ -3497,42 +3276,7 @@
   }
 }
 
-@media (max-width: 768px) {
-  .rt-carrier-pair {
-    grid-template-columns: minmax(0, 1fr) minmax(168px, 210px);
-    max-width: none;
-  }
-
-  .rt-rate-col {
-    margin-left: -16px;
-  }
-
-  .rt-carrier-stat {
-    min-width: 96px;
-    padding: 10px 12px 8px;
-  }
-
-  .rt-carrier-stat strong {
-    font-size: 22px;
-  }
-
-  .rt-carrier-stat strong {
-    font-size: 30px;
-  }
-
-  .rt-carrier-stat span {
-    font-size: 10px;
-  }
-
-  .rt-rate-stack {
-    max-width: 210px;
-    gap: 12px;
-  }
-
-  .rt-rate-card {
-    padding: 9px 10px 7px;
-  }
-}
+/* （2026-09-01）Carriers 768 紧凑重排版已删：窄屏走 PC 设计稿整组 scale(--fts) */
 
 /* —— Stats：四象限 + 十字线 + 外围渐变遮罩 —— */
 .rt-stats {
@@ -6046,22 +5790,7 @@ html.is-reduce-fx .rt-roi::after {
     margin: 0;
   }
 
-  .rt-carrier-pair {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    max-width: none;
-    flex: none;
-    align-items: start;
-  }
-
-  .rt-ship-label {
-    height: auto;
-    min-height: 300px;
-  }
-
-  .rt-rate-stack {
-    margin-left: 0;
-  }
+  /* （2026-09-01）Carriers 单列重排版已删：窄屏走 PC 设计稿整组 scale(--fts) */
 }
 
 @media (max-width: 640px) {
@@ -6835,5 +6564,47 @@ html.is-reduce-fx .rt-roi::after {
     width: 144px;
     left: 6px;
     bottom: 16px;
+  }
+}
+
+/* =========================================================
+   Feature 插图窄屏整组等比缩放（2026-09-01 Park，Hero --rt-s 同款）
+   JS（ReturnsDomStages useFeatureFit）在 ≤768 写 --fts 与场景高（H×s）；
+   场景盒固定 PC 设计稿尺寸（W×H）再 scale，内部布局/动画 = PC 版原样等比。
+   基准：portal 677×560 · ai 703×560 · recovery 677×519 · carriers 703×560
+   ========================================================= */
+@media (max-width: 768px) {
+  .rt-portal-wrap .feature-stage,
+  .rt-wf-wrap .feature-stage,
+  .rt-rv-wrap .feature-stage,
+  .rt-carrier-wrap .feature-stage {
+    overflow: visible !important;
+  }
+
+  .rt-portal-wrap .feature-stage-art,
+  .rt-wf-wrap .feature-stage-art,
+  .rt-rv-wrap .feature-stage-art,
+  .rt-carrier-wrap .feature-stage-art {
+    /* 固定 PC 设计稿尺寸；JS 已把 height 写成 H×s，这里把盒宽钉死为 W，
+       transform-origin 左上，--fts 缩放后可视宽 = 容器宽 */
+    width: var(--fts-w, 677px) !important;
+    max-width: none !important;
+    transform-origin: top left !important;
+    scale: var(--fts, 1) !important;
+    overflow: visible !important;
+  }
+
+  .rt-wf-wrap .feature-stage-art,
+  .rt-carrier-wrap .feature-stage-art {
+    --fts-w: 703px;
+  }
+
+  /* 容器高度由 JS（H×s）决定；停用旧 768/640 的容器高覆盖 */
+  .rt-feature-media {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: hidden;
+    overflow: clip;
   }
 }

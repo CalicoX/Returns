@@ -509,6 +509,42 @@ function lerp(a, b, t) {
   return a + (b - a) * t;
 }
 
+/*
+ * Feature 插图窄屏整组等比缩放（Park 2026-09-01，Hero --rt-s 同款方案）：
+ * ≤768 把场景盒固定成 PC 设计稿尺寸（W×H）再 scale(--fts) 缩到容器宽，
+ * 内部布局/动画坐标全部保持 PC 版比例；桌面不写 --fts（走原布局）。
+ */
+const FEATURE_FIT = { portal: [677, 560], ai: [703, 560], recovery: [677, 519], carriers: [703, 560] };
+
+function useFeatureFit(sceneRef, key) {
+  const [w, h] = FEATURE_FIT[key];
+  useEffect(() => {
+    const scene = sceneRef.current;
+    if (!scene) return undefined;
+
+    function fit() {
+      /* 宽度取 .rt-feature-media（grid 列定宽，不会被固定 W 的场景盒撑大）；
+         stage/visual 会被未缩放的场景盒暂时撑宽，不能用它们算比例 */
+      const media = scene.closest(".rt-feature-media");
+      const cw = media ? media.clientWidth : 0;
+      const mobile = window.matchMedia("(max-width: 768px)").matches;
+      if (!mobile || cw <= 0) {
+        scene.style.removeProperty("--fts");
+        scene.style.height = "";
+        return;
+      }
+      const s = Math.min(1, cw / w);
+      scene.style.setProperty("--fts", s.toFixed(4));
+      scene.style.height = `${Math.round(h * s)}px`;
+    }
+
+    fit();
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sceneRef, key]);
+}
+
 function easeOut(t) {
   return 1 - (1 - t) * (1 - t);
 }
@@ -520,6 +556,7 @@ export function DomStagePortal() {
   const cardRef = useRef(null);
   const hueRef = useRef(null);
   const svRef = useRef(null);
+  useFeatureFit(sceneRef, "portal");
   const [hsv, setHsv] = useState(HSV0);
   const [phase, setPhase] = useState("idle");
   const [sel, setSel] = useState(0);
@@ -564,9 +601,12 @@ export function DomStagePortal() {
       if (!scene || !el) return { ...pos };
       const sr = scene.getBoundingClientRect();
       const r0 = el.getBoundingClientRect();
+      // --x/--y 消费在 scene 未缩放坐标系里；≤768 scene 被 scale(--fts)，
+      // rect 差值是屏幕像素，必须除回缩放比，否则鼠标飘出插图（同 Hero --rt-s 的坑）
+      const s = parseFloat(scene.style.getPropertyValue("--fts")) || 1;
       return {
-        x: r0.left - sr.left + r0.width * fx,
-        y: r0.top - sr.top + r0.height * fy,
+        x: (r0.left - sr.left + r0.width * fx) / s,
+        y: (r0.top - sr.top + r0.height * fy) / s,
       };
     }
 
@@ -995,6 +1035,7 @@ function WorkflowBot() {
 /** 1 · AI workflows */
 export function DomStageAi() {
   const wrapRef = useRef(null);
+  const sceneRef = useRef(null);
   const [pill, setPill] = useState(-1);
   const [typed, setTyped] = useState("");
   const [caret, setCaret] = useState(true);
@@ -1002,6 +1043,7 @@ export function DomStageAi() {
   const [ready, setReady] = useState(0);
   const [note, setNote] = useState("");
   const [showStat, setShowStat] = useState(false);
+  useFeatureFit(sceneRef, "ai");
 
   useEffect(() => {
     const id = window.setInterval(() => setCaret((on) => !on), 460);
@@ -1104,7 +1146,7 @@ export function DomStageAi() {
   return (
     <div className="feature-visual rt-dom-stage-wrap rt-wf-wrap" ref={wrapRef}>
       <div className="feature-stage is-active" data-theme="notify" style={{ ["--fx-c"]: 1 }}>
-        <div className={`feature-stage-art rt-wf-scene${ready > 0 ? " is-split" : ""}`}>
+        <div className={`feature-stage-art rt-wf-scene${ready > 0 ? " is-split" : ""}`} ref={sceneRef}>
           <div className="rt-wf-panel-wrap">
             <div className="rt-wf-panel">
               <header className="rt-wf-head">
@@ -1262,6 +1304,7 @@ export function DomStageRecovery() {
   const [grown, setGrown] = useState(false);
   const [secs, setSecs] = useState(30);
   const [mouse, setMouse] = useState({ x: 28, y: 36, on: false, down: false });
+  useFeatureFit(sceneRef, "recovery");
 
   useEffect(() => {
     const wrap = wrapRef.current;
@@ -1293,9 +1336,11 @@ export function DomStageRecovery() {
       if (!scene || !el) return { ...pos };
       const sr = scene.getBoundingClientRect();
       const r0 = el.getBoundingClientRect();
+      // ≤768 scene 被 scale(--fts)，rect 差值是屏幕像素，除回缩放比（同 Hero/Portal）
+      const s = parseFloat(scene.style.getPropertyValue("--fts")) || 1;
       return {
-        x: r0.left - sr.left + r0.width * fx,
-        y: r0.top - sr.top + r0.height * fy,
+        x: (r0.left - sr.left + r0.width * fx) / s,
+        y: (r0.top - sr.top + r0.height * fy) / s,
       };
     }
 
@@ -1647,6 +1692,7 @@ function ShipMatrix() {
 /** 3 · Multi-carrier rates — big label + floating glass rate cards */
 export function DomStageCarriers() {
   const sceneRef = useRef(null);
+  useFeatureFit(sceneRef, "carriers");
 
   useEffect(() => {
     const el = sceneRef.current;

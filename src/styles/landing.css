@@ -9507,17 +9507,22 @@
       .hero .cta-row .btn,
       .hero .cta-row .btn-switch,
       .hero .cta-row .btn-demo {
-        width: 100%;
+        width: auto;
+        flex: 1 1 0;
+        min-width: 0;
         justify-content: center;
       }
+      /* 手机 CTA 并排一行（Park 2026-09-01）：两颗各吃一半，不再全宽堆叠 */
       .bottom-cta .cta-row {
-        flex-direction: column;
+        flex-direction: row;
         align-items: stretch;
       }
       .bottom-cta .cta-row .btn,
       .bottom-cta .cta-row .btn-switch,
       .bottom-cta .cta-row a {
-        width: 100%;
+        width: auto;
+        flex: 1 1 0;
+        min-width: 0;
         justify-content: center;
         text-align: center;
       }

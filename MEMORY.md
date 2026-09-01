@@ -98,25 +98,26 @@ Park 用 Tracking 模块整块替换：12 家静态两排各 6。不要 Shopify 
 - 性能：原引擎 compute 长边 1600，WebGL fragment 跑同样数学在 M2 Pro 只有 ~12fps；降到 1024 + 30fps 节流后观感无损（UV 场平滑、点在 Pass2 全分辨率画）。别把 COMPUTE_MAX 加回 1600。
 - 测试坑：Lenis 页面里 `scrollIntoView` 会被弹回顶部，IntersectionObserver 不触发；验证自动挂载要直接设 `scrollTop` 或真实滚动。
 
-## 响应式断点（2026-08-17）
+## 响应式断点（2026-09-01 并档，对齐 API 项目 Tailwind 三档）
 
-Park 要看的档：480 / 768 / 1024 / 1200 / 1440。Returns 专属写在 `returns-page.css`，不要改 `landing.css`。
+全站 max-width 只剩 **640 / 768 / 1024** 三档（+640 内可嵌套 360 窄机档）；1440 是内容壳宽（`max-width: var(--max)`）**不是断点**。化石层 480/520/560/680/700/720/900/960/980/1100/1200 已全部清理（2026-09-01，returns 主体在 `4663564` / `49ab19b`）。**新增响应式只许挂这三档，禁止再钉新数字。**
 
-| 宽度 | gutter | 布局 |
-|------|--------|------|
-| **1440** | 48 | 桌面：Hero 双栏、Feature sticky 双栏 |
-| **1200** | 40 | 仍桌面构图，只收 gutter |
-| **1024** | 32 | Hero 双栏改比例（文案可缩、插图吃更多）；Feature 仍 sticky 双栏；Stats 标题可换行、标签可折行 |
-| **768** | 20 | Hero 堆叠；浮卡收进照片内，禁止 `left: -48px` 撑出横向滚动；shader 仍关；运单/FAQ 收紧 |
-| **480** | 16 | 小屏：Stats 四象限改单列；ROI 单列；Feature 02 只留中间 AI 面板（规则卡会裁切）；CTA 全宽、热区 ≥44px |
-| **960**（内部） | 24 | Feature sticky **在此改为堆叠**（CSS + `FeatureRows.jsx` `matchMedia` 必须一致）。Plans 单列。 |
+档位语义（同 API AGENTS.md「断点规范」）：
 
-移动端铁律：
+- **≤640** 手机特化：单列、全宽卡破壳、BrandsSay `100cqw`、credentials 单列 360 居中、CTA 全宽热区 ≥44、gutter 16
+- **≤768** 平板竖屏紧凑：hero 单列堆叠、Feature sticky **在此改堆叠**（CSS + `FeatureRows.jsx` matchMedia 768 一致）、TrustBand logo 4 列网格、explore 单列、gutter 20；FX 降级线也在这（`responsive-fx` mq640 打 `is-reduce-fx`，shader 类挂 768 自己关）
+- **≤1024** 两/三列 rebalance：hero 双栏收比例、credentials 4→2、footer nav 2×2、topbar 收汉堡、logos 间距收紧、gutter 32
+- **>1024** 桌面全量
+
+映射备忘（按设计意图归位）：原 ≤900/960 单列堆叠块 → 768；原 ≤980/1100 rebalance 块 → 1024；原 ≤480/520/560 → 640；原 ≤680/700/720 → 768；`min-width:961` 配对块 → 769。JS：`FeatureRows` 960→768、`landing-inline` 980→1024、`responsive-fx` mq480→mq640。
+
+铁律（API 踩过的坑同样适用）：
 
 - 不横向溢出。Hero 用 `overflow-x: clip`；功能行插图列 `overflow: hidden`。
-- 窄屏浮卡贴照片内缘，不要为了「压左缘」伸出视口。
+- **从宽档往窄档挪规则时窄档必须接住**（768 删了单列、640 没接 = 390 破版）。
+- 同选择器出现在多个档块时靠源顺序决胜；同特异性的窄档块必须写在宽档块之后（当前两文件级联已核对）。
 - Dock：`max-width: calc(100% - 24px)`，`--dock-bottom` 吃 `safe-area-inset-bottom`。
-- 不要为了手机把 1200/1440 桌面构图改坏。
+- 不要为了手机把桌面构图改坏；验收五档 1440 / 1024 / 768 / 640 / 390（2026-09-01 全过：零溢出、1440 与改前零变化）。
 
 ---
 

@@ -36,7 +36,7 @@ FeatureRows：sticky 叠屏；2/4 块翻转（图左文右）；每块略矮于�
 - CTA：Free Trial + Book a Demo。全站 `.btn-switch`（Hero / Feature×4 / Plans / BrandsSay / BottomCta）带青绿 border beam（`returns-cta-beam.js`，teal 变体，离屏暂停）。
 - 青绿自研 WebGL wash（API 同款双通道；无橙/紫/蓝；无 FilmGrain）。
 - 整页兼容：WebGL1 主路径 + mediump；无 WebGL / context lost 走青绿 fallback。动画不砍，离屏/切标签才停 rAF。
-- 响应式：1440/1200 桌面双栏；1024 双栏收比例；≤768 Hero 堆叠；≤480 Stats/ROI 单列。Feature sticky 在 960 改为堆叠。预览用 DevTools 切 480/768/1024/1200/1440。
+- 响应式（2026-09-01 并档）：全站只有 **640 / 768 / 1024** 三档 max-width（1440 是壳宽非断点）。≤1024 双栏 rebalance；≤768 Hero 堆叠、Feature sticky 改堆叠；≤640 Stats/ROI/credentials 单列、全宽卡。预览用 DevTools 切 1440 / 1024 / 768 / 640 / 390。
 - 页面文案字阶对齐 tracking 实际 `h2` / `.lead` / `--sec-*`。Hero 标题仍是展示级 56。
 
 ---

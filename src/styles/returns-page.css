@@ -6154,25 +6154,33 @@ html.is-reduce-fx .rt-roi::after {
   }
 
   .rt-roi-metric {
+    /* 字号随卡宽缩：$184,000（9 字符）最长，约 5.4ch 换算，29cqi 封顶保证不溢出 */
+    container-type: inline-size;
+    /* 两卡等高后数字贴底对齐（label 行数不同也不错位） */
+    justify-content: flex-start;
     padding: 14px 14px 16px;
     border-radius: 14px;
   }
 
   .rt-roi-metric-value {
-    /* 1440→44 · 640→30 · 360 触底 26 */
-    font-size: clamp(26px, calc(19.55px + 2.42vw), 44px);
+    margin-top: auto;
+    font-size: clamp(18px, 12.5cqi, 44px);
     letter-spacing: -0.02em;
   }
 
   .rt-roi-metric-label {
-    padding-right: 0;
+    /* badge 改回右上角 absolute（与桌面同构），label 预留其空间保证两卡文字对齐 */
+    padding-right: 8.5em;
     margin-bottom: 6px;
   }
 
+  .rt-roi-metric:not(.is-recover) .rt-roi-metric-label {
+    padding-right: 0;
+  }
+
   .rt-roi-badge {
-    position: static;
-    align-self: flex-start;
-    margin-bottom: 6px;
+    top: 12px;
+    right: 12px;
     padding: 3px 8px;
     font-size: 10px;
   }

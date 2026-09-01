@@ -22,7 +22,7 @@ export default function FeatureRows() {
     const n = slides.length;
     if (!n) return undefined;
 
-    const mq = window.matchMedia("(max-width: 960px)");
+    const mq = window.matchMedia("(max-width: 768px)");
     const gap = 12;
     let panelH = 0;
     let travel = 1;

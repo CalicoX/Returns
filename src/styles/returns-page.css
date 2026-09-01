@@ -735,7 +735,7 @@
   }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 768px) {
   .rt-hero-visual {
     perspective: none;
     justify-content: center;
@@ -1363,7 +1363,7 @@
   color: #115e59;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 768px) {
   .rt-portal-scene {
     --portal-inset-x: 5%;
     --portal-inset-y: 5%;
@@ -1397,7 +1397,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .rt-portal-scene {
     --portal-inset-x: 4%;
     --portal-inset-y: 5%;
@@ -2013,7 +2013,7 @@
   color: rgba(255, 255, 255, 0.82);
 }
 
-@media (max-width: 960px) {
+@media (max-width: 768px) {
   .rt-wf-panel-wrap {
     top: 3%;
     bottom: 5%;
@@ -2066,7 +2066,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .rt-wf-scene.is-split .rt-wf-panel-wrap {
     left: 50%;
     transform: translateX(-50%);
@@ -2097,7 +2097,7 @@
   overflow: visible !important;
 }
 
-@media (min-width: 961px) {
+@media (min-width: 769px) {
   .rt-feature-media:has(.rt-rv-wrap) {
     height: 100%;
     max-height: none;
@@ -2268,7 +2268,7 @@
   min-height: 248px;
 }
 
-@media (min-width: 961px) {
+@media (min-width: 769px) {
   .rt-rv-col.is-left {
     gap: 12px;
   }
@@ -2650,7 +2650,7 @@
   height: 22px;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 768px) {
   .rt-rv-scene {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -4435,7 +4435,7 @@
   height: 24px;
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1024px) {
   .returns-page .logos-track {
     gap: 28px;
   }
@@ -4445,7 +4445,7 @@
   }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 768px) {
   .returns-page .logo-tile {
     height: 32px;
   }
@@ -4544,7 +4544,7 @@
 }
 
 /* 移动端卡片两端撑满（2026-08-28，与 tracking/API 同步）；壳特异性高，需在此重写 */
-@media (max-width: 720px) {
+@media (max-width: 640px) {
   .returns-page .brands-say-rows {
     margin: 0 calc(-1 * var(--page-pad-x));
     width: auto;
@@ -5775,14 +5775,7 @@ html.is-reduce-fx .rt-roi::after {
   max-width: 16em;
 }
 
-/* —— Responsive：1440 画布 · 1200 仍桌面 · 1024 过渡 · 768/480 堆叠 —— */
-@media (max-width: 1200px) {
-  .returns-page {
-    --rt-gutter: 40px;
-    --page-pad-x: 40px;
-  }
-}
-
+/* —— Responsive：1440 画布（壳宽，非断点）· 1024 rebalance · 768 平板 · 640 手机 —— */
 @media (max-width: 1024px) {
   .returns-page {
     --rt-gutter: 32px;
@@ -5827,7 +5820,7 @@ html.is-reduce-fx .rt-roi::after {
   }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 768px) {
   .returns-page {
     --rt-gutter: 24px;
     --page-pad-x: 24px;
@@ -6071,7 +6064,7 @@ html.is-reduce-fx .rt-roi::after {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .returns-page {
     --rt-gutter: 16px;
     --page-pad-x: 16px;
@@ -6693,7 +6686,7 @@ html.is-reduce-fx .rt-roi::after {
   }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 768px) {
   .returns-page .track-ui {
     min-height: 380px;
   }
@@ -6713,7 +6706,7 @@ html.is-reduce-fx .rt-roi::after {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .returns-page .explore-card {
     grid-template-columns: 1fr !important;
     gap: 18px;

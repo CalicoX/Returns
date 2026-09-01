@@ -6160,6 +6160,18 @@ html.is-reduce-fx .rt-roi::after {
     width: 100%;
   }
 
+  /* 手机 CTA 全宽堆叠（与 BottomCta/Plans 一致）；覆盖 ≤768 的并排设计——
+     必须复用 768 块的高特异性选择器 .returns-page .hero .cta-row > * 才能打赢 max-width:220px */
+  .rt-hero-copy .rt-hero-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .returns-page .hero .cta-row > * {
+    width: 100%;
+    max-width: none;
+  }
+
   .rt-hero-cta .btn-switch,
   .rt-hero-cta .btn-demo {
     min-height: 44px;

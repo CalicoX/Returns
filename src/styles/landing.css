@@ -9426,6 +9426,8 @@
       .bottom-cta .cta-row {
         flex-wrap: wrap;
         gap: 10px;
+        /* 纵向 flex 里 cta-row 被 ≤768 块拉成 100% 宽，按钮内容需显式居中（对齐 h2/lead） */
+        justify-content: center;
       }
       .bottom-cta h2 {
       }

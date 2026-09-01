@@ -4174,7 +4174,8 @@
 }
 
 .rt-bento-value {
-  font-size: clamp(37.5px, calc(33.14px + 1.21vw), 49.6px);
+  /* 数字随视宽连续缩小（Park 2026-09-01）：1440→49.6 · 768→35.2 · 390→27 · 360 触底 26 */
+  font-size: clamp(26px, calc(18.67px + 2.148vw), 49.6px);
   font-weight: 800;
   letter-spacing: -0.035em;
   line-height: 1;

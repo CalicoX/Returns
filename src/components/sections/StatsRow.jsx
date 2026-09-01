@@ -505,6 +505,8 @@ export default function StatsRow() {
               active={hover === i}
               runId={hover === i ? runId : 0}
               onEnter={() => {
+                /* ≤640 手机档没有 hover 光效（Park 2026-09-01）：enter 直接短路 */
+                if (window.matchMedia("(max-width: 640px)").matches) return;
                 setHover(i);
                 setRunId((n) => n + 1);
               }}

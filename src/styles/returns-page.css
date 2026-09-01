@@ -6592,26 +6592,48 @@ html.is-reduce-fx .rt-roi::after {
   .rt-wf-wrap .feature-stage-art,
   .rt-rv-wrap .feature-stage-art,
   .rt-carrier-wrap .feature-stage-art {
-    /* 固定 PC 设计稿尺寸；JS 已把 height 写成 H×s，这里把盒宽钉死为 W，
-       transform-origin 左上，--fts 缩放后可视宽 = 容器宽 */
+    /* 场景盒 = PC 设计稿尺寸（W 由各场景覆写、H 由 --fts-h 定）；
+       landing.css ≤768 的 max-height:420 会把 560 钳扁（比例变 1.61），必须解锁 */
     width: var(--fts-w, 677px) !important;
     max-width: none !important;
-    transform-origin: top left !important;
-    scale: var(--fts, 1) !important;
+    height: var(--fts-h, 560px) !important;
+    min-height: 0 !important;
+    max-height: none !important;
     overflow: visible !important;
   }
 
-  .rt-wf-wrap .feature-stage-art,
-  .rt-carrier-wrap .feature-stage-art {
-    --fts-w: 703px;
+  /* scale 挂 stage（子级），scene 保持未缩放布局盒 —— 占位高 H×s 在 media，无双缩 */
+  .rt-portal-wrap .feature-stage,
+  .rt-wf-wrap .feature-stage,
+  .rt-rv-wrap .feature-stage,
+  .rt-carrier-wrap .feature-stage {
+    /* stage 布局盒 = scene 自然尺寸（W×H），height:100% 链解锁，否则 scene 溢出被裁 */
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    transform-origin: top left;
+    scale: var(--fts, 1);
   }
 
-  /* 容器高度由 JS（H×s）决定；停用旧 768/640 的容器高覆盖 */
+  /* 容器高度由 JS（H×s）写 inline；这里只解锁 min/max 钳制 */
   .rt-feature-media {
-    height: auto !important;
     min-height: 0 !important;
     max-height: none !important;
     overflow: hidden;
     overflow: clip;
   }
+
+  .rt-wf-wrap .feature-stage-art,
+  .rt-carrier-wrap .feature-stage-art {
+    --fts-w: 703px;
+    --fts-h: 560px;
+  }
+
+  .rt-rv-wrap .feature-stage-art {
+    --fts-h: 519px;
+  }
+
+  /* 容器高度由 JS（H×s）写 inline 占位；640 块的 height/min-height 覆盖
+     用同特异性源顺序压不过这里的 !important 解锁块（下方 media 规则已含） */
 }

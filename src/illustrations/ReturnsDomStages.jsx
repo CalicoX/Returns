@@ -521,21 +521,22 @@ function useFeatureFit(sceneRef, key) {
   useEffect(() => {
     const scene = sceneRef.current;
     if (!scene) return undefined;
+    const media = scene.closest(".rt-feature-media");
 
     function fit() {
-      /* 宽度取 .rt-feature-media（grid 列定宽，不会被固定 W 的场景盒撑大）；
-         stage/visual 会被未缩放的场景盒暂时撑宽，不能用它们算比例 */
-      const media = scene.closest(".rt-feature-media");
-      const cw = media ? media.clientWidth : 0;
+      /* 宽度取 .rt-feature-media（grid 列定宽）；--fts 写在 media 上——
+         scale 应用在 stage（media 的子级）才能继承到；占位高 H×s 同写 media */
       const mobile = window.matchMedia("(max-width: 768px)").matches;
-      if (!mobile || cw <= 0) {
-        scene.style.removeProperty("--fts");
-        scene.style.height = "";
+      if (!mobile) {
+        media?.style.removeProperty("--fts");
+        media?.style.removeProperty("height");
         return;
       }
+      const cw = media ? media.clientWidth : 0;
+      if (cw <= 0) return;
       const s = Math.min(1, cw / w);
-      scene.style.setProperty("--fts", s.toFixed(4));
-      scene.style.height = `${Math.round(h * s)}px`;
+      media.style.setProperty("--fts", s.toFixed(4));
+      media.style.height = `${Math.round(h * s)}px`;
     }
 
     fit();

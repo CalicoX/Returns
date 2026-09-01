@@ -6574,6 +6574,13 @@ html.is-reduce-fx .rt-roi::after {
    基准：portal 677×560 · ai 703×560 · recovery 677×519 · carriers 703×560
    ========================================================= */
 @media (max-width: 768px) {
+  /* 固定 W 的场景盒沿布局撑宽 stage（transform scale 不缩布局），media 的 clip
+     在部分链路上拦不住滚动区扩展；≤768 已无 sticky（桌面保持 open），直接在
+     features 容器裁 X，兜住横向溢出 */
+  .rt-features {
+    overflow-x: clip;
+  }
+
   .rt-portal-wrap .feature-stage,
   .rt-wf-wrap .feature-stage,
   .rt-rv-wrap .feature-stage,

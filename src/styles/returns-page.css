@@ -5932,10 +5932,7 @@ html.is-reduce-fx .rt-roi::after {
     overflow: hidden;
   }
 
-  .rt-plans-grid {
-    grid-template-columns: 1fr;
-    max-width: 420px;
-  }
+  /* Plans 平板竖屏保持桌面 3 列（Park 2026-09-01）；单列降级挪到 ≤640 手机档 */
 }
 
 @media (max-width: 768px) {
@@ -6186,6 +6183,12 @@ html.is-reduce-fx .rt-roi::after {
 
   .rt-feature-slide {
     padding: 36px 0;
+  }
+
+  /* Plans 单列（从 768 挪下来；768 平板保持桌面 3 列） */
+  .rt-plans-grid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
   }
 }
 

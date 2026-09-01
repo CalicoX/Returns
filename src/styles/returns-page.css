@@ -5040,19 +5040,10 @@ html.is-reduce-fx .rt-roi::after {
   color: #94a3b8;
 }
 
+/* ROI CTA 已换 btn-switch（全站 CTA 样式，含旋钮箭头 + border beam）；
+   旧青绿实心覆盖删除，尺寸仅在深色面板里微调 */
 .rt-roi-cta {
-  display: inline-flex;
-  background: #14b8a6 !important;
-  color: #042f2e !important;
-  border: 0 !important;
-  box-shadow: 0 0 0 0 rgba(45, 212, 191, 0.35), 0 8px 24px rgba(13, 148, 136, 0.28);
-  transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.2s ease !important;
-}
-
-.rt-roi-cta:hover {
-  background: #2dd4bf !important;
-  transform: translateY(-1px);
-  box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.16), 0 12px 28px rgba(13, 148, 136, 0.35);
+  min-height: 48px;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -6147,17 +6147,44 @@ html.is-reduce-fx .rt-roi::after {
   }
 
   .rt-roi-metrics {
-    grid-template-columns: 1fr;
+    /* 结果卡保持 2 个一行（Park 2026-09-01），字体随宽度缩，一屏放得下；
+       minmax(0,1fr) 防止 recover 卡的 badge 把轨道撑得不均 */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .rt-roi-metric {
+    padding: 14px 14px 16px;
+    border-radius: 14px;
+  }
+
+  .rt-roi-metric-value {
+    /* 1440→44 · 640→30 · 360 触底 26 */
+    font-size: clamp(26px, calc(19.55px + 2.42vw), 44px);
+    letter-spacing: -0.02em;
   }
 
   .rt-roi-metric-label {
     padding-right: 0;
+    margin-bottom: 6px;
   }
 
   .rt-roi-badge {
     position: static;
     align-self: flex-start;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    padding: 3px 8px;
+    font-size: 10px;
+  }
+
+  /* 滑杆区：三卡改一列紧凑排（640 一行三列会挤到 180px 宽，滑杆没法用），
+     卡内留白收紧 */
+  .rt-roi-controls {
+    gap: 10px;
+  }
+
+  .rt-roi-controls .rt-roi-field {
+    padding: 12px 12px 14px;
   }
 
   .rt-hero .hero-inner.rt-hero-inner {

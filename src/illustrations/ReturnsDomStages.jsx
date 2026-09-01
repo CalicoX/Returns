@@ -604,7 +604,8 @@ export function DomStagePortal() {
       const r0 = el.getBoundingClientRect();
       // --x/--y 消费在 scene 未缩放坐标系里；≤768 scene 被 scale(--fts)，
       // rect 差值是屏幕像素，必须除回缩放比，否则鼠标飘出插图（同 Hero --rt-s 的坑）
-      const s = parseFloat(scene.style.getPropertyValue("--fts")) || 1;
+      // --fts 在 media（useFeatureFit 写在那，stage/scene 靠继承消费）；rect 差值是屏幕像素，除回缩放比
+      const s = parseFloat(scene.closest(".rt-feature-media")?.style.getPropertyValue("--fts")) || 1;
       return {
         x: (r0.left - sr.left + r0.width * fx) / s,
         y: (r0.top - sr.top + r0.height * fy) / s,
@@ -1337,8 +1338,8 @@ export function DomStageRecovery() {
       if (!scene || !el) return { ...pos };
       const sr = scene.getBoundingClientRect();
       const r0 = el.getBoundingClientRect();
-      // ≤768 scene 被 scale(--fts)，rect 差值是屏幕像素，除回缩放比（同 Hero/Portal）
-      const s = parseFloat(scene.style.getPropertyValue("--fts")) || 1;
+      // ≤768 stage 被 scale(--fts)，rect 差值是屏幕像素，除回缩放比（--fts 在 media 上，同 Portal）
+      const s = parseFloat(scene.closest(".rt-feature-media")?.style.getPropertyValue("--fts")) || 1;
       return {
         x: (r0.left - sr.left + r0.width * fx) / s,
         y: (r0.top - sr.top + r0.height * fy) / s,

@@ -6169,18 +6169,15 @@ html.is-reduce-fx .rt-roi::after {
   }
 
   .rt-roi-metric-label {
-    /* badge 改回右上角 absolute（与桌面同构），label 预留其空间保证两卡文字对齐 */
-    padding-right: 8.5em;
     margin-bottom: 6px;
   }
 
-  .rt-roi-metric:not(.is-recover) .rt-roi-metric-label {
-    padding-right: 0;
-  }
-
   .rt-roi-badge {
-    top: 12px;
-    right: 12px;
+    /* 独占一行放在 label 上方（流内），不与 label 重叠；两卡内容都从顶部起排，天然对齐 */
+    position: static;
+    order: -1;
+    align-self: flex-start;
+    margin-bottom: 8px;
     padding: 3px 8px;
     font-size: 10px;
   }

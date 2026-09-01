@@ -5304,6 +5304,17 @@ html.is-reduce-fx .rt-roi::after {
   align-items: stretch;
 }
 
+/* 手机档 tab 切换控件：桌面隐藏（≤640 才显示，见下方媒体块） */
+.rt-plan-tabs {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rt-plan-tabs-thumb {
+    transition: none;
+  }
+}
+
 .rt-plan-card {
   position: relative;
   display: flex;
@@ -6185,10 +6196,60 @@ html.is-reduce-fx .rt-roi::after {
     padding: 36px 0;
   }
 
-  /* Plans 单列（从 768 挪下来；768 平板保持桌面 3 列） */
+  /* Plans 单列 → tab 切换（API 同款分段控件，Park 2026-09-01）：卡片撑满、白钮滑动 */
   .rt-plans-grid {
     grid-template-columns: 1fr;
-    max-width: 420px;
+    max-width: none;
+  }
+
+  .rt-plan-tabs {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    margin: 0 0 18px;
+    padding: 4px;
+    border-radius: 14px;
+    background: #eef2f7;
+  }
+
+  .rt-plan-tabs-thumb {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: calc(4px + var(--i, 0) * ((100% - 20px) / 3 + 4px));
+    width: calc((100% - 20px) / 3);
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.12);
+    transition: left 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .rt-plan-tabs button {
+    position: relative;
+    z-index: 1;
+    padding: 11px 0 12px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 650;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.25s ease;
+  }
+
+  .rt-plan-tabs button.is-active {
+    color: var(--brand-primary);
+  }
+
+  .rt-plans-grid .rt-plan-card {
+    display: none;
+  }
+
+  .rt-plans-grid .rt-plan-card.is-active {
+    display: flex;
   }
 }
 

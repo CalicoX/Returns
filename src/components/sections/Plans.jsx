@@ -1,16 +1,40 @@
+import { useState } from "react";
 import { HERO, PLANS } from "../../content/returnsCopy.js";
 
 /** Basic / Pro / Max — aligned Subscribe row, Max border beam */
 export default function Plans() {
+  /* ≤640 手机档 tab 切换（API 同款分段控件）：桌面 grid 平铺不受影响 */
+  const [planIdx, setPlanIdx] = useState(0);
+
   return (
     <section className="rt-plans" id="returns-plans">
       <div className="rt-wrap rt-plans-inner">
         <h2 className="rt-plans-title">{PLANS.title}</h2>
+        <div
+          className="rt-plan-tabs"
+          role="tablist"
+          aria-label="Pricing plans"
+          style={{ "--i": planIdx }}
+        >
+          <span className="rt-plan-tabs-thumb" aria-hidden="true" />
+          {PLANS.items.map((plan, i) => (
+            <button
+              key={plan.name}
+              type="button"
+              role="tab"
+              aria-selected={i === planIdx}
+              className={i === planIdx ? "is-active" : ""}
+              onClick={() => setPlanIdx(i)}
+            >
+              {plan.name}
+            </button>
+          ))}
+        </div>
         <div className="rt-plans-grid">
-          {PLANS.items.map((plan) => (
+          {PLANS.items.map((plan, i) => (
             <article
               key={plan.name}
-              className={`rt-plan-card${plan.recommended ? " is-recommended" : ""}${plan.name === "Basic" ? " is-basic" : ""}`}
+              className={`rt-plan-card${plan.recommended ? " is-recommended" : ""}${plan.name === "Basic" ? " is-basic" : ""}${i === planIdx ? " is-active" : ""}`}
             >
               {plan.recommended ? (
                 <span className="rt-plan-badge">{PLANS.recommended}</span>

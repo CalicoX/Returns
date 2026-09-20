@@ -481,91 +481,10 @@ export function mount() {
     };
   }
 
-  /** 底栏 product dock：仅深色背景启用 colorful dark beam */
-  function mountProductDockBeam() {
-    var tabs = document.getElementById("product-tabs");
-    var dock = document.querySelector(".product-dock");
-    if (!tabs || tabs.getAttribute("data-beam")) return null;
-
-    var r = tabs.getBoundingClientRect();
-    var radius = Math.round(Math.max(r.height, 44) / 2);
-
-    var api = mountBorderBeam(tabs, {
-      id: "product-dock",
-      theme: "dark",
-      colorVariant: "colorful",
-      borderRadius: radius || 28,
-      borderWidth: 1,
-      duration: 2.15,
-      brightness: 1.45,
-      saturation: 1.35,
-      strength: 1,
-      // 深色毛玻璃上需要更明显一点
-      strokeOpacity: 0.42,
-      innerOpacity: 0.55,
-      bloomOpacity: 0.38,
-      active: false,
-    });
-
-    function isDark() {
-      return !!(dock && dock.classList.contains("dock-on-dark"));
-    }
-
-    function sync() {
-      if (!api) return;
-      // 高度变化时圆角跟着 pill
-      var h = tabs.getBoundingClientRect().height;
-      if (h > 8) {
-        // 仅更新 CSS 变量不够（radius 写死在 stylesheet）；resize 时 remount 成本高，固定用大圆角即可
-      }
-      api.setActive(isDark());
-    }
-
-    var mo = null;
-    if (dock) {
-      mo = new MutationObserver(sync);
-      mo.observe(dock, { attributes: true, attributeFilter: ["class"] });
-    }
-    window.addEventListener("resize", sync, { passive: true });
-    /* no setInterval — class MutationObserver + scroll bus cover dark/light */
-    var prevBeamScroll = window.__updateAiScroll;
-    window.__updateAiScroll = function () {
-      if (typeof prevBeamScroll === "function") prevBeamScroll();
-      sync();
-    };
-    requestAnimationFrame(sync);
-    cleanups.push(function () {
-      window.removeEventListener("resize", sync);
-      if (mo) {
-        try {
-          mo.disconnect();
-        } catch {
-          /* ignore */
-        }
-      }
-      window.__updateAiScroll =
-        typeof prevBeamScroll === "function" ? prevBeamScroll : undefined;
-      if (api && typeof api.setActive === "function") {
-        try {
-          api.setActive(false);
-        } catch {
-          /* ignore */
-        }
-      }
-    });
-    return api;
-  }
+  /* 底栏 product dock 的 beam 已下线（2026-09-20 Park：深色 tab 不要边框光效），
+     引擎保留给 .explore-link 等调用方。 */
 
   global.mountBorderBeam = mountBorderBeam;
-  global.mountProductDockBeam = mountProductDockBeam;
-
-  if (typeof document !== "undefined") {
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", mountProductDockBeam);
-    } else {
-      mountProductDockBeam();
-    }
-  }
 })(typeof window !== "undefined" ? window : this);
 
   } catch (err) {

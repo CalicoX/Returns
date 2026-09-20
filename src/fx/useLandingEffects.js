@@ -20,7 +20,6 @@ const FX_LOADERS = {
   impactMetrics: () => import("./modules/impact-metrics.js"),
   impactBg: () => import("./modules/impact-bg-shader.js"),
   landingInline: () => import("./modules/landing-inline.js"),
-  returnsCtaBeam: () => import("./modules/returns-cta-beam.js"),
   thinkingOrb: () => import("./modules/thinking-orb.js"),
   aiLab: () => import("./modules/ai-lab.js"),
   aiTitleParticles: () => import("./modules/ai-title-particles.js"),
@@ -75,10 +74,6 @@ export function useLandingEffects() {
     (async () => {
       await mountNamed("responsive");
       await mountNamed("borderBeam");
-      // Returns 全站 .btn-switch beam（tracking 由 ai-lab.js 挂，Returns 无 #ai-lab）
-      if (document.querySelector(".returns-page .btn-switch")) {
-        await mountNamed("returnsCtaBeam");
-      }
       // Topbar height + on-dark (independent of AI Lab)
       await mountNamed("topbarTheme");
       // Product dock WebGL/frosted pipeline — not deferred

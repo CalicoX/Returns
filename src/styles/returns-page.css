@@ -191,11 +191,14 @@
 }
 
 /* —— Returns 按钮主题色（覆盖 blue primary） —— */
+/* 2026-09-20 Park：border beam 与 hover 滑动箭头下线。白钮固定右侧，
+   默认即吃 landing hover 那侧的内边距，hover 时 knob / 文案零位移。 */
 .returns-page .btn-switch {
   --sw-bg0: #0f766e;
   --sw-bg1: #2dd4bf;
-  /* 常亮薄荷描边：beam 高光扫到弱相位时按钮边缘也保持点亮（对齐 tracking 观感） */
-  border-color: rgba(204, 251, 241, 0.7);
+  padding-left: calc(var(--sw-pad) + 14px);
+  padding-right: calc(var(--sw-pad) + var(--sw-knob) + var(--sw-gap));
+  border-color: rgba(204, 251, 241, 0.35);
   background: linear-gradient(180deg, var(--sw-bg1) 0%, var(--brand-primary) 48%, var(--sw-bg0) 100%);
   color: #f0fdfa;
   /* 阴影只向下投（offset ≥ blur - |spread|），否则模糊晕圈会溢到胶囊顶上方，Retina 下读成一条暗边 */
@@ -204,15 +207,8 @@
     0 2px 3px -1px rgba(15, 118, 110, 0.25) !important;
 }
 
-.returns-page .btn-switch-shader {
-  background:
-    radial-gradient(ellipse 75% 95% at 14% 30%, rgba(153, 246, 228, 0.5), transparent 58%),
-    radial-gradient(ellipse 60% 80% at 88% 70%, rgba(13, 148, 136, 0.35), transparent 55%),
-    radial-gradient(ellipse 50% 55% at 50% 110%, rgba(15, 118, 110, 0.28), transparent 52%),
-    radial-gradient(ellipse 40% 45% at 70% 8%, rgba(204, 251, 241, 0.28), transparent 50%);
-}
-
 .returns-page .btn-switch-knob {
+  left: calc(100% - var(--sw-pad) - var(--sw-knob));
   background: linear-gradient(180deg, #ffffff 0%, #f0fdfa 100%);
   color: var(--brand-primary);
   box-shadow:
@@ -226,7 +222,7 @@
 
 .returns-page .btn-switch:hover,
 .returns-page .btn-switch:focus-visible {
-  border-color: rgba(204, 251, 241, 0.85);
+  border-color: rgba(204, 251, 241, 0.55);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.25),
     0 10px 18px -8px rgba(13, 148, 136, 0.35) !important;
@@ -237,14 +233,14 @@
 }
 
 .returns-page .btn-switch.on-dark {
-  border-color: rgba(204, 251, 241, 0.7);
+  border-color: rgba(204, 251, 241, 0.35);
   background: linear-gradient(180deg, #14b8a6 0%, var(--brand-primary) 50%, #0f766e 100%);
   color: #f0fdfa;
 }
 
 .returns-page .btn-switch.on-dark:hover,
 .returns-page .btn-switch.on-dark:focus-visible {
-  border-color: rgba(204, 251, 241, 0.85);
+  border-color: rgba(204, 251, 241, 0.55);
   background: linear-gradient(180deg, #2dd4bf 0%, #0d9488 50%, #0f766e 100%);
 }
 
@@ -4784,7 +4780,7 @@ html.is-reduce-fx .rt-roi::after {
   color: #94a3b8;
 }
 
-/* ROI CTA 已换 btn-switch（全站 CTA 样式，含旋钮箭头 + border beam）；
+/* ROI CTA 已换 btn-switch（全站 CTA 样式，白钮固定右侧、无光效）；
    旧青绿实心覆盖删除，尺寸仅在深色面板里微调 */
 .rt-roi-cta {
   min-height: 48px;

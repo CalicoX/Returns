@@ -33,9 +33,9 @@ export function mount() {
 
     /** Known dark section selectors (tracking + returns) */
     const DARK_SEL =
-      "#ai-lab-intro, #bottom-cta, #returns-roi, #returns-faq, " +
+      "#ai-lab-intro, #bottom-cta, #returns-roi, " +
       ".ai-lab-intro, .ai-intro-bg, .bottom-cta, .site-footer, " +
-      ".rt-roi, .rt-faq";
+      ".rt-roi";
 
     function isDarkUnderNav() {
       const br = bar.getBoundingClientRect();
@@ -54,14 +54,12 @@ export function mount() {
             node.id === "ai-lab-intro" ||
             node.id === "bottom-cta" ||
             node.id === "returns-roi" ||
-            node.id === "returns-faq" ||
             (node.classList &&
               (node.classList.contains("ai-lab-intro") ||
                 node.classList.contains("ai-intro-bg") ||
                 node.classList.contains("bottom-cta") ||
                 node.classList.contains("site-footer") ||
                 node.classList.contains("rt-roi") ||
-                node.classList.contains("rt-faq") ||
                 (node.classList.contains("case-art") &&
                   node.classList.contains("dark"))))
           ) {

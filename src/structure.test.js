@@ -39,8 +39,6 @@ describe("Returns landing structure", () => {
       "TrustBand",
       "RoiCalculator",
       "FeatureRows",
-      "Plans",
-      "Faq",
       "ExploreMore",
       "BrandsSay",
       "Credentials",
@@ -55,6 +53,15 @@ describe("Returns landing structure", () => {
     expect(lp).toMatch(/<Credentials \/>\s*<ExploreMore \/>\s*<BottomCta \/>/);
   });
 
+  it("Pricing and FAQ stay removed (marketing asked for it)", () => {
+    const lp = read("components/LandingPage.jsx");
+    expect(lp).not.toMatch(/Plans|Faq|Pricing/);
+    const copy = read("content/returnsCopy.js");
+    expect(copy).not.toMatch(/export const PLANS|export const FAQS/);
+    const css = read("styles/returns-page.css");
+    expect(css).not.toMatch(/\.rt-plans|\.rt-plan-|\.rt-faq|\.rt-enterprise/);
+  });
+
   it("copy is English returns product page content", () => {
     const copy = read("content/returnsCopy.js");
     expect(copy).toContain("Turn every return");
@@ -62,9 +69,6 @@ describe("Returns landing structure", () => {
     expect(copy).toContain("AI-powered 24/7 returns automation");
     expect(copy).toContain("How Much Revenue Can");
     expect(copy).toContain("Branded Self-Service Returns Portal");
-    expect(copy).toContain("Pay based on monthly return volume");
-    expect(copy).toContain("How does the AI Rule Builder work?");
-    expect(copy).toContain("Basic");
   });
 
   it("Product dock highlights Returns and offers Tracking", () => {

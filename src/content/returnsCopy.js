@@ -172,7 +172,8 @@ export const FEATURES = [
  */
 export const PLANS = {
   title: "Pricing",
-  lead: "Pay based on monthly return volume. Upgrade or downgrade anytime. Save ~18% with annual billing.",
+  /* \u00A0 粘住末两词，杜绝 lone orphan 行（末行只剩 billing.） */
+  lead: "Pay based on monthly return volume. Upgrade or downgrade anytime. Save ~18% with annual\u00A0billing.",
   billedYearly: "Billed yearly",
   save: "Save ~18%",
   perMonth: "/month",

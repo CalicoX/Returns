@@ -27,6 +27,8 @@ ExploreMore：在 Credentials **后面**（Park 2026-08-26）。Tracking 卡：�
 
 RoiCalculator 背景：CSS 青绿光晕 + Point Waves 复刻（`roi-point-waves.js`，WebGL2-only，滚动到区块才挂载）。
 
+Plans：**四档 Free / Basic / Pro / Max + 企业定制版横幅**，文案与价格矩阵取自官方 pricing 页 17RETURNS 分档（2026-09-20）。卡内年付开关 + 额度下拉联动真实价格；Max 通栏「★ RECOMMENDED」丝带、上沿高出 34px。桌面 4 列 → ≤1024 2×2（徽标改右上小标）→ ≤640 单列 + 四档 tab。
+
 FeatureRows：sticky 叠屏；2/4 块翻转（图左文右）；每块略矮于视口（下一块会露一点），文案/插图列间距收紧；每块主题色只体现在勾选圆点（青绿/紫/琥珀/蓝）；无 01/04 计数、无标题色条、无插图衬底、无顶部白雾、滚动无 blur（只有轻透明度衰减）。
 
 ### Hero 现状

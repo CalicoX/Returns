@@ -62,7 +62,7 @@ describe("Returns landing structure", () => {
     expect(copy).toContain("AI-powered 24/7 returns automation");
     expect(copy).toContain("How Much Revenue Can");
     expect(copy).toContain("Branded Self-Service Returns Portal");
-    expect(copy).toContain("Returns Solutions for Every DTC Growth Stage");
+    expect(copy).toContain("Pay based on monthly return volume");
     expect(copy).toContain("How does the AI Rule Builder work?");
     expect(copy).toContain("Basic");
   });

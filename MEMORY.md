@@ -207,16 +207,25 @@ Park：最大兼容，但效果与动画保持、不卡。不要用「更多设�
 - Explore 动效必须盯 `.explore-grid` 挂 `landing-inline`（ASCII 底纹 + 指针高光）。不要只观察 `#key-features`：Returns 的 FeatureRows 对不上旧 features DOM，脚本会永不挂载。
 - ≤768 保留 API ASCII 底纹滚动（`returns-page.css` 盖掉 landing.css 的 `display:none` / `animation:none`）。768 卡内仍左右双列；≤480 改上下布局，CTA 与正文 **20px**（不要靠 `margin-top:auto`，单列会塌成 0）。
 
-## 定价 Plans（2026-09-20 对齐官方 pricing 页）
+## 定价 Plans / FAQ —— 已整块删除（2026-09-20，市场部门要求）
 
-- 结构与文案全部取自 17track 官方定价页 17RETURNS 分档（`https://www.17track.net/en/pricing`），**四档 Free / Basic / Pro / Max** + 底部**企业定制版**横幅。不要再回到旧的「三档 + Challenges We Solve」结构。
-- 价格是**真实价格矩阵**，写在 `returnsCopy.js` 的 `PLANS.items[].quotas`：`month` / `year` 各 5 档额度（20/60/100/200/400）。年付 ≈ 月付 ×0.82（Basic 5→4、Pro 11→9、Max 29→24）。超额单价 Basic $0.20 / Pro $0.50 / Max $1.20（官方渲染页是 `$1.20`，i18n JSON 里的 `returns_max_tips: $1.40` 是过期值，别照抄）。
-- 卡内控件：年付开关（`role="switch"`，四卡联动同一个 state）+ 额度下拉（改额度即改价，与官方一致）。Free 无这两者，用占位撑到与付费档同一按钮基线。
-- Max 卡：**通栏丝带**「★ RECOMMENDED」（青绿渐变，压卡片上沿、文字居中），卡上沿高出其它卡 34px（`margin-top:-34px` + `padding-top:60px`），**底沿与其它卡齐平**。桌面四卡等宽一行。
-- 断点：桌面 4 列 → **≤1024 改 2×2**（丝带同时改回右上小徽标，否则通栏丝带会串行）→ ≤640 单列 + 顶部四档 tab 切换。
-- **坑：缩略条不能用样式表里的 `var(--i)` 算位置**。`.rt-plan-tabs-thumb` 的 `left: calc(...var(--i)...)` 在 Chrome 下算不出来（嵌套 var 做除法），且窄屏全局 `transform` 降级会压掉 `transform`/`translate` 位移。现在由 JSX 内联 `left` 给出（`calc(4px + i * ((100% - 20px)/4 + 4px))`），CSS 只留宽度。
-- **坑：测缩略条位置要先出帧**。该页 `document.timeline` 不推进时 `left` 过渡会冻在起点，`getBoundingClientRect()` 读到旧值；先 `screenshot()` 一次再读才对。
-- 计费口径：官方中文页写「年付享约18%折扣」、英文页写 `Save ~18%`，两处都保留英文页措辞。
+- **市场部门要求下线 Pricing 与 FAQ 两个模块**，已从落地页整块移除。这是外部业务决定，不是设计调整，**不要凭代码洁癖或「看起来空」把它加回来**。
+- 删掉的东西：`sections/Plans.jsx`、`sections/Faq.jsx`、`returnsCopy.js` 的 `PLANS`/`FAQS` 导出、`returns-page.css` 的 `.rt-plans*` / `.rt-plan-*` / `.rt-enterprise*` / `.rt-faq*` 全部样式（含 1024/768/640 媒体查询里的片段）、`topbar-theme.js` 里 `#returns-faq` / `.rt-faq` 的深色判断。
+- `structure.test.js` 加了防回归断言：LandingPage 不得出现 `Plans|Faq|Pricing`，copy 不得有 `export const PLANS|FAQS`，CSS 不得有 `.rt-plans|.rt-plan-|.rt-faq|.rt-enterprise`。要恢复模块就得同时改这条测试。
+- 删 FAQ 后**顶栏深色主题仍然正常**（`#returns-roi`、`#bottom-cta` 两处照样触发 `topbar-on-dark`）——已验证，别误以为要补回 FAQ 才不坏。
+
+<details>
+<summary>删除前的定价实现（若日后要恢复，看这里）</summary>
+
+结构与文案取自 17track 官方定价页 17RETURNS 分档（`https://www.17track.net/en/pricing`）：**四档 Free / Basic / Pro / Max** + 底部**企业定制版**横幅。
+
+- 价格是真实价格矩阵，写在 `PLANS.items[].quotas`：`month` / `year` 各 5 档额度（20/60/100/200/400）。年付 ≈ 月付 ×0.82（Basic 5→4、Pro 11→9、Max 29→24）。超额单价 Basic $0.20 / Pro $0.50 / Max $1.20（官方渲染页是 `$1.20`，i18n JSON 里的 `returns_max_tips: $1.40` 是过期值）。
+- 卡内控件：年付开关（`role="switch"`，四卡联动同一 state）+ 额度下拉（改额度即改价）。Free 无这两者，用占位撑到与付费档同一按钮基线。
+- Max 卡：通栏丝带「★ RECOMMENDED」（青绿渐变，压卡片上沿），上沿高出其它卡 34px（`margin-top:-34px` + `padding-top:60px`），底沿齐平。
+- 断点：桌面 4 列 → ≤1024 改 2×2（丝带同时改回右上小徽标）→ ≤640 单列 + 顶部四档 tab 切换。
+- 副标题 `Pay based on monthly return volume...` 曾掉孤词（末行只剩 `billing.`），用 `\u00A0` 粘住末两词 + `text-wrap: pretty` 修掉。
+
+</details>
 
 ## 工程教训
 

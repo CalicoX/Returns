@@ -17,7 +17,9 @@
 
 ### 页面顺序
 
-Topbar → Hero → TrustBand → BrandsSay → StatsRow → RoiCalculator → FeatureRows → Plans → Faq → Credentials → ExploreMore → BottomCta → Footer + ProductDock
+Topbar → Hero → TrustBand → BrandsSay → StatsRow → RoiCalculator → FeatureRows → Credentials → ExploreMore → BottomCta → Footer + ProductDock
+
+**Pricing 与 FAQ 已整块删除**（市场部门要求，2026-09-20）：组件、`returnsCopy.js` 的 `PLANS`/`FAQS`、`returns-page.css` 里的 `.rt-plans*` / `.rt-faq*` 样式、以及 `topbar-theme.js` 里 `#returns-faq` 的深色判断都一并清掉。不要加回来。
 
 TrustBand：标题/副标题居中；logo 静态 **两排各 6**（Tracking 同款 12 家，列距 72）。不要跑马灯、不要 Shopify/SHEIN/Temu。
 
@@ -27,15 +29,13 @@ ExploreMore：在 Credentials **后面**（Park 2026-08-26）。Tracking 卡：�
 
 RoiCalculator 背景：CSS 青绿光晕 + Point Waves 复刻（`roi-point-waves.js`，WebGL2-only，滚动到区块才挂载）。
 
-Plans：**四档 Free / Basic / Pro / Max + 企业定制版横幅**，文案与价格矩阵取自官方 pricing 页 17RETURNS 分档（2026-09-20）。卡内年付开关 + 额度下拉联动真实价格；Max 通栏「★ RECOMMENDED」丝带、上沿高出 34px。桌面 4 列 → ≤1024 2×2（徽标改右上小标）→ ≤640 单列 + 四档 tab。
-
 FeatureRows：sticky 叠屏；2/4 块翻转（图左文右）；每块略矮于视口（下一块会露一点），文案/插图列间距收紧；每块主题色只体现在勾选圆点（青绿/紫/琥珀/蓝）；无 01/04 计数、无标题色条、无插图衬底、无顶部白雾、滚动无 blur（只有轻透明度衰减）。
 
 ### Hero 现状
 
 - 左文案 / 右插图；人物卡约 620px、靠右。照片是欧美金发、二十多岁网球动作（`/assets/hero-returns.jpg`），参考 Baleaf 运动感；不要亚洲面孔、不要显老、不要坐姿棚拍、不要运动内衣。
 - 三张玻璃浮卡 + 假鼠标自动演示；悬停不暂停。演示比初版略快（点前 520 / 步间 360）。
-- CTA：Free Trial + Book a Demo。全站 `.btn-switch`（Hero / Feature×4 / Plans / BrandsSay / BottomCta）带青绿 border beam（`returns-cta-beam.js`，teal 变体，离屏暂停）。
+- CTA：Free Trial + Book a Demo。全站 `.btn-switch`（Hero / Feature×4 / BrandsSay / BottomCta）带青绿 border beam（`returns-cta-beam.js`，teal 变体，离屏暂停）。
 - 青绿自研 WebGL wash（API 同款双通道；无橙/紫/蓝；无 FilmGrain）。
 - 整页兼容：WebGL1 主路径 + mediump；无 WebGL / context lost 走青绿 fallback。动画不砍，离屏/切标签才停 rAF。
 - 响应式（2026-09-01 并档）：全站只有 **640 / 768 / 1024** 三档 max-width（1440 是壳宽非断点）。≤1024 双栏 rebalance；≤768 Hero 堆叠、Feature sticky 改堆叠；≤640 Stats/ROI/credentials 单列、全宽卡。预览用 DevTools 切 1440 / 1024 / 768 / 640 / 390。

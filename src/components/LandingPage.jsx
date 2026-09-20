@@ -6,8 +6,6 @@ import StatsRow from "./sections/StatsRow.jsx";
 import TrustBand from "./sections/TrustBand.jsx";
 import RoiCalculator from "./sections/RoiCalculator.jsx";
 import FeatureRows from "./sections/FeatureRows.jsx";
-import Plans from "./sections/Plans.jsx";
-import Faq from "./sections/Faq.jsx";
 import ExploreMore from "./sections/ExploreMore.jsx";
 import BrandsSay from "./sections/BrandsSay.jsx";
 import Credentials from "./sections/Credentials.jsx";
@@ -36,8 +34,6 @@ export default function LandingPage() {
           <StatsRow />
           <RoiCalculator />
           <FeatureRows />
-          <Plans />
-          <Faq />
           <Credentials />
           <ExploreMore />
           <BottomCta />

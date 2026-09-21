@@ -86,12 +86,11 @@ export function useLandingEffects() {
         console.warn("[useLandingEffects] product dock", err);
       }
 
-      // Returns hero: API 同款自研 WebGL wash（青绿，立即挂载）
+      // Returns hero: 2026-09-21 Park——玻璃斜纹 wash 与鼠标划过效果整体下线，
+      // Hero 改静态淡青绿渐变（CSS）。模块保留，恢复时重新挂 heroWash 即可。
       const isReturns = document.querySelector(".returns-page");
       const hero = document.querySelector(".hero");
-      if (hero && isReturns && !shouldReduceFx()) {
-        await mountNamed("heroWash");
-      } else if (hero && !isReturns && !shouldReduceFx()) {
+      if (hero && !isReturns && !shouldReduceFx()) {
         const stopIdle = whenIdle(() => {
           const unvis = observeVisibility(
             hero,

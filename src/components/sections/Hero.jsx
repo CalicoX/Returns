@@ -1,16 +1,11 @@
 import { HERO } from "../../content/returnsCopy.js";
 import { DomHeroReturns } from "../../illustrations/ReturnsDomStages.jsx";
 
-/** Returns Hero — 50/50 split, switch CTA, shader wash, 3D panel */
+/** Returns Hero — 50/50 split, switch CTA, static teal gradient bg, 3D panel */
 export default function Hero() {
   return (
     <section className="rt-hero hero" id="returns-hero">
-      <canvas className="rt-hero-shader" id="rt-hero-shader" aria-hidden="true" />
-      <div className="rt-hero-ambient" aria-hidden="true">
-        <span className="rt-hero-blob rt-hero-blob-a" />
-        <span className="rt-hero-blob rt-hero-blob-b" />
-        <span className="rt-hero-blob rt-hero-blob-c" />
-      </div>
+      {/* shader canvas / ambient blobs 已随 wash 效果下线（2026-09-21 Park），背景走 CSS 渐变 */}
 
       <div className="rt-wrap rt-hero-inner hero-inner">
         <div className="rt-hero-copy">

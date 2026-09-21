@@ -52,16 +52,17 @@
   --dock-bottom: max(16px, env(safe-area-inset-bottom, 0px));
 }
 
-/* —— Hero：细化 + 无地球背景 —— */
+/* —— Hero：淡青绿渐变静态背景（2026-09-21 Park：wash 斜纹下线） —— */
 .rt-hero.hero {
   position: relative;
   isolation: isolate;
   overflow-x: clip;
   overflow-y: visible;
   background:
-    radial-gradient(ellipse 90% 70% at 12% 0%, rgba(20, 184, 166, 0.1), transparent 55%),
-    radial-gradient(ellipse 70% 60% at 92% 18%, rgba(45, 212, 191, 0.08), transparent 50%),
-    linear-gradient(180deg, #f7fffd 0%, #ffffff 42%, #ffffff 100%);
+    radial-gradient(ellipse 85% 75% at 10% 0%, rgba(45, 212, 191, 0.16), transparent 58%),
+    radial-gradient(ellipse 70% 65% at 95% 12%, rgba(20, 184, 166, 0.14), transparent 55%),
+    radial-gradient(ellipse 60% 55% at 50% 110%, rgba(13, 148, 136, 0.1), transparent 60%),
+    linear-gradient(160deg, #ecfdf9 0%, #f4fdfa 38%, #ffffff 78%, #ffffff 100%);
 }
 
 /* 彻底隐藏 undertones 地球 canvas（即使脚本误挂） */
@@ -91,18 +92,12 @@
 }
 
 .rt-hero.hero.hero-shader-fallback {
+  /* 同主线：淡青绿渐变，斜纹条纹已下线 */
   background:
-    repeating-linear-gradient(
-      31deg,
-      rgba(255, 255, 255, 0) 0px,
-      rgba(255, 255, 255, 0) 11px,
-      rgba(240, 253, 250, 0.35) 15px,
-      rgba(255, 255, 255, 0.75) 19px,
-      rgba(255, 255, 255, 0) 24px
-    ),
-    radial-gradient(ellipse 90% 70% at 12% 0%, rgba(20, 184, 166, 0.1), transparent 55%),
-    radial-gradient(ellipse 70% 60% at 92% 18%, rgba(45, 212, 191, 0.08), transparent 50%),
-    linear-gradient(180deg, #f7fffd 0%, #ffffff 42%, #ffffff 100%);
+    radial-gradient(ellipse 85% 75% at 10% 0%, rgba(45, 212, 191, 0.16), transparent 58%),
+    radial-gradient(ellipse 70% 65% at 95% 12%, rgba(20, 184, 166, 0.14), transparent 55%),
+    radial-gradient(ellipse 60% 55% at 50% 110%, rgba(13, 148, 136, 0.1), transparent 60%),
+    linear-gradient(160deg, #ecfdf9 0%, #f4fdfa 38%, #ffffff 78%, #ffffff 100%);
 }
 
 .rt-hero-ambient {
@@ -5830,12 +5825,12 @@ html.is-reduce-fx .rt-roi::after {
   animation: none;
 }
 
-/* WISMO 浮卡挪到左侧（2026-09-21 Park）：压住面板左缘 / 蓝区，不挡右侧事件 */
+/* WISMO 浮卡在右（2026-09-21 Park：先左后改右）：压住面板右缘，不挡左侧文案 */
 .returns-page .track-ui .float-card-metric {
-  left: -96px;
+  left: auto;
+  right: -8px;
   top: auto;
   bottom: 40px;
-  right: auto;
   width: 156px;
   z-index: 4;
 }
@@ -5882,7 +5877,7 @@ html.is-reduce-fx .rt-roi::after {
   }
   .returns-page .track-ui .float-card-metric {
     width: 148px;
-    left: -60px;
+    right: -4px;
     bottom: 24px;
   }
 }
@@ -5896,7 +5891,7 @@ html.is-reduce-fx .rt-roi::after {
     right: 8px;
   }
   .returns-page .track-ui .float-card-metric {
-    left: -48px;
+    right: 6px;
     bottom: 20px;
     width: 148px;
   }
@@ -5924,7 +5919,7 @@ html.is-reduce-fx .rt-roi::after {
   }
   .returns-page .track-ui .float-card-metric {
     width: 144px;
-    left: -36px;
+    right: 6px;
     bottom: 16px;
   }
 }

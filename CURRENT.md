@@ -25,7 +25,7 @@ TrustBand：标题/副标题居中；logo 静态 **两排各 6**（Tracking 同�
 
 BrandsSay：紧跟 TrustBand，**白底**（标题/副标题深色）。**单行**照片+白字跑马灯（第二行已删，Park 2026-08-27）；卡高 **260**（比 tracking 双行版高）。卡内 logo 偏暗（opacity 0.7），引用/署名更亮。不要深色底、不要放回 ExploreMore 后面、不要加回第二行。
 
-ExploreMore：在 Credentials **后面**（Park 2026-08-26）。Tracking 卡：标题/CTA 都是 **17TRACK Order Tracking**（不要 Explore）；17TRACK 蓝；正面包裹 icon；右侧是 **5175 tracking-react Hero 模块**（`os-status` + 左侧 WISMO 浮卡；进度条为真实五态纯紫圆点；事件走 `TRACK_EVENTS` 30 条真实轨迹、底部渐隐；Brand video 浮卡已删，2026-09-21），不要自制 Shipping Events 板。API 卡源码对齐 5175（Lucide `</>`、终端毛玻璃、ASCII `translateY`、无 3D；768 也保留滚动）。768 卡内左右双列；≤480 上下布局，正文和 CTA 20px。卡是平面的，只要指针高光，不要 tilt。
+ExploreMore：在 Credentials **后面**（Park 2026-08-26）。Tracking 卡：标题/CTA 都是 **17TRACK Order Tracking**（不要 Explore）；17TRACK 蓝；正面包裹 icon；右侧是 **5175 tracking-react Hero 模块**（`os-status` + 右侧 WISMO 浮卡；进度条为真实五态纯紫圆点；事件走 `TRACK_EVENTS` 30 条真实轨迹、底部渐隐；Brand video 浮卡已删，2026-09-21），不要自制 Shipping Events 板。API 卡源码对齐 5175（Lucide `</>`、终端毛玻璃、ASCII `translateY`、无 3D；768 也保留滚动）。768 卡内左右双列；≤480 上下布局，正文和 CTA 20px。卡是平面的，只要指针高光，不要 tilt。
 
 RoiCalculator 背景：CSS 青绿光晕 + Point Waves 复刻（`roi-point-waves.js`，WebGL2-only，滚动到区块才挂载）。
 
@@ -36,7 +36,7 @@ FeatureRows：sticky 叠屏；2/4 块翻转（图左文右）；每块略矮于�
 - 左文案 / 右插图；人物卡约 620px、靠右。照片是欧美金发、二十多岁网球动作（`/assets/hero-returns.jpg`），参考 Baleaf 运动感；不要亚洲面孔、不要显老、不要坐姿棚拍、不要运动内衣。
 - 三张玻璃浮卡 + 假鼠标自动演示；悬停不暂停。演示比初版略快（点前 520 / 步间 360）。
 - CTA：Free Trial + Book a Demo。全站 `.btn-switch`（Hero / Feature×4 / BrandsSay / BottomCta）**无 border beam、无 hover 滑动**（2026-09-20 Park 下线，`returns-cta-beam.js` 已删）；白钮固定右侧，hover 只提亮描边/阴影。
-- 青绿自研 WebGL wash（API 同款双通道；无橙/紫/蓝；无 FilmGrain）。
+- 背景：**静态淡青绿渐变**（CSS，2026-09-21 wash 斜纹 + 鼠标划过效果下线，`hero-wash-shader.js` 保留未挂）。
 - 整页兼容：WebGL1 主路径 + mediump；无 WebGL / context lost 走青绿 fallback。动画不砍，离屏/切标签才停 rAF。
 - 响应式（2026-09-01 并档）：全站只有 **640 / 768 / 1024** 三档 max-width（1440 是壳宽非断点）。≤1024 双栏 rebalance；≤768 Hero 堆叠、Feature sticky 改堆叠；≤640 Stats/ROI/credentials 单列、全宽卡。预览用 DevTools 切 1440 / 1024 / 768 / 640 / 390。
 - 页面文案字阶对齐 tracking 实际 `h2` / `.lead` / `--sec-*`。Hero 标题仍是展示级 56。

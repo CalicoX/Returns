@@ -13,7 +13,7 @@
 | **H2** | Hero 插图 | 人像照片 + 三张玻璃浮卡（商品 / 原因 / 方式）+ 假鼠标自动演示。禁止退回 Safari 门户。 |
 | **H3** | 自动演示 | 假鼠标循环：外套 → 原因 → Green Return。**悬停只做 3D 倾斜，禁止暂停演示。** |
 | **H4** | 主题色 | 青绿 `#0d9488` / `#14b8a6` / `#0f766e`，对齐定价「订阅」按钮。 |
-| **H5** | Hero 背景 | API 同款自研 WebGL（Swirl + ChromaFlow + FlutedGlass），**不走 npm `shaders` 包**。青绿：left `#0d9488`（替换 API 橙 `#FF3805`）、down `#14b8a6`、right `#0f766e`、up `#99f6e4`。**不要 FilmGrain**（白底发脏）；Swirl 副色 `#f0f7f3`（2026-08-17 两轮调出：近白 `#f7fffc` 静止时几乎看不见；`#e9f2ee` 又太亮抢插图，最终取中间值——静止可见、不压插图）。窄屏 / 减动效用静态青绿渐变。 |
+| **H5** | Hero 背景 | **2026-09-21 Park：WebGL wash（Swirl/ChromaFlow/FlutedGlass 玻璃斜纹 + 鼠标划过）整体下线**，`useLandingEffects` 不再挂 `heroWash`，Hero.jsx 的 shader canvas / ambient blobs 已删。Hero 改静态**淡青绿渐变**（`.rt-hero.hero` 四层 radial+linear，fallback 同款，斜纹条纹已删）。模块 `hero-wash-shader.js` 保留，恢复时重挂 + 加回 JSX 即可。窄屏 / 减动效同走 CSS 渐变。 |
 
 ---
 
@@ -206,7 +206,7 @@ Park：最大兼容，但效果与动画保持、不卡。不要用「更多设�
 
 - Returns 落地页的 Explore 左卡是 **17TRACK Order Tracking**（标题和 CTA 都写全称，CTA 不要 Explore），底色必须是 **17TRACK 蓝** `#003a9b` 家族（`#1a5cd4 → #003a9b → #002a75`），**不要**用 Returns 青绿 `#20B195`。
 - **进度条真实五态 + 纯圆点（2026-09-21 Park 改版）**：五态是 Order pending → Info Received → In Transit → Pick Up → Delivered（17track 真实状态，不要 Ordered/Processed/Shipped/Out）。节点是**纯紫色圆点（#6d28d9）+ 淡紫光环，环内不要图标**；连接线也改紫色渐变（#8b5cf6→#6d28d9），Delivered 端光环更大（双层 box-shadow）。原来蓝→紫渐变线 + 22px 图标圆删除。
-- **WISMO 浮卡（2026-09-21）**：数字 ↓35% 改 **↓95%**；"More shoppers self-serve after purchase" 句子已删（原来会溢出卡框）。−12% tag 保留。**位置在左**（`left: -96px`，压蓝区不挡事件；1024/768/640 依次 -60/-48/-36）。
+- **WISMO 浮卡（2026-09-21）**：数字 ↓35% 改 **↓95%**；"More shoppers self-serve after purchase" 句子已删（原来会溢出卡框）。−12% tag 保留。**位置在右**（`right: -8px` 压面板右缘；1024/768/640 依次 -4/6/6）。同日先左后右，最终以右为准。
 - **真实轨迹事件（2026-09-21 Park 给完整 MO）**：`returnsCopy.js` 导出 `TRACK_EVENTS`（30 条 USPS 真实轨迹，最新 Delivered · SAINT LOUIS, MO 63109 · 2026/9/14 在前，`latest: true` 绿色高亮），ExploreMore 里 map 渲染。**超出卡片底部渐隐隐藏**（`.os-events` mask-image 线性渐变，非滚动裁切）。旧的三条假事件（Today · Front door 等）已删。
 - **Brand video 浮卡已整块删除**（2026-09-21 Park：右侧 video 不要）：JSX 的 `float-card-video` 整块、`returns-page.css` 四处 `.float-card-video` 尺寸覆盖全清。不要加回来；右侧只剩 os-status 主面板。
 - Hover 高光：指针跟随的**亮蓝**径向 spotlight（sky/blue，`mix-blend-mode: screen`）。**不要白芯**，发白是错的。**不要 3D tilt**（Park 2026-08-25：去掉倾斜和内层视差，卡保持平面）。

@@ -207,6 +207,7 @@ Park：最大兼容，但效果与动画保持、不卡。不要用「更多设�
 - Returns 落地页的 Explore 左卡是 **17TRACK Order Tracking**（标题和 CTA 都写全称，CTA 不要 Explore），底色必须是 **17TRACK 蓝** `#003a9b` 家族（`#1a5cd4 → #003a9b → #002a75`），**不要**用 Returns 青绿 `#20B195`。
 - **进度条真实五态 + 纯圆点（2026-09-21 Park 改版）**：五态是 Order pending → Info Received → In Transit → Pick Up → Delivered（17track 真实状态，不要 Ordered/Processed/Shipped/Out）。节点是**纯紫色圆点（#6d28d9）+ 淡紫光环，环内不要图标**；连接线也改紫色渐变（#8b5cf6→#6d28d9），Delivered 端光环更大（双层 box-shadow）。原来蓝→紫渐变线 + 22px 图标圆删除。
 - **WISMO 浮卡（2026-09-21）**：数字 ↓35% 改 **↓95%**；"More shoppers self-serve after purchase" 句子已删（原来会溢出卡框）。−12% tag 保留。**位置在右**（`right: -8px` 压面板右缘；1024/768/640 依次 -4/6/6）。同日先左后右，最终以右为准。
+- **移动端 WISMO 踩坑（2026-09-21）**：`landing.css` ≤768 块有 `.float-card { display: none !important; }`（tracking 站手机藏浮卡旧规），Returns 桌面覆盖压不过它 → 手机上 WISMO 消失。修法：`returns-page.css` 640 档对 `.float-card-metric` 写 `display:block !important; position:absolute !important` 接住。不要去改 landing.css（工程原则 3）。
 - **真实轨迹事件（2026-09-21 Park 给完整 MO）**：`returnsCopy.js` 导出 `TRACK_EVENTS`（30 条 USPS 真实轨迹，最新 Delivered · SAINT LOUIS, MO 63109 · 2026/9/14 在前，`latest: true` 绿色高亮），ExploreMore 里 map 渲染。**超出卡片底部渐隐隐藏**（`.os-events` mask-image 线性渐变，非滚动裁切）。旧的三条假事件（Today · Front door 等）已删。
 - **Brand video 浮卡已整块删除**（2026-09-21 Park：右侧 video 不要）：JSX 的 `float-card-video` 整块、`returns-page.css` 四处 `.float-card-video` 尺寸覆盖全清。不要加回来；右侧只剩 os-status 主面板。
 - Hover 高光：指针跟随的**亮蓝**径向 spotlight（sky/blue，`mix-blend-mode: screen`）。**不要白芯**，发白是错的。**不要 3D tilt**（Park 2026-08-25：去掉倾斜和内层视差，卡保持平面）。

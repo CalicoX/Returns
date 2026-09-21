@@ -5918,6 +5918,10 @@ html.is-reduce-fx .rt-roi::after {
     bottom: 10px;
   }
   .returns-page .track-ui .float-card-metric {
+    /* landing.css ≤768 对 .float-card 一刀切 display:none!important（tracking 站旧规），
+       Returns 的 WISMO 卡要在手机上保留（2026-09-21 Park 修复），特异性+important 接住 */
+    display: block !important;
+    position: absolute !important;
     width: 144px;
     right: 6px;
     bottom: 16px;

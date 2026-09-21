@@ -5721,33 +5721,27 @@ html.is-reduce-fx .rt-roi::after {
   right: 10%;
   top: 50%;
   height: 2px;
-  background: linear-gradient(90deg, #38bdf8 0%, #2563eb 55%, #8b5cf6 100%);
+  background: linear-gradient(90deg, #8b5cf6 0%, #7c3aed 55%, #6d28d9 100%);
   transform: translateY(-50%);
 }
 
+/* 节点是纯圆点 + 淡紫光环（2026-09-21 Park：不要图标），Delivered 光环更大 */
 .returns-page .track-ui .os-progress i {
   position: relative;
   z-index: 1;
-  width: 22px;
-  height: 22px;
+  width: 10px;
+  height: 10px;
   margin: 0 auto;
   border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: var(--os-brown);
-  color: #f4f7fb;
-  -webkit-text-fill-color: #f4f7fb;
+  background: #6d28d9;
+  box-shadow: 0 0 0 4px rgba(109, 40, 217, 0.16);
 }
 
 .returns-page .track-ui .os-progress i.is-now {
-  background: linear-gradient(135deg, #4f46e5 0%, #8b5cf6 100%);
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.16);
-}
-
-.returns-page .track-ui .os-progress i svg {
-  width: 11px;
-  height: 11px;
-  display: block;
+  background: #6d28d9;
+  box-shadow:
+    0 0 0 4px rgba(109, 40, 217, 0.16),
+    0 0 0 9px rgba(109, 40, 217, 0.12);
 }
 
 .returns-page .track-ui .os-progress-labels {
@@ -5827,15 +5821,8 @@ html.is-reduce-fx .rt-roi::after {
   z-index: 4;
 }
 
-.returns-page .track-ui .float-card-video {
-  left: auto;
-  right: -8px;
-  top: 108px;
-  bottom: auto;
-  width: 168px;
-  z-index: 5;
-  padding: 11px;
-}
+/* Brand video 浮卡已删（2026-09-21 Park：右侧 video 不要），
+   .float-card-video 样式全部清理；WISMO 卡保留 */
 
 .returns-page .track-ui .float-card .num {
   font-size: 24px;
@@ -5874,11 +5861,6 @@ html.is-reduce-fx .rt-roi::after {
   .returns-page .track-ui {
     min-height: 400px;
   }
-  .returns-page .track-ui .float-card-video {
-    width: 152px;
-    right: -4px;
-    top: 100px;
-  }
   .returns-page .track-ui .float-card-metric {
     width: 148px;
     left: -4px;
@@ -5893,11 +5875,6 @@ html.is-reduce-fx .rt-roi::after {
   .returns-page .track-ui .os-status {
     left: 8px;
     right: 8px;
-  }
-  .returns-page .track-ui .float-card-video {
-    width: 148px;
-    right: 6px;
-    top: 96px;
   }
   .returns-page .track-ui .float-card-metric {
     left: 6px;
@@ -5925,11 +5902,6 @@ html.is-reduce-fx .rt-roi::after {
     right: 6px;
     top: 10px;
     bottom: 10px;
-  }
-  .returns-page .track-ui .float-card-video {
-    width: 140px;
-    right: 6px;
-    top: 88px;
   }
   .returns-page .track-ui .float-card-metric {
     width: 144px;

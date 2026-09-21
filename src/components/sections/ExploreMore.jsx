@@ -30,50 +30,23 @@ export default function ExploreMore() {
                 <span className="explore-link-arrow" aria-hidden="true">→</span>
               </span>
             </div>
-            <div className="track-ui" aria-hidden="true">
-              <div className="os-status">
-                <h3>Your order has been delivered.</h3>
-                <div className="os-progress">
-                  <i className="is-on">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                      <path d="M4 7h16l-1.2 11H5.2L4 7z" />
-                      <path d="M9 7V5.5A3 3 0 0115 5.5V7" />
-                    </svg>
-                  </i>
-                  <i className="is-on">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                      <rect x="4" y="5" width="16" height="14" rx="1.5" />
-                      <path d="M8 9h8M8 13h5" />
-                    </svg>
-                  </i>
-                  <i className="is-on">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                      <path d="M3 16V8h11v8H3z" />
-                      <path d="M14 11h4l3 3v2h-7v-5z" />
-                      <circle cx="7" cy="17.5" r="1.6" />
-                      <circle cx="17" cy="17.5" r="1.6" />
-                    </svg>
-                  </i>
-                  <i className="is-on">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                      <path d="M4 17V9l7-4 7 4v8" />
-                      <path d="M9 17v-5h6v5" />
-                    </svg>
-                  </i>
-                  <i className="is-on is-now">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                      <path d="M4 20V10l8-6 8 6v10" />
-                      <path d="M10 20v-6h4v6" />
-                    </svg>
-                  </i>
-                </div>
-                <div className="os-progress-labels">
-                  <span>Ordered</span>
-                  <span>Processed</span>
-                  <span>Shipped</span>
-                  <span>Out</span>
-                  <span>Delivered</span>
-                </div>
+              <div className="track-ui" aria-hidden="true">
+                <div className="os-status">
+                  <h3>Your order has been delivered.</h3>
+                  <div className="os-progress">
+                    <i className="is-on"></i>
+                    <i className="is-on"></i>
+                    <i className="is-on"></i>
+                    <i className="is-on"></i>
+                    <i className="is-on is-now"></i>
+                  </div>
+                  <div className="os-progress-labels">
+                    <span>Order pending</span>
+                    <span>Info received</span>
+                    <span>In transit</span>
+                    <span>Pick up</span>
+                    <span>Delivered</span>
+                  </div>
                 <div className="os-carrier">
                   <b>USPS</b>
                   <span>9400 1000 0000 2849 1</span>
@@ -100,9 +73,8 @@ export default function ExploreMore() {
                 </div>
                 <span className="num">
                   <span className="num-arrow" aria-hidden="true">↓</span>
-                  35%
+                  95%
                 </span>
-                <span className="hint">More shoppers self-serve after purchase</span>
                 <div className="mini-bars" aria-hidden="true">
                   <span style={{ height: "88%" }}></span>
                   <span style={{ height: "76%" }}></span>
@@ -112,33 +84,6 @@ export default function ExploreMore() {
                   <span style={{ height: "38%" }}></span>
                   <span style={{ height: "32%" }}></span>
                   <span style={{ height: "26%" }}></span>
-                </div>
-              </div>
-              <div className="float-card float-card-video">
-                <div className="float-card-top">
-                  <span className="label">Brand video</span>
-                  <span className="float-card-tag video">Embed</span>
-                </div>
-                <div className="video-thumb">
-                  <img
-                    src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=400&q=80"
-                    alt=""
-                    width="168"
-                    height="105"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <span className="video-play">
-                    <svg viewBox="0 0 12 12" fill="currentColor">
-                      <path d="M3.2 2.1v7.8L10 6 3.2 2.1z" />
-                    </svg>
-                  </span>
-                </div>
-                <strong className="video-title">Studio edit · unbox film</strong>
-                <div className="video-meta">
-                  <span>0:42</span>
-                  <i></i>
-                  <span>Post-purchase story</span>
                 </div>
               </div>
             </div>

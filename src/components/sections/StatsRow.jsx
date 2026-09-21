@@ -387,6 +387,22 @@ function StatCell({ stat, index, active, runId, onEnter, onLeave }) {
         {stat.tag ? <span className="rt-bento-tag">{stat.tag}</span> : null}
       </div>
 
+      {/* Q4：进度条在上、数字贴底（与 Q3 数字基线对齐，2026-09-21 Park） */}
+      {kind === "meter" ? (
+        <div className="rt-bento-meter" aria-hidden="true">
+          <div className="rt-bento-meter-track">
+            <div
+              className="rt-bento-meter-fill"
+              style={{ ["--fill"]: `${stat.fill ?? 80}%` }}
+            />
+          </div>
+          <div className="rt-bento-meter-scale">
+            <span>0%</span>
+            <span>100%</span>
+          </div>
+        </div>
+      ) : null}
+
       <div className="rt-bento-main">
         <strong className="rt-bento-value" aria-label={stat.value}>
           {display}
@@ -418,21 +434,6 @@ function StatCell({ stat, index, active, runId, onEnter, onLeave }) {
           ) : null}
         </strong>
       </div>
-
-      {kind === "meter" ? (
-        <div className="rt-bento-meter" aria-hidden="true">
-          <div className="rt-bento-meter-track">
-            <div
-              className="rt-bento-meter-fill"
-              style={{ ["--fill"]: `${stat.fill ?? 80}%` }}
-            />
-          </div>
-          <div className="rt-bento-meter-scale">
-            <span>0%</span>
-            <span>100%</span>
-          </div>
-        </div>
-      ) : null}
     </article>
   );
 }

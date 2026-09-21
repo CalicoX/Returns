@@ -3948,8 +3948,10 @@
   transform-origin: left center;
 }
 
+/* 进度条移到数字上方（2026-09-21 Park 对调）：吃掉原数字的 auto 空隙，
+   数字贴底与 Q3 的 7×24h 基线对齐 */
 .rt-bento-meter {
-  margin-top: 18px;
+  margin: 18px 0;
   position: relative;
   z-index: 1;
 }

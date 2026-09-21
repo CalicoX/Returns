@@ -1,4 +1,4 @@
-import { EXPLORE } from "../../content/returnsCopy.js";
+import { EXPLORE, TRACK_EVENTS } from "../../content/returnsCopy.js";
 
 /**
  * Explore More — Tracking card + Tracking API card
@@ -52,18 +52,12 @@ export default function ExploreMore() {
                   <span>9400 1000 0000 2849 1</span>
                 </div>
                 <ul className="os-events">
-                  <li>
-                    <strong>Delivered</strong>
-                    <span>Today · 2:14 PM · Front door</span>
-                  </li>
-                  <li>
-                    <strong>Out for delivery</strong>
-                    <span>Today · 8:02 AM · Los Angeles, CA</span>
-                  </li>
-                  <li>
-                    <strong>Arrived at hub</strong>
-                    <span>Yesterday · 6:41 PM</span>
-                  </li>
+                  {TRACK_EVENTS.map((ev, i) => (
+                    <li key={`${ev.title}-${i}`} className={ev.latest ? "is-latest" : undefined}>
+                      <strong>{ev.title}</strong>
+                      <span>{ev.meta}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="float-card float-card-metric">

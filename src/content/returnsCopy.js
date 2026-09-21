@@ -51,6 +51,43 @@ export const STATS = [
   },
 ];
 
+/**
+ * Explore Tracking 卡真实轨迹（Park 2026-09-21 提供完整 USPS MO）。
+ * order: 最新在前。默认只显示前几条，超出卡片渐隐隐藏。
+ */
+export const TRACK_EVENTS = [
+  { title: "Delivered", meta: "SAINT LOUIS, MO 63109 · 9/14/26, 8:23 PM", latest: true },
+  { title: "Out for Delivery", meta: "RUSTON, LA 71270 · 10/31/24, 8:23 AM" },
+  { title: "Arrived at Post Office", meta: "RUSTON, LA 71270 · 10/31/24, 6:49 AM" },
+  { title: "In Transit to Next Facility", meta: "10/31/24, 6:38 AM" },
+  { title: "Departed USPS Facility", meta: "MONROE, LA 71203 · 10/31/24, 4:17 AM" },
+  { title: "Arrived at USPS Facility", meta: "MONROE, LA 71203 · 10/31/24, 4:00 AM" },
+  { title: "In Transit to Next Facility", meta: "10/30/24, 6:38 PM" },
+  { title: "Departed USPS Regional Facility", meta: "SHREVEPORT LA DISTRIBUTION CENTER · 10/30/24, 5:28 PM" },
+  { title: "Accepted at USPS Regional Destination Facility", meta: "SHREVEPORT LA DISTRIBUTION CENTER · 10/30/24, 4:44 PM" },
+  { title: "Arrived at USPS Regional Facility", meta: "SHREVEPORT LA DISTRIBUTION CENTER · 10/30/24, 2:28 PM" },
+  { title: "In Transit to Next Facility", meta: "10/30/24, 2:33 AM" },
+  { title: "Departed USPS Regional Facility", meta: "DALLAS TX LOGISTICS CENTER · 10/29/24, 11:57 PM" },
+  { title: "Arrived USPS Regional Facility", meta: "DALLAS TX LOGISTICS CENTER · 10/29/24, 10:15 PM" },
+  { title: "Departed Shipping Partner Facility, USPS Awaiting Item", meta: "GRAND PRAIRIE, TX 75052 · 10/29/24, 3:26 PM" },
+  { title: "Arrived Shipping Partner Facility, USPS Awaiting Item", meta: "GRAND PRAIRIE, TX 75052 · 10/28/24, 7:22 PM" },
+  { title: "Delivered to local carrier", meta: "10/28/24, 4:45 PM" },
+  { title: "Departed from facility", meta: "LOS ANGELES, CALIFORNIA, US · 10/28/24, 6:57 AM" },
+  { title: "Arrived at sort facility", meta: "LOS ANGELES, CALIFORNIA, US · 10/26/24, 10:58 PM" },
+  { title: "Arrived at sort facility", meta: "10/25/24, 12:05 PM" },
+  { title: "Departed from facility", meta: "10/25/24, 11:10 AM" },
+  { title: "Clearance processing completed - Import", meta: "LOS ANGELES, CALIFORNIA, US · 10/25/24, 11:10 AM" },
+  { title: "In clearance processing - Import", meta: "10/24/24, 9:09 AM" },
+  { title: "International flight has arrived", meta: "US · 10/24/24, 8:03 AM" },
+  { title: "International flight has departed", meta: "CN · 10/24/24, 7:56 AM" },
+  { title: "Arrived at the origin international airport", meta: "CN · 10/24/24, 4:54 AM" },
+  { title: "Shipment is in transit to next facility", meta: "Mainland China, CN · 10/22/24, 6:35 PM" },
+  { title: "Departed from sort facility", meta: "Mainland China, CN · 10/22/24, 3:05 PM" },
+  { title: "Arrived at origin facility", meta: "Mainland China, CN · 10/21/24, 9:52 PM" },
+  { title: "Shipment information received", meta: "10/21/24, 9:26 PM" },
+  { title: "Shipping Label Created, USPS Awaiting Item", meta: "9/9/26, 12:23 PM" },
+];
+
 export const BRANDS = {
   title: "Trusted by over 100,000 brands across various industries worldwide",
   logos: [

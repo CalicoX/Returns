@@ -5784,7 +5784,17 @@ html.is-reduce-fx .rt-roi::after {
   margin: 10px 0 0;
   padding: 0;
   display: grid;
-  gap: 7px;
+  gap: 10px;
+  /* 事件多时超出卡片底部渐隐（Park 2026-09-21）：不滚动、不裁切生硬 */
+  overflow-y: auto;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 78%, transparent 100%);
+  padding-bottom: 18px;
+}
+
+.returns-page .track-ui .os-events::-webkit-scrollbar {
+  display: none;
 }
 
 .returns-page .track-ui .os-events strong {
@@ -5793,11 +5803,9 @@ html.is-reduce-fx .rt-roi::after {
   font-weight: 650;
   color: var(--os-ink);
   -webkit-text-fill-color: var(--os-ink);
-}
-
-.returns-page .track-ui .os-events li:first-child strong {
-  color: #15803d;
-  -webkit-text-fill-color: #15803d;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .returns-page .track-ui .os-events span {
@@ -5806,16 +5814,25 @@ html.is-reduce-fx .rt-roi::after {
   font-size: 10px;
   color: var(--os-mute);
   -webkit-text-fill-color: var(--os-mute);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.returns-page .track-ui .os-events li.is-latest strong {
+  color: #15803d;
+  -webkit-text-fill-color: #15803d;
 }
 
 .returns-page .track-ui .float-card {
   animation: none;
 }
 
+/* WISMO 浮卡挪到左侧（2026-09-21 Park）：压住面板左缘 / 蓝区，不挡右侧事件 */
 .returns-page .track-ui .float-card-metric {
-  left: -8px;
+  left: -96px;
   top: auto;
-  bottom: 28px;
+  bottom: 40px;
   right: auto;
   width: 156px;
   z-index: 4;
@@ -5863,7 +5880,7 @@ html.is-reduce-fx .rt-roi::after {
   }
   .returns-page .track-ui .float-card-metric {
     width: 148px;
-    left: -4px;
+    left: -60px;
     bottom: 24px;
   }
 }
@@ -5877,7 +5894,7 @@ html.is-reduce-fx .rt-roi::after {
     right: 8px;
   }
   .returns-page .track-ui .float-card-metric {
-    left: 6px;
+    left: -48px;
     bottom: 20px;
     width: 148px;
   }
@@ -5905,7 +5922,7 @@ html.is-reduce-fx .rt-roi::after {
   }
   .returns-page .track-ui .float-card-metric {
     width: 144px;
-    left: 6px;
+    left: -36px;
     bottom: 16px;
   }
 }

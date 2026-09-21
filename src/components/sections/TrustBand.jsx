@@ -23,7 +23,6 @@ export default function TrustBand() {
       <div className="trust">
         <div className="trust-copy">
           <strong>{BRANDS.title}</strong>
-          <span>{BRANDS.subtitle}</span>
         </div>
         <div className="logos-marquee" aria-label="Brand logos">
           <div className="logos-track">

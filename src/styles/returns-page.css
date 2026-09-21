@@ -3928,91 +3928,24 @@
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
   transition: transform 0.35s cubic-bezier(0.22, 0.61, 0.36, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.14em;
+}
+
+/* 趋势箭头（2026-09-21 Park：红框文案删后用方向表达语义）；
+   em 定宽随数字缩放，↑ 上调 / ↓ 下调 */
+.rt-bento-trend {
+  width: 0.62em;
+  height: 0.62em;
+  flex-shrink: 0;
+  color: inherit;
+  margin-top: 0.04em;
 }
 
 .rt-quad-cell.is-hover .rt-bento-value {
   transform: translateY(-2px) scale(1.03);
   transform-origin: left center;
-}
-
-.rt-bento-hint {
-  font-size: clamp(12px, calc(11.28px + 0.2vw), 14px);
-  line-height: 1.45;
-  color: #334155;
-  font-weight: 550;
-  opacity: 1;
-}
-
-/* ALWAYS ON + AI rules / Auto labels / Refunds 同一行 */
-.rt-quad-tags {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 6px;
-  margin-top: 4px;
-  max-width: 100%;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.rt-quad-tags::-webkit-scrollbar {
-  display: none;
-}
-
-.rt-bento-process-sub {
-  display: inline-flex;
-  flex-shrink: 0;
-  margin: 0;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #0f766e;
-  background: rgba(13, 148, 136, 0.12);
-  border: 0;
-  padding: 5px 10px;
-  border-radius: 999px;
-  white-space: nowrap;
-}
-
-.rt-quad-chips {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 6px;
-  flex-shrink: 0;
-}
-
-.rt-quad-chips li {
-  flex-shrink: 0;
-  font-size: 12px;
-  font-weight: 650;
-  color: #0f766e;
-  padding: 5px 10px;
-  border-radius: 999px;
-  background: rgba(13, 148, 136, 0.12);
-  white-space: nowrap;
-  transition: transform 0.3s ease, background 0.3s ease;
-}
-
-.rt-quad-cell.is-hover .rt-quad-chips li {
-  background: rgba(13, 148, 136, 0.16);
-}
-
-.rt-quad-cell.is-hover .rt-quad-chips li:nth-child(1) {
-  transition-delay: 0.05s;
-  transform: translateY(-2px);
-}
-.rt-quad-cell.is-hover .rt-quad-chips li:nth-child(2) {
-  transition-delay: 0.1s;
-  transform: translateY(-2px);
-}
-.rt-quad-cell.is-hover .rt-quad-chips li:nth-child(3) {
-  transition-delay: 0.15s;
-  transform: translateY(-2px);
 }
 
 .rt-bento-meter {
@@ -5057,10 +4990,6 @@ html.is-reduce-fx .rt-roi::after {
 
   .rt-stats-title {
     white-space: normal;
-  }
-
-  .rt-quad-tags {
-    flex-wrap: wrap;
   }
 
 }

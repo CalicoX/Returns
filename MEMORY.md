@@ -71,7 +71,13 @@ Park 用 Tracking 模块整块替换：12 家静态两排各 6。不要 Shopify 
 
 ---
 
-## 流体字号（2026-08-27 Park「移动端字有点大」）
+## Stats / TrustBand 文案精简（2026-09-21 Park）
+
+- **TrustBand 只留标题**：`BRANDS.subtitle`（Returns automation for DTC...）已删，`TrustBand.jsx` 不再渲染 `<span>`。不要加回。
+- **Stats 四象限红框内容全删**：Q1 `hint: "Increasing"`、Q2 `hint: "Lower shipping cost day by day"`、Q3 `kicker/points`（ALWAYS ON + AI rules/Auto labels/Refunds 三颗 chip）、Q4 `hint: "Tickets automated"` 都从 `STATS` 移除；`rt-bento-hint` / `rt-quad-tags` / `rt-quad-chips` / `rt-bento-process-sub` 样式一并删除。
+- **趋势箭头替代语义**：Q1 `20%+ ↑`、Q2 `18%+ ↓`、Q4 `80% ↓`（Q3 7×24h 无箭头）。`STATS[].trend: "up"|"down"`，StatsRow 里内联 SVG 箭头（`.rt-bento-trend`，0.62em 随数字缩放、同色 inherit）。方向是语义：↑=增长、↓=成本/工单下降，别把上下搞反。
+
+
 
 - **全站页面文字随视宽连续缩小、触底 12px；API / tracking-react / returns 三站同参**。公式 `clamp(M, calc(A + B·vw), D)`：锚点 1360→桌面现值 D 不变、360→M=`max(12, min(原最深媒体覆盖@360, 0.82×D))`。
 - 根 token `--fs-display/-h2/-h3/-lead/-body` 已全部曲线化；landing.css 与 returns-page.css 里 ≤768/≤480 的字号硬切覆盖已删。`rt-hero-copy h1` 变 `clamp(29px, calc(19.28px + 2.7vw), 56px)`、`.rt-faq/.rt-plan/.rt-feature/.rt-roi-metric/.rt-bento` 全部跟着缩。

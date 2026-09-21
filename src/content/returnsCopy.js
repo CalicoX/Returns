@@ -27,35 +27,32 @@ export const STATS = [
     value: "20%+",
     label: "Recover Revenue",
     kind: "spark",
-    hint: "Increasing",
+    trend: "up",
     tag: "Monthly",
   },
   {
     value: "18%+",
     label: "Reduce Reverse Logistics Costs",
     kind: "big",
-    hint: "Lower shipping cost day by day",
+    trend: "down",
     tag: "Live",
   },
   {
     value: "7×24h",
     label: "Automated Processing",
     kind: "wide",
-    kicker: "Always on",
-    points: ["AI rules", "Auto labels", "Refunds"],
   },
   {
     value: "80%",
     label: "Support Workload",
     kind: "meter",
-    hint: "Tickets automated",
+    trend: "down",
     fill: 80,
   },
 ];
 
 export const BRANDS = {
   title: "Trusted by over 100,000 brands across various industries worldwide",
-  subtitle: "Returns automation for DTC, cross-border, and Shopify merchants.",
   logos: [
     { src: "/assets/logos/aliexpress.svg", alt: "AliExpress" },
     { src: "/assets/logos/baleaf.png", alt: "Baleaf" },

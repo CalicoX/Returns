@@ -390,22 +390,33 @@ function StatCell({ stat, index, active, runId, onEnter, onLeave }) {
       <div className="rt-bento-main">
         <strong className="rt-bento-value" aria-label={stat.value}>
           {display}
+          {stat.trend ? (
+            <svg
+              className={`rt-bento-trend trend-${stat.trend}`}
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              {stat.trend === "up" ? (
+                <path
+                  d="M12 19V5M12 5l-6.5 6.5M12 5l6.5 6.5"
+                  stroke="currentColor"
+                  strokeWidth="3.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              ) : (
+                <path
+                  d="M12 5v14M12 19l-6.5-6.5M12 19l6.5-6.5"
+                  stroke="currentColor"
+                  strokeWidth="3.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              )}
+            </svg>
+          ) : null}
         </strong>
-        {stat.hint ? <span className="rt-bento-hint">{stat.hint}</span> : null}
-        {stat.kicker || stat.points?.length ? (
-          <div className="rt-quad-tags">
-            {stat.kicker ? (
-              <span className="rt-bento-process-sub">{stat.kicker}</span>
-            ) : null}
-            {stat.points?.length ? (
-              <ul className="rt-quad-chips">
-                {stat.points.map((p) => (
-                  <li key={p}>{p}</li>
-                ))}
-              </ul>
-            ) : null}
-          </div>
-        ) : null}
       </div>
 
       {kind === "meter" ? (

@@ -3943,12 +3943,17 @@
   transform-origin: left center;
 }
 
-/* 进度条移到数字上方（2026-09-21 Park 对调）：吃掉原数字的 auto 空隙，
-   数字贴底与 Q3 的 7×24h 基线对齐 */
-.rt-bento-meter {
-  margin: 18px 0;
-  position: relative;
-  z-index: 1;
+/* 进度条改左右布局（2026-09-22 Park）：absolute 到右侧垂直居中（对位 Q3 时钟），
+   数字独占左下流内贴底，与 Q3 的 7×24h 基线自然对齐。
+   选择器带 .q4 压过上方共享规则的 position: relative */
+.rt-quad-cell.q4 .rt-bento-meter {
+  position: absolute;
+  right: clamp(28px, 3vw, 48px);
+  top: 50%;
+  width: min(46%, 260px);
+  transform: translateY(-50%);
+  margin: 0;
+  z-index: 2;
 }
 
 .rt-bento-meter-track {
@@ -5275,6 +5280,14 @@ html.is-reduce-fx .rt-roi::after {
     border: 0;
     border-bottom: 0;
     padding: 28px 20px 24px;
+  }
+
+  /* ≤640 单列：进度条回退流内竖排（数字上方、左对齐），同样带 .q4 压过桌面规则 */
+  .rt-quad-cell.q4 .rt-bento-meter {
+    position: static;
+    transform: none;
+    width: 100%;
+    margin: 14px 0;
   }
 
   .rt-quad-cell:last-child {

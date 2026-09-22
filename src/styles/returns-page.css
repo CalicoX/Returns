@@ -3943,15 +3943,14 @@
   transform-origin: left center;
 }
 
-/* 进度条改左右布局（2026-09-22 Park）：absolute 到右侧垂直居中（对位 Q3 时钟），
-   数字独占左下流内贴底，与 Q3 的 7×24h 基线自然对齐。
+/* 进度条改左右布局（2026-09-22 Park）：absolute 挂右侧，底部与 80% 基线平齐
+   （bottom = 格子底 padding，与流内贴底的数字共享同一条底边）。
    选择器带 .q4 压过上方共享规则的 position: relative */
 .rt-quad-cell.q4 .rt-bento-meter {
   position: absolute;
   right: clamp(28px, 3vw, 48px);
-  top: 50%;
+  bottom: clamp(28px, 3.8vh, 48px);
   width: min(46%, 260px);
-  transform: translateY(-50%);
   margin: 0;
   z-index: 2;
 }
@@ -5026,6 +5025,11 @@ html.is-reduce-fx .rt-roi::after {
 
   .rt-quad-cell {
     padding: 28px 24px 24px;
+  }
+
+  /* ≤768 格子底 padding 收成 24,进度条 bottom 跟着改,保持与 80% 底边平齐 */
+  .rt-quad-cell.q4 .rt-bento-meter {
+    bottom: 24px;
   }
 
   .rt-quad-cross-key {
